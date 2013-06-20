@@ -9,4 +9,12 @@ FactoryGirl.define do
     last_name "The Great One"
   end
 
+  factory :project do
+    sequence(:title) { |n| "My Awesome Project #{n}" }
+    description "My project is incredible!"
+    budget 1
+    weekly_rate 1
+    user
+  end
+
 end
