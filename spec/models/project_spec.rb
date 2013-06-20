@@ -8,11 +8,6 @@ describe User do
     expect(project).to be_valid
   end
 
-  it "is not valid without a user" do
-    project.user = nil
-    expect(project).to_not be_valid
-  end
-
   it "is not valid without a title" do
     project.title = nil
     expect(project).to_not be_valid
