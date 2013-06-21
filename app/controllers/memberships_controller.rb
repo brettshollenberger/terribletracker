@@ -2,16 +2,22 @@ class MembershipsController < ApplicationController
 
   def new
     @project = Project.find(params[:project])
+    @role = params[:role] || "collaborator"
     @membership = Membership.new
   end
 
   def create
     @project = Project.find(params[:membership][:project])
     @user = User.where(email: params[:membership][:user]).first
-    @membership = Membership.new(user: @user, project: @project)
+    @role = params[:membership][:role]
+    @membership = Membership.new(user: @user, project: @project, role: @role)
 
     if @membership.save
-      flash[:notice] = "Collaborator Added"
+      if @membership.role == "collaborator"
+        flash[:notice] = "Collaborator Added"
+      else
+        flash[:notice] = "Client Added"
+      end
       redirect_to @project
     else
       if @membership.errors.include?(:user)

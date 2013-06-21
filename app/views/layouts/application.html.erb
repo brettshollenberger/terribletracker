@@ -48,6 +48,9 @@
                         <li>
                           <%= link_to "Add Collaborator", new_membership_path(project: @project) %>
                         </li>
+                        <li>
+                          <%= link_to "Add Client", new_membership_path(project: @project, role: "client") %>
+                        </li>
                       </ul>
                     </li>
                   <% end %>

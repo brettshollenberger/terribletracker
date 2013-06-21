@@ -5,14 +5,19 @@
         <div class="notice"><%= notice %></div>
       <% end %>
       <div class="terrible_form">
-        <h2>Add Collaborators.</h2>
+        <h2>Add <% if @role == "collaborator" %>Collaborators.<% else %>Client.<% end %></h2>
         <%= form_for @membership do |f| %>
 
           <%= f.text_field :user, :placeholder => "User's Email" %>
           <br>
           <%= f.hidden_field :project, :value => @project.id %>
+          <%= f.hidden_field :role, :value => @role %>
 
-          <%= f.submit("Add Collaborator", :class => "btn btn-success new-project-btn") %>
+          <% if @role == "collaborator" %>
+            <%= f.submit("Add Collaborator", :class => "btn btn-success new-project-btn") %>
+          <% else %>
+            <%= f.submit("Add Client", :class => "btn btn-success new-project-btn") %>
+          <% end %>
 
         <% end %>
       </div>
