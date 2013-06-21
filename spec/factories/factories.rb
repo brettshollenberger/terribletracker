@@ -62,7 +62,24 @@ FactoryGirl.define do
     story "As a user, I want to take over the world, so I can be its sole leader."
     estimate_in_quarter_days 1
     complexity 1
+    state "unstarted"
     project
+
+    trait :started do
+      state "started"
+    end
+
+    trait :review do
+      state "review"
+    end
+
+    trait :finished do
+      state "finished"
+    end
+
+    factory :started_story, traits: [:started]
+    factory :review_story, traits: [:review]
+    factory :finished_story, traits: [:finished]
   end
 
 end

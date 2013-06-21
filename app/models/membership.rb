@@ -6,7 +6,7 @@ class Membership < ActiveRecord::Base
   }
 
   validates :state, {
-  inclusion: { :in => %w(new pending active closed) }
+    inclusion: { :in => %w(pending active closed) }
   }
 
   validates :role, {
