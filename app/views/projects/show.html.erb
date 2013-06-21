@@ -16,7 +16,7 @@
       <div class="project_weekly_rate">
         <%= @project.weekly_rate %>
       </div>
-      <%= link_to "Add Collaborator", new_membership_path(project: @project) %>
+      <%= link_to "Add Collaborators", new_membership_path(project: @project), :class => "btn btn-primary" %>
     </div>
   </div>
 </div>

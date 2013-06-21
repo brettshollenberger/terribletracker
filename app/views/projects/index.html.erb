@@ -12,7 +12,7 @@
         <tbody>
           <% @projects.each do |project| %>
             <tr>
-              <td><%= project.title %></td>
+              <td><%= link_to "#{project.title}", project_path(project), :class => "project-list" %></td>
             </tr>
           <% end %>
         </tbody>

@@ -40,6 +40,18 @@
                 <% end %>
                   <%= link_to "New Project", new_project_path %>
                 </li>
+                <% if @project && !@project.memberships.empty? %>
+                  <% if current_page?(project_path(@project)) %>
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                        <li>
+                          <%= link_to "Add Collaborator", new_membership_path(project: @project) %>
+                        </li>
+                      </ul>
+                    </li>
+                  <% end %>
+                <% end %>
                 <li><%= link_to "Logout", logout_path %></li>
               <% else %>
                 <li><%= link_to "Signin", login_path %></li>
