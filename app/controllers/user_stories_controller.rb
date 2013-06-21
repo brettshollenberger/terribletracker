@@ -33,4 +33,16 @@ class UserStoriesController < ApplicationController
     redirect_to @project
   end
 
+  def destroy
+    @story = UserStory.find(params[:id])
+    @project = @story.project
+
+    if @story.delete
+      flash[:notice] = "Story Deleted"
+    else
+      flash[:notice] = "There was an error deleting your story"
+    end
+    redirect_to @project
+  end
+
 end
