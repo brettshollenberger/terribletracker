@@ -14,7 +14,16 @@ class MembershipsController < ApplicationController
       flash[:notice] = "Collaborator Added"
       redirect_to @project
     else
-      flash[:notice] = "User has already been invited to this project"
+      if @membership.errors.include?(:user)
+        flash[:notice] = "#{params[:membership][:user]} is not yet on Terrible Tracker."
+      elsif @membership.errors.include?(:user_id) &&
+        Membership.where(user_id: @user.id).first.state == "active"
+        flash[:notice] = "#{params[:membership][:user]} is already active on this project."
+      elsif @membership.errors.include?(:user_id)
+        flash[:notice] = "#{params[:membership][:user]} has already been invited to this project"
+      else
+        flash[:notice] = "There was an error adding #{params[:membership][:user]} as a collaborator."
+      end
       redirect_to new_membership_path(project: @project.id)
     end
   end

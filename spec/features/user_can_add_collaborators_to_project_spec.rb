@@ -22,4 +22,20 @@ feature "user can add collaborators to project" do
     login_as(@user2, :scope => :user)
     expect(page).to have_content(@project.title)
   end
+
+  scenario "user is already active on a project" do
+    click_link "Add Collaborator"
+    fill_in "membership[user]", with: @user.email
+    click_button "Add Collaborator"
+    expect(page).to have_content("already active on this project")
+  end
+
+  scenario "user has already been invited to the project" do
+    2.times do
+      click_link "Add Collaborator"
+      fill_in "membership[user]", with: @user2.email
+      click_button "Add Collaborator"
+    end
+    expect(page).to have_content("has already been invited to this project")
+  end
 end
