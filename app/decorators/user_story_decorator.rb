@@ -1,5 +1,4 @@
 class UserStoryDecorator < Draper::Decorator
-  decorates :user_story
   delegate_all
 
   def estimated
