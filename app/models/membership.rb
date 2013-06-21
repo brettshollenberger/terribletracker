@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :project, :role, :user
+  attr_accessible :project, :role, :user, :state
 
   validates :project, :role, :user, :state, :user_id, :project_id, {
     presence: true

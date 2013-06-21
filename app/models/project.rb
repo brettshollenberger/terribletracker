@@ -13,4 +13,10 @@ class Project < ActiveRecord::Base
   has_many :users, {
     through: :memberships
   }
+
+  def owner
+    self.memberships.each do |membership|
+      return membership.user if membership.role == "owner"
+    end
+  end
 end

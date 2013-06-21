@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <% if notice %>
+        <div class="notice"><%= notice %></div>
+      <% end %>
+      <h2>
+        <%= @project.title %>
+      </h2>
+      <div class="project_description">
+        <%= @project.description %>
+      </div>
+      <div class="project_budget">
+        <%= @project.budget %>
+      </div>
+      <div class="project_weekly_rate">
+        <%= @project.weekly_rate %>
+      </div>
+      <%= link_to "Add Collaborator", new_membership_path(project: @project) %>
+    </div>
+  </div>
+</div>

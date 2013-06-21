@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <% if notice %>
+        <div class="notice"><%= notice %></div>
+      <% end %>
+      <div class="terrible_form">
+        <h2>Add Collaborators.</h2>
+        <%= form_for @membership do |f| %>
+
+          <%= f.text_field :user, :placeholder => "User's Email" %>
+          <br>
+          <%= f.hidden_field :project, :value => @project.id %>
+
+          <%= f.submit("Add Collaborator", :class => "btn btn-success new-project-btn") %>
+
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
