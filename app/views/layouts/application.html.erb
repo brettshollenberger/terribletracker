@@ -26,39 +26,44 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <% if current_user %>
-                <% if current_page?(projects_path) %>
-                  <li class="active">
-                <% else %>
-                  <li>
-                <% end %>
-                  <%= link_to "#{current_user.first_name}'s Projects", projects_path %>
-                </li>
-                <% if current_page?(new_project_path) %>
-                  <li class="active">
-                <% else %>
-                  <li>
-                <% end %>
-                  <%= link_to "New Project", new_project_path %>
-                </li>
-                <% if @project && !@project.memberships.empty? %>
-                  <% if current_page?(project_path(@project)) %>
+                  <% unless current_user.projects.empty? %>
                     <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.first_name %>'s Projects <b class="caret"></b></a>
                       <ul class="dropdown-menu">
-                        <li>
-                          <%= link_to "Add Collaborator", new_membership_path(project: @project) %>
-                        </li>
-                        <li>
-                          <%= link_to "Add Client", new_membership_path(project: @project, role: "client") %>
-                        </li>
+                        <% current_user.projects.each do |project| %>
+                          <li>
+                            <%= link_to "#{project.title}", project_path(project) %>
+                          </li>
+                        <% end %>
                       </ul>
                     </li>
                   <% end %>
+                  <% if current_page?(new_project_path) %>
+                    <li class="active">
+                  <% else %>
+                    <li>
+                  <% end %>
+                    <%= link_to "New Project", new_project_path %>
+                  </li>
+                  <% if @project && !@project.memberships.empty? %>
+                    <% if current_page?(project_path(@project)) %>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li>
+                            <%= link_to "Add Collaborator", new_membership_path(project: @project) %>
+                          </li>
+                          <li>
+                            <%= link_to "Add Client", new_membership_path(project: @project, role: "client") %>
+                          </li>
+                        </ul>
+                      </li>
+                    <% end %>
+                  <% end %>
+                  <li><%= link_to "Logout", logout_path %></li>
+                <% else %>
+                  <li><%= link_to "Signin", login_path %></li>
                 <% end %>
-                <li><%= link_to "Logout", logout_path %></li>
-              <% else %>
-                <li><%= link_to "Signin", login_path %></li>
-              <% end %>
               <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
               <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>

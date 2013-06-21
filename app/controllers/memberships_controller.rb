@@ -13,6 +13,7 @@ class MembershipsController < ApplicationController
     @membership = Membership.new(user: @user, project: @project, role: @role)
 
     if @membership.save
+      CollaborationInvitationMailer.collaboration_invitation_email(@user, @project).deliver
       if @membership.role == "collaborator"
         flash[:notice] = "Collaborator Added"
       else
