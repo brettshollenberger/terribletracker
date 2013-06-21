@@ -6,7 +6,9 @@
   <body>
     <h1>Congratulations <%= @user.first_name %>!</h1>
 
-    <p>You've been invited to <%= link_to "#{@project.title}", @url %></p>
+    <p>You've been invited to <%= link_to "#{@project.title}", @url %>.</p>
+
+    <p><%= link_to "Click here to accept the invitation!", @accept_url %></p>
 
   </body>
 </html>

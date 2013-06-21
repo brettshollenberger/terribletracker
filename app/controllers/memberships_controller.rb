@@ -35,4 +35,18 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def accept
+    @membership = Membership.find(params[:id])
+    if @membership.update_attributes(state: "active")
+      if current_user != @membership.user
+        redirect_to logout_path
+      else
+        flash[:notice] = "You're a #{@membership.role}!"
+        redirect_to @membership.project
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
 end

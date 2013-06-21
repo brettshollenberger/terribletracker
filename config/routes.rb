@@ -12,6 +12,8 @@ Terribletracker::Application.routes.draw do
   resources :projects
   resources :memberships
 
+  get "/membership/:id/accept", to: "memberships#accept"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
