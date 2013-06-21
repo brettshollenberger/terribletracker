@@ -10,7 +10,7 @@ feature 'collaborator adds user story', %q{
   # They belong to projects and users (assigned to them).
 
   context 'as a collaborator' do
-    let(:membership) { FactoryGirl.create(:active_collaborator) }
+    let(:membership) { FactoryGirl.create(:active_collaboratorship) }
 
     scenario 'adding a user story to a project' do
       project = membership.project
@@ -27,7 +27,7 @@ feature 'collaborator adds user story', %q{
 
       fill_in 'Title', with: 'New user story'
       fill_in 'user_story[story]', with: 'foo bar baz'
-      fill_in 'Estimate in quarter days', with: 0.25
+      fill_in 'Estimate in quarter days', with: 1
       fill_in 'Complexity', with: 1
 
       click_on 'Create Story'
@@ -35,7 +35,7 @@ feature 'collaborator adds user story', %q{
       page.should have_content('New user story')
       page.should have_content('foo bar baz')
       page.should have_content('0.25 days')
-      page.should have_content('Complexity: 1')
+      page.should have_content('1')
     end
   end
 end

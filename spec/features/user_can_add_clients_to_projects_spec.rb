@@ -5,7 +5,7 @@ Warden.test_mode!
 
 feature "user can add clients to project" do
   background do
-    @membership = FactoryGirl.create(:active_owner)
+    @membership = FactoryGirl.create(:active_ownership)
     @project = @membership.project
     @user = @project.owner
     @user2 = FactoryGirl.create(:user)

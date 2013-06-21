@@ -8,6 +8,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = current_user.projects.find(params[:id])
+    @user_stories = @project.user_stories.decorate
   end
 
   def new

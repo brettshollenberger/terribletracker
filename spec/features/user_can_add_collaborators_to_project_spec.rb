@@ -5,7 +5,7 @@ Warden.test_mode!
 
 feature "user can add collaborators to project" do
   background do
-    @membership = FactoryGirl.create(:active_owner)
+    @membership = FactoryGirl.create(:active_ownership)
     @project = @membership.project
     @user = @project.owner
     @user2 = FactoryGirl.create(:user)
@@ -13,7 +13,7 @@ feature "user can add collaborators to project" do
 
   scenario "user is not a collaborator" do
     login_as(@user2, :scope => :user)
-    visit project_path(@project)
+    visit projects_path
     expect(page).to_not have_content(@project.title)
   end
 

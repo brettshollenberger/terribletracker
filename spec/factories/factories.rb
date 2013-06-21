@@ -46,15 +46,23 @@ FactoryGirl.define do
       state "closed"
     end
 
-    factory :active_owner, traits: [:active, :owner]
-    factory :pending_owner, traits: [:pending, :owner]
-    factory :closed_owner, traits: [:closed, :owner]
-    factory :pending_collaborator, traits: [:pending, :collaborator]
-    factory :active_collaborator, traits: [:active, :collaborator]
-    factory :closed_collaborator, traits: [:closed, :collaborator]
-    factory :pending_client, traits: [:pending, :client]
-    factory :active_client, traits: [:active, :client]
-    factory :closed_client, traits: [:closed, :client]
+    factory :active_ownership, traits: [:active, :owner]
+    factory :pending_ownership, traits: [:pending, :owner]
+    factory :closed_ownership, traits: [:closed, :owner]
+    factory :pending_collaboratorship, traits: [:pending, :collaborator]
+    factory :active_collaboratorship, traits: [:active, :collaborator]
+    factory :closed_collaboratorship, traits: [:closed, :collaborator]
+    factory :pending_clientship, traits: [:pending, :client]
+    factory :active_clientship, traits: [:active, :client]
+    factory :closed_clientship, traits: [:closed, :client]
+  end
+
+  factory :user_story do
+    title "Terrible Story"
+    story "As a user, I want to take over the world, so I can be its sole leader."
+    estimate_in_quarter_days 1
+    complexity 1
+    project
   end
 
 end

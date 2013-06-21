@@ -1,28 +1,28 @@
 require 'spec_helper'
 
 describe Membership do
-  let(:membership)           { FactoryGirl.create(:membership)}
-  let(:active_owner)         { FactoryGirl.create(:active_owner) }
-  let(:pending_owner)        { FactoryGirl.create(:pending_owner) }
-  let(:closed_owner)         { FactoryGirl.create(:closed_owner) }
-  let(:pending_collaborator) { FactoryGirl.create(:pending_collaborator) }
-  let(:active_collaborator)  { FactoryGirl.create(:active_collaborator) }
-  let(:closed_collaborator)  { FactoryGirl.create(:closed_collaborator) }
-  let(:pending_client)       { FactoryGirl.create(:pending_client) }
-  let(:active_client)        { FactoryGirl.create(:active_client) }
-  let(:closed_client)        { FactoryGirl.create(:closed_client) }
+  let(:membership)               { FactoryGirl.create(:membership)}
+  let(:active_ownership)         { FactoryGirl.create(:active_ownership) }
+  let(:pending_ownership)        { FactoryGirl.create(:pending_ownership) }
+  let(:closed_ownership)         { FactoryGirl.create(:closed_ownership) }
+  let(:pending_collaboratorship) { FactoryGirl.create(:pending_collaboratorship) }
+  let(:active_collaboratorship)  { FactoryGirl.create(:active_collaboratorship) }
+  let(:closed_collaboratorship)  { FactoryGirl.create(:closed_collaboratorship) }
+  let(:pending_clientship)       { FactoryGirl.create(:pending_clientship) }
+  let(:active_clientship)        { FactoryGirl.create(:active_clientship) }
+  let(:closed_clientship)        { FactoryGirl.create(:closed_clientship) }
 
   it "is valid" do
     expect(membership).to be_valid
-    expect(active_owner).to be_valid
-    expect(pending_owner).to be_valid
-    expect(closed_owner).to be_valid
-    expect(pending_collaborator).to be_valid
-    expect(active_collaborator).to be_valid
-    expect(closed_collaborator).to be_valid
-    expect(pending_client).to be_valid
-    expect(active_client).to be_valid
-    expect(closed_client).to be_valid
+    expect(active_ownership).to be_valid
+    expect(pending_ownership).to be_valid
+    expect(closed_ownership).to be_valid
+    expect(pending_collaboratorship).to be_valid
+    expect(active_collaboratorship).to be_valid
+    expect(closed_collaboratorship).to be_valid
+    expect(pending_clientship).to be_valid
+    expect(active_clientship).to be_valid
+    expect(closed_clientship).to be_valid
   end
 
   it "is not valid with a non-standard role" do
