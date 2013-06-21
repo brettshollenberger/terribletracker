@@ -1,15 +1,15 @@
 Terribletracker::Application.routes.draw do
   root to: "projects#index"
 
-  devise_for :users
-
   devise_for :users do
     get "/login" => "devise/sessions#new"
     get "/register" => "devise/registrations#new"
     get "/logout" => "devise/sessions#destroy"
   end
 
-  resources :projects
+  resources :projects do
+    resources :user_stories
+  end
   resources :memberships
 
   get "/membership/:id/accept", to: "memberships#accept"

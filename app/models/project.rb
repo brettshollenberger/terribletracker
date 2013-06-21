@@ -14,6 +14,11 @@ class Project < ActiveRecord::Base
     through: :memberships
   }
 
+  has_many :user_stories, {
+    dependent: :destroy,
+    inverse_of: :project
+  }
+
   def owner
     self.memberships.each do |membership|
       return membership.user if membership.role == "owner"

@@ -15,6 +15,9 @@
       </div>
       <div class="project_weekly_rate">
         <%= @project.weekly_rate %>
+        <br>
+        <br>
+        <%= button_to "Add Story", new_project_user_story_path(@project), :class => 'btn btn-primary', method: "get" %>
       </div>
     </div>
   </div>

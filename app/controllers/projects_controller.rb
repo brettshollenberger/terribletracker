@@ -7,8 +7,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
-    redirect_to projects_path unless current_user.projects.include?(@project)
+    @project = current_user.projects.find(params[:id])
   end
 
   def new

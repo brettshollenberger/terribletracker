@@ -9,11 +9,17 @@ feature "user can add collaborators to project" do
     @project = @membership.project
     @user = @project.owner
     @user2 = FactoryGirl.create(:user)
-    login_as(@user, :scope => :user)
-    visit project_path(@project)
   end
 
-  scenario "user adds a collaborator" do
+  scenario "user is not a collaborator" do
+    login_as(@user2, :scope => :user)
+    visit project_path(@project)
+    expect(page).to_not have_content(@project.title)
+  end
+
+  scenario "user is added as a collaborator by the project's owner" do
+    login_as(@user, :scope => :user)
+    visit project_path(@project)
     click_link "Add Collaborator"
     fill_in "membership[user]", with: @user2.email
     click_button "Add Collaborator"
@@ -24,6 +30,8 @@ feature "user can add collaborators to project" do
   end
 
   scenario "user is already active on a project" do
+    login_as(@user, :scope => :user)
+    visit project_path(@project)
     click_link "Add Collaborator"
     fill_in "membership[user]", with: @user.email
     click_button "Add Collaborator"
@@ -31,6 +39,8 @@ feature "user can add collaborators to project" do
   end
 
   scenario "user has already been invited to the project" do
+    login_as(@user, :scope => :user)
+    visit project_path(@project)
     2.times do
       click_link "Add Collaborator"
       fill_in "membership[user]", with: @user2.email
