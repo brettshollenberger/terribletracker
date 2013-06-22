@@ -2,7 +2,7 @@ class UserStoryDecorator < Draper::Decorator
   delegate_all
 
   def estimated
-    plurify((object.estimate_in_quarter_days.to_f / 4), "day")
+    plurify(estimize(object), "day")
   end
 
   def state_button
@@ -17,6 +17,17 @@ private
     return "#{num} #{word.pluralize}" if num < 1
     return "#{num} #{word}" if num == 1
     return "#{num} #{word.pluralize}"
+  end
+
+  def estimize(obj)
+    estimate = obj.estimate_in_quarter_days.to_f / 4
+    return strfy(estimate)
+  end
+
+  def strfy(num)
+    str = num.to_s
+    return str[0..-2].to_i if str[-1] == "0" && str[-2] == "."
+    return num
   end
 
   def state_button_link
@@ -68,18 +79,5 @@ private
     h.link_to "Finished",
     "/user_story/#{id}/finished"
   end
-
-  def show_state
-    state.capitalize
-  end
-
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
 
 end
