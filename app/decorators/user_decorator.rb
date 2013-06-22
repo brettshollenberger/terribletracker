@@ -13,4 +13,11 @@ class UserDecorator < Draper::Decorator
     return MembershipDecorator.decorate_collection(invitation_list)
   end
 
+  def gravatar
+    gravatar_id = Digest::MD5.hexdigest(self.email.downcase)
+    h.link_to("https://en.gravatar.com/emails/") do
+      h.image_tag "http://gravatar.com/avatar/#{gravatar_id}.png?s=150"
+    end
+  end
+
 end

@@ -4,6 +4,7 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
+      <div class="gravatar"><%= current_user.gravatar %></div>
       <div class"terrible_form">
         <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
