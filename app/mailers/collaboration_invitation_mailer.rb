@@ -6,8 +6,9 @@ class CollaborationInvitationMailer < ActionMailer::Base
     @user = user
     @project = project
     @membership = Membership.where(user_id: @user, project_id: @project).first
+    @inviter = @membership.inviter
     @url = "#{@base_url}/projects/#{@project.id}"
     @accept_url = "http://0.0.0.0:3000/membership/#{@membership.id}/accept"
-    mail(:to => "#{@user.email}", :subject => "You've been invited to #{@project.title}")
+    mail(:to => "#{@user.email}", :subject => "You've been invited to #{@project.title} on Terrible Tracker")
   end
 end

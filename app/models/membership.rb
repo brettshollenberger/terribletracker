@@ -54,7 +54,7 @@ class Membership < ActiveRecord::Base
   end
 
   def email_accepted_confirmations
-    InvitationAcceptedMailer.invitation_accepted_email_owner(user, project).deliver
+    InvitationAcceptedMailer.invitation_accepted_email_owner(user, project).deliver unless project.owner == inviter
     InvitationAcceptedMailer.invitation_accepted_email_inviter(user, project).deliver
   end
 
