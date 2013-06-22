@@ -7,11 +7,12 @@ class MembershipDecorator < Draper::Decorator
       :class => "btn-group"
   end
 
+private
   def actions_dropdown_link
     h.link_to "Action
       <span class = 'caret'>".html_safe,
       "#",
-      :class => "btn dropdown-toggle state-btn",
+      :class => "btn dropdown-toggle",
       "data-toggle" => "dropdown"
   end
 
