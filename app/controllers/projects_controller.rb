@@ -7,11 +7,13 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @projects, @invitations = find_projects
     @project = current_user.projects.find(params[:id])
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
   end
 
   def new
+    @projects, @invitations = find_projects
     @project = Project.new
   end
 
@@ -32,6 +34,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    @projects, @invitations = find_projects
     @project = Project.find(params[:id])
   end
 
