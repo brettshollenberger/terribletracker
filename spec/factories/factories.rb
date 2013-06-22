@@ -21,6 +21,7 @@ FactoryGirl.define do
     project
     role "collaborator"
     state "active"
+    inviter_id 1
 
     trait :owner do
       role "owner"

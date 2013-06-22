@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :project, :role, :user, :state
+  attr_accessible :project, :role, :user, :state, :inviter_id
 
   validates :project, :role, :user, :state, :user_id, :project_id, {
     presence: true
@@ -73,6 +73,10 @@ class Membership < ActiveRecord::Base
 
   def email_reopen_confirmations
     print "Email reopen confirmations"
+  end
+
+  def inviter
+    User.find(inviter_id)
   end
 
 end

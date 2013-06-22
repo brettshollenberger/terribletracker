@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
 
   def index
     @user = current_user
-    @projects, @pending_projects = find_projects
+    @projects, @invitations = find_projects
   end
 
   def show
@@ -20,6 +20,7 @@ class ProjectsController < ApplicationController
 
     if @project.save
       @membership = Membership.new(project: @project, user: current_user, role: "owner", state: "active")
+
       if @membership.save
         flash[:notice] = "Project created successfully"
         redirect_to @project
@@ -60,12 +61,12 @@ class ProjectsController < ApplicationController
 
   def find_projects
     active_projects_list = []
-    pending_projects_list = []
+    invitations = []
     current_user.memberships.each do |membership|
       active_projects_list.push(membership.project) if membership.state == "active"
-      pending_projects_list.push(membership.project) if membership.state == "pending"
+      invitations.push(membership) if membership.state == "pending"
     end
-    return active_projects_list, pending_projects_list
+    return active_projects_list, invitations
   end
 
 end
