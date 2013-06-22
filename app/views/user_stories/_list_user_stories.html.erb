@@ -4,6 +4,8 @@
     <th>User Story</th>
     <th>Estimate</th>
     <th>Complexity</th>
+    <th>Status</th>
+    <th>Delete</th>
   </thead>
   <tbody>
     <% @user_stories.each do |story| %>
@@ -12,6 +14,7 @@
         <td><%= story.story %></td>
         <td><%= story.estimated %></td>
         <td><%= story.complexity %></td>
+        <td><%= story.state_button %></td>
         <td><%= link_to "Delete", project_user_story_path(@project, story), method: :delete %></td>
       </tr>
     <% end %>

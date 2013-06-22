@@ -12,6 +12,11 @@ Terribletracker::Application.routes.draw do
   end
   resources :memberships
 
+  get "user_story/:id/unstarted", to: "user_stories#unstarted"
+  get "user_story/:id/started", to: "user_stories#started"
+  get "user_story/:id/review", to: "user_stories#review"
+  get "user_story/:id/finished", to: "user_stories#finished"
+
   get "/membership/:id/accept", to: "memberships#accept"
 
   # The priority is based upon order of creation:

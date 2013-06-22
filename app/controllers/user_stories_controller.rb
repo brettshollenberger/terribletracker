@@ -45,4 +45,27 @@ class UserStoriesController < ApplicationController
     redirect_to @project
   end
 
+  def unstarted
+    change_state { |story| story.unstart }
+  end
+
+  def started
+    change_state { |story| story.start }
+  end
+
+  def review
+    change_state { |story| story.mark_for_review }
+  end
+
+  def finished
+    change_state { |story| story.finish }
+  end
+
+  def change_state(&block)
+    @story = UserStory.find(params[:id])
+    @project = @story.project
+    yield(@story)
+    redirect_to @project
+  end
+
 end

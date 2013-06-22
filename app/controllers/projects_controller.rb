@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 
   def show
     @project = current_user.projects.find(params[:id])
-    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories)
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
   end
 
   def new
