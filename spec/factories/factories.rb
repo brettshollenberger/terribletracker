@@ -87,4 +87,11 @@ FactoryGirl.define do
     factory :finished_story, traits: [:finished]
   end
 
+  factory :team do
+    name "The Merry Men"
+    description "A very funny group of men"
+    owner_id 1
+    website "themerrymen.com"
+  end
+
 end
