@@ -49,4 +49,16 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def decline
+    @membership = Membership.find(params[:id])
+    if @membership.update_attributes(state: "closed")
+      if current_user != @membership.user
+        redirect_to logout_path
+      else
+        flash[:notice] = "You've declined."
+      end
+    end
+    redirect_to root_path
+  end
+
 end

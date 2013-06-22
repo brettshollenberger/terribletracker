@@ -18,6 +18,7 @@ Terribletracker::Application.routes.draw do
   get "user_story/:id/finished", to: "user_stories#finished"
 
   get "/membership/:id/accept", to: "memberships#accept"
+  get "/membership/:id/decline", to: "memberships#decline"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

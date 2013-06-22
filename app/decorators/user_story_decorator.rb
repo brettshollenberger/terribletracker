@@ -61,23 +61,19 @@ private
   end
 
   def unstarted_link
-    h.link_to "Unstarted",
-      "/user_story/#{id}/unstarted"
+    h.link_to "Unstarted", "/user_story/#{id}/unstarted"
   end
 
   def started_link
-    h.link_to "Started",
-    "/user_story/#{id}/started"
+    h.link_to "Started", "/user_story/#{id}/started"
   end
 
   def review_link
-    h.link_to "Review",
-      "/user_story/#{id}/review"
+    h.link_to "Review", "/user_story/#{id}/review"
   end
 
   def finished_link
-    h.link_to "Finished",
-    "/user_story/#{id}/finished"
+    h.link_to "Finished", "/user_story/#{id}/finished"
   end
 
 end

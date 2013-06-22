@@ -66,7 +66,7 @@ class ProjectsController < ApplicationController
       active_projects_list.push(membership.project) if membership.state == "active"
       invitations.push(membership) if membership.state == "pending"
     end
-    return active_projects_list, invitations
+    return active_projects_list, MembershipDecorator.decorate_collection(invitations)
   end
 
 end
