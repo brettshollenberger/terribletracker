@@ -9,6 +9,11 @@ class Team < ActiveRecord::Base
     numericality: true
   }
 
+  has_many :memberships, {
+    :as => :joinable,
+    :dependent => :destroy
+  }
+
   def owner
     User.where(id: owner_id)
   end
@@ -21,5 +26,11 @@ class Team < ActiveRecord::Base
     client_list = []
     TeamMembership.where(team_id: id, role: "client").all.each { |membership| client_list.push(membership.user) }
     return client_list
+  end
+
+  def members
+    members_list = []
+    TeamMembership.where(team_id: id, role: "collaborator").all.each { |membership| members_list.push(membership.user) }
+    return members_list << owner
   end
 end

@@ -40,7 +40,10 @@ describe Membership do
   end
 
   it "validates" do
-    expect(membership).to validate_presence_of("project_id")
+    expect(membership).to validate_presence_of("joinable_id")
+    expect(membership).to validate_presence_of("joinable_type")
+    expect(membership).to validate_presence_of("joinable")
+    expect(membership).to validate_presence_of("user")
     expect(membership).to validate_presence_of("user_id")
     expect(membership).to validate_presence_of("state")
   end

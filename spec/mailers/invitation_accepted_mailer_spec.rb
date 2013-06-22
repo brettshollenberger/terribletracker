@@ -15,7 +15,7 @@ describe InvitationAcceptedMailer do
   let(:new_collaborator)        { FactoryGirl.create(:user) }
 
   before(:each) do
-    active_collaboratorship.project = project
+    active_collaboratorship.joinable = project
     active_collaboratorship.save
 
     login_as(active_collaborator, scope: :user)

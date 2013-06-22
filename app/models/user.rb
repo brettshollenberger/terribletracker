@@ -15,11 +15,20 @@ class User < ActiveRecord::Base
   }
 
   has_many :memberships, {
-    dependent: :destroy,
-    inverse_of: :user
+    :dependent => :destroy,
+    :inverse_of => :user
   }
 
   has_many :projects, {
-    through: :memberships
+    through: :memberships,
+    source: :joinable,
+    source_type: 'Project'
   }
+
+  has_many :teams, {
+    through: :memberships,
+    source: :joinable,
+    source_type: 'Team'
+  }
+
 end

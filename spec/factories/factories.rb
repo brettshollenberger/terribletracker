@@ -22,10 +22,10 @@ FactoryGirl.define do
 
   factory :membership do
     user
-    project
     role "collaborator"
     state "active"
     inviter_id 1
+    association :joinable, factory: :project
 
     trait :owner do
       role "owner"
@@ -51,15 +51,23 @@ FactoryGirl.define do
       state "closed"
     end
 
-    factory :active_ownership, traits: [:active, :owner]
-    factory :pending_ownership, traits: [:pending, :owner]
-    factory :closed_ownership, traits: [:closed, :owner]
-    factory :pending_collaboratorship, traits: [:pending, :collaborator]
-    factory :active_collaboratorship, traits: [:active, :collaborator]
-    factory :closed_collaboratorship, traits: [:closed, :collaborator]
-    factory :pending_clientship, traits: [:pending, :client]
-    factory :active_clientship, traits: [:active, :client]
-    factory :closed_clientship, traits: [:closed, :client]
+    trait :joinable_project do
+      association :joinable, factory: :project
+    end
+
+    trait :joinable_team do
+      association :joinable, factory: :team
+    end
+
+    factory :active_ownership, traits: [:active, :owner, :joinable_project]
+    factory :pending_ownership, traits: [:pending, :owner, :joinable_project]
+    factory :closed_ownership, traits: [:closed, :owner, :joinable_project]
+    factory :pending_collaboratorship, traits: [:pending, :collaborator, :joinable_project]
+    factory :active_collaboratorship, traits: [:active, :collaborator, :joinable_project]
+    factory :closed_collaboratorship, traits: [:closed, :collaborator, :joinable_project]
+    factory :pending_clientship, traits: [:pending, :client, :joinable_project]
+    factory :active_clientship, traits: [:active, :client, :joinable_project]
+    factory :closed_clientship, traits: [:closed, :client, :joinable_project]
   end
 
   factory :user_story do

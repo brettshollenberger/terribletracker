@@ -5,7 +5,7 @@ class CollaborationInvitationMailer < ActionMailer::Base
     @base_url = "http://0.0.0.0:3000"
     @user = user
     @project = project
-    @membership = Membership.where(user_id: @user, project_id: @project).first
+    @membership = Membership.where(user_id: @user, joinable_id: @project.id, joinable_type: "Project").first
     @inviter = @membership.inviter
     @url = "#{@base_url}/projects/#{@project.id}"
     @accept_url = "http://0.0.0.0:3000/membership/#{@membership.id}/accept"

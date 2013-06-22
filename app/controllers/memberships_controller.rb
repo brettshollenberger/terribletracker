@@ -10,7 +10,7 @@ class MembershipsController < ApplicationController
     @project = Project.find(params[:membership][:project])
     @user = User.where(email: params[:membership][:user]).first
     @role = params[:membership][:role]
-    @membership = Membership.new(user: @user, project: @project, role: @role, inviter_id: current_user.id)
+    @membership = Membership.new(user: @user, joinable: @project, role: @role, inviter_id: current_user.id)
 
     if @membership.save
       CollaborationInvitationMailer.collaboration_invitation_email(@user, @project).deliver

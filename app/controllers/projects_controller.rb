@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
 
     if @project.save
-      @membership = Membership.new(project: @project, user: current_user, role: "owner", state: "active")
+      @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
 
       if @membership.save
         flash[:notice] = "Project created successfully"

@@ -5,9 +5,9 @@ class InvitationAcceptedMailer < ActionMailer::Base
     @base_url = "http://0.0.0.0:3000"
     @user = user
     @project = project
-    @membership = Membership.where(user_id: @user, project_id: @project).first
+    @membership = Membership.where(user_id: @user, joinable_id: @project.id, joinable_type: "Project").first
     @inviter = @membership.inviter
-    @owner = @membership.project.owner
+    @owner = @project.owner
     @url = "#{@base_url}/projects/#{@project.id}"
     mail(:to => "#{@owner.email}",
       :subject => "#{@user.first_name} joined #{@project.title}")
@@ -17,9 +17,9 @@ class InvitationAcceptedMailer < ActionMailer::Base
     @base_url = "http://0.0.0.0:3000"
     @user = user
     @project = project
-    @membership = Membership.where(user_id: @user, project_id: @project).first
+    @membership = Membership.where(user_id: @user, joinable_id: @project.id, joinable_type: "Project").first
     @inviter = @membership.inviter
-    @owner = @membership.project.owner
+    @owner = @project.owner
     @url = "#{@base_url}/projects/#{@project.id}"
     mail(:to => "#{@inviter.email}",
       :subject => "#{@user.first_name} joined #{@project.title}")

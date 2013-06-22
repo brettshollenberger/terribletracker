@@ -20,7 +20,7 @@ feature 'collaborators and clients can see their invitations', %q{
     background do
       @owner = ownership.user
       @project = ownership.project
-      collaboratorship.project = @project
+      collaboratorship.joinable = @project
       collaboratorship.save
       @collaborator = collaboratorship.user
       login_as(@collaborator, scope: :user)

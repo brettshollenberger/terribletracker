@@ -1,7 +1,7 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :project, :role, :user, :state, :inviter_id
+  attr_accessible :joinable, :role, :user, :state, :inviter_id, :joinable_id, :joinable_type
 
-  validates :role, :user, :project, :state, :user_id, :project_id, {
+  validates :role, :user, :joinable, :state, :user_id, :joinable_id, :joinable_type, {
     presence: true
   }
 
@@ -14,15 +14,15 @@ class Membership < ActiveRecord::Base
   }
 
   validates_uniqueness_of :user_id, {
-    :scope => :project_id
+    :scope => [:joinable_id, :joinable_type]
   }
 
   belongs_to :user, {
     inverse_of: :memberships
   }
 
-  belongs_to :project, {
-    inverse_of: :memberships
+  belongs_to :joinable, {
+    polymorphic: true
   }
 
   state_machine :state, :initial => :pending do
@@ -77,6 +77,14 @@ class Membership < ActiveRecord::Base
 
   def inviter
     User.find(inviter_id)
+  end
+
+  def project
+    Project.find(joinable_id) if joinable_type == "Project"
+  end
+
+  def team
+    Team.find(joinable_id) if joinable_type == "Team"
   end
 
 end

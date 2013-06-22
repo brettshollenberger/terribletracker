@@ -6,8 +6,8 @@ class Project < ActiveRecord::Base
   }
 
   has_many :memberships, {
-    dependent: :destroy,
-    inverse_of: :project
+    :as => :joinable,
+    :dependent => :destroy
   }
 
   has_many :users, {
