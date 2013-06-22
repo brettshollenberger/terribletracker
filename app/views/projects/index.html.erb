@@ -4,15 +4,15 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
-      <% unless @invitations.empty? %>
-        <%= render 'invitations' %>
-      <% end %>
-      <% if @projects.empty? %>
-        <%= render 'welcome_page' %>
-      <% else %>
-        <%= render 'projects_page' %>
-      <% end %>
-      <%= link_to "Create Project", new_project_path, :class => "btn btn-primary" %>
+        <% unless current_user.invitations.empty? %>
+          <%= render 'invitations' %>
+        <% end %>
+        <% if current_user.projects.empty? %>
+          <%= render 'welcome_page' %>
+        <% else %>
+          <%= render 'projects_page' %>
+        <% end %>
+        <%= link_to "Create Project", new_project_path, :class => "btn btn-primary" %>
     </div>
   </div>
 </div>

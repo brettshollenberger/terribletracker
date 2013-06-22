@@ -1,6 +1,5 @@
 class UserStoriesController < ApplicationController
   def new
-    @projects, @invitations = find_projects
     @project = Project.find(params[:project_id])
     @user_story = UserStory.new
   end
@@ -18,7 +17,6 @@ class UserStoriesController < ApplicationController
   end
 
   def edit
-    @projects, @invitations = find_projects
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.find(params[:id])
   end
@@ -68,16 +66,6 @@ class UserStoriesController < ApplicationController
     @project = @story.project
     yield(@story)
     redirect_to @project
-  end
-
-  def find_projects
-    active_projects_list = []
-    invitations = []
-    current_user.memberships.each do |membership|
-      active_projects_list.push(membership.project) if membership.state == "active"
-      invitations.push(membership) if membership.state == "pending"
-    end
-    return active_projects_list, MembershipDecorator.decorate_collection(invitations)
   end
 
 end

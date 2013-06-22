@@ -3,17 +3,18 @@ class ProjectsController < ApplicationController
 
   def index
     @user = current_user
-    @projects, @invitations = find_projects
   end
 
   def show
-    @projects, @invitations = find_projects
-    @project = current_user.projects.find(params[:id])
-    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    begin
+      @project = current_user.projects.find(params[:id])
+      @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    rescue
+      redirect_to root_path
+    end
   end
 
   def new
-    @projects, @invitations = find_projects
     @project = Project.new
   end
 
@@ -34,7 +35,6 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-    @projects, @invitations = find_projects
     @project = Project.find(params[:id])
   end
 
@@ -60,16 +60,6 @@ class ProjectsController < ApplicationController
       flash[:error] = "Oops. There was an error deleting your project"
       redirect_to projects_path
     end
-  end
-
-  def find_projects
-    active_projects_list = []
-    invitations = []
-    current_user.memberships.each do |membership|
-      active_projects_list.push(membership.project) if membership.state == "active"
-      invitations.push(membership) if membership.state == "pending"
-    end
-    return active_projects_list, MembershipDecorator.decorate_collection(invitations)
   end
 
 end

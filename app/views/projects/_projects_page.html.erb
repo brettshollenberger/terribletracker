@@ -4,7 +4,7 @@
     <th>Title</th>
   </thead>
   <tbody>
-    <% @projects.each do |project| %>
+    <% current_user.active_projects.each do |project| %>
       <tr>
         <td><%= link_to "#{project.title}", project_path(project), :class => "project-list" %></td>
       </tr>

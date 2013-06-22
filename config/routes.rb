@@ -10,6 +10,7 @@ Terribletracker::Application.routes.draw do
   resources :projects do
     resources :user_stories
   end
+
   resources :memberships
 
   get "user_story/:id/unstarted", to: "user_stories#unstarted"

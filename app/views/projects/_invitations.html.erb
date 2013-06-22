@@ -8,7 +8,7 @@
       <th>Actions</th>
     </thead>
     <tbody>
-      <% @invitations.each do |invitation| %>
+      <% current_user.invitations.each do |invitation| %>
         <tr>
           <td><%= invitation.project.title %></td>
           <td><%= "#{invitation.project.owner.first_name} #{invitation.project.owner.last_name}" %></td>

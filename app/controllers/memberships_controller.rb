@@ -1,7 +1,6 @@
 class MembershipsController < ApplicationController
 
   def new
-    @projects, @invitations = find_projects
     @project = Project.find(params[:project])
     @role = params[:role] || "collaborator"
     @membership = Membership.new
@@ -60,16 +59,6 @@ class MembershipsController < ApplicationController
       end
     end
     redirect_to root_path
-  end
-
-  def find_projects
-    active_projects_list = []
-    invitations = []
-    current_user.memberships.each do |membership|
-      active_projects_list.push(membership.project) if membership.state == "active"
-      invitations.push(membership) if membership.state == "pending"
-    end
-    return active_projects_list, MembershipDecorator.decorate_collection(invitations)
   end
 
 end
