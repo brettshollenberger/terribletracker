@@ -25,6 +25,9 @@ group :development, :test do
   gem 'pry-rails'
 end
 
+group :test do
+  gem 'email_spec'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -7,6 +7,10 @@ FactoryGirl.define do
     password "foobar29"
     first_name "Yoda"
     last_name "The Great One"
+
+    trait :one do
+      id 1
+    end
   end
 
   factory :project do

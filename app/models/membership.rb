@@ -1,7 +1,7 @@
 class Membership < ActiveRecord::Base
   attr_accessible :project, :role, :user, :state, :inviter_id
 
-  validates :project, :role, :user, :state, :user_id, :project_id, {
+  validates :role, :user, :project, :state, :user_id, :project_id, {
     presence: true
   }
 
@@ -54,8 +54,8 @@ class Membership < ActiveRecord::Base
   end
 
   def email_accepted_confirmations
-    puts "Email accepted confirmations"
-    puts "Here are the confirmations you ordered"
+    InvitationAcceptedMailer.invitation_accepted_email_owner(user, project).deliver
+    InvitationAcceptedMailer.invitation_accepted_email_inviter(user, project).deliver
   end
 
   def email_pending_confirmations

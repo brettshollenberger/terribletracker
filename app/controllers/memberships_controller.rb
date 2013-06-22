@@ -38,7 +38,7 @@ class MembershipsController < ApplicationController
 
   def accept
     @membership = Membership.find(params[:id])
-    if @membership.update_attributes(state: "active")
+    if @membership.approve_membership
       if current_user != @membership.user
         redirect_to logout_path
       else
