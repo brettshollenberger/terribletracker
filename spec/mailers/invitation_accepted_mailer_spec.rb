@@ -27,12 +27,12 @@ describe InvitationAcceptedMailer do
 
     @new_membership = new_collaborator.memberships.first
 
-    @email_owner = InvitationAcceptedMailer.
+    @email_project_owner = InvitationAcceptedMailer.
       invitation_accepted_email_owner(
         new_collaborator,
         project)
 
-    @email_inviter = InvitationAcceptedMailer.
+    @email_project_inviter = InvitationAcceptedMailer.
       invitation_accepted_email_inviter(
         new_collaborator,
         project)
@@ -41,15 +41,15 @@ describe InvitationAcceptedMailer do
   context "invitation_accepted_email_owner mailer", type: :feature do
 
     it "is delivered to owner of the project" do
-      @email_owner.should deliver_to(project.owner.email)
+      @email_project_owner.should deliver_to(project.owner.email)
     end
 
     it "should contain the user's name in the message" do
-      @email_owner.should have_body_text(owner.first_name)
+      @email_project_owner.should have_body_text(owner.first_name)
     end
 
     it "should have the correct subject" do
-      @email_owner.should have_subject("#{new_collaborator.first_name} joined #{project.title}")
+      @email_project_owner.should have_subject("#{new_collaborator.first_name} joined #{project.title}")
     end
 
   end
@@ -57,15 +57,15 @@ describe InvitationAcceptedMailer do
   context "invitation_accepted_email_owner mailer", type: :feature do
 
     it "is delivered to the person that invited " do
-      @email_inviter.should deliver_to(@new_membership.inviter.email)
+      @email_project_inviter.should deliver_to(@new_membership.inviter.email)
     end
 
     it "should contain the user's name in the message" do
-      @email_inviter.should have_body_text(owner.first_name)
+      @email_project_inviter.should have_body_text(owner.first_name)
     end
 
     it "should have the correct subject" do
-      @email_inviter.should have_subject("#{new_collaborator.first_name} joined #{project.title}")
+      @email_project_inviter.should have_subject("#{new_collaborator.first_name} joined #{project.title}")
     end
 
   end
