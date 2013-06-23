@@ -61,4 +61,22 @@ class MembershipsController < ApplicationController
     redirect_to root_path
   end
 
+  def new_team_membership
+    @team = Team.find(params[:team])
+    @membership = Membership.new
+  end
+
+  def create_team_membership
+    @team = Team.find(params[:membership][:team])
+    @user = User.where(email: params[:membership][:user]).first
+    @membership = Membership.new(user: @user, joinable: @team, inviter_id: current_user.id)
+
+    if @membership.save
+      flash[:notice] = "Member invited"
+    else
+      flash[:notice] = "There was an error inviting this memeber"
+    end
+    redirect_to new_team_membership_path(team: @team)
+  end
+
 end

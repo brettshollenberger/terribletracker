@@ -15,22 +15,23 @@ class Team < ActiveRecord::Base
   }
 
   def owner
-    User.where(id: owner_id)
+    User.where(id: owner_id).first
   end
 
   def projects
     Project.where(team_id: id)
   end
 
-  def clients
-    client_list = []
-    TeamMembership.where(team_id: id, role: "client").all.each { |membership| client_list.push(membership.user) }
-    return client_list
-  end
+  # def clients
+  #   client_list = []
+  #   Membership.where(joinable_id: id, joinable_type: "Team", role: "client").all.each { |membership| client_list.push(membership.user) }
+  #   return client_list
+  # end
 
   def members
     members_list = []
-    TeamMembership.where(team_id: id, role: "collaborator").all.each { |membership| members_list.push(membership.user) }
-    return members_list << owner
+    Membership.where(joinable_id: id, joinable_type: "Team", role: "collaborator", state: "active").all.each { |membership| members_list.push(membership.user) }
+    members_list.push(owner)
+    return UserDecorator.decorate_collection(members_list)
   end
 end

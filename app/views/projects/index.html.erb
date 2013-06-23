@@ -4,10 +4,11 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
+        <%= link_to "Create Team", new_team_path, :class => "btn btn-primary" %>
         <% unless current_user.invitations.empty? %>
           <%= render 'invitations' %>
         <% end %>
-        <% if current_user.projects.empty? %>
+        <% if current_user.active_projects.empty? %>
           <%= render 'welcome_page' %>
         <% else %>
           <%= render 'projects_page' %>

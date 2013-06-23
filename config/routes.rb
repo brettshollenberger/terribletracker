@@ -13,6 +13,8 @@ Terribletracker::Application.routes.draw do
 
   resources :memberships
 
+  resources :teams
+
   get "user_story/:id/unstarted", to: "user_stories#unstarted"
   get "user_story/:id/started", to: "user_stories#started"
   get "user_story/:id/review", to: "user_stories#review"
@@ -20,6 +22,8 @@ Terribletracker::Application.routes.draw do
 
   get "/membership/:id/accept", to: "memberships#accept"
   get "/membership/:id/decline", to: "memberships#decline"
+  get "/new/team_membership", to: "memberships#new_team_membership"
+  post "/create_team_membership", to: "memberships#create_team_membership"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
