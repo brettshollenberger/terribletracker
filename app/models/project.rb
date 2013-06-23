@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  attr_accessible :budget, :description, :title, :weekly_rate
+  attr_accessible :budget, :description, :title, :weekly_rate, :team
 
   validates :title, :description, {
     presence: true
@@ -17,6 +17,10 @@ class Project < ActiveRecord::Base
   has_many :user_stories, {
     dependent: :destroy,
     inverse_of: :project
+  }
+
+  belongs_to :team, {
+    inverse_of: :projects
   }
 
   def owner

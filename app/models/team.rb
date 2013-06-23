@@ -14,6 +14,10 @@ class Team < ActiveRecord::Base
     :dependent => :destroy
   }
 
+  has_many :projects, {
+    inverse_of: :team
+  }
+
   def owner
     owner = User.where(id: owner_id).first
     return owner unless owner == nil
