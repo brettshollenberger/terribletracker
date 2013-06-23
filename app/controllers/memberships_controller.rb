@@ -35,6 +35,17 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def destroy
+    @membership = Membership.find(params[:id])
+    @joinable = @membership.joinable
+    if @membership.delete
+      flash[:notice] = "Member removed"
+    else
+      flash[:notice] = "There was an error removing this member."
+    end
+    redirect_to @joinable
+  end
+
   def accept
     @membership = Membership.find(params[:id])
     if @membership.approve_membership
@@ -51,7 +62,7 @@ class MembershipsController < ApplicationController
 
   def decline
     @membership = Membership.find(params[:id])
-    if @membership.update_attributes(state: "closed")
+    if @membership.delete
       if current_user != @membership.user
         redirect_to logout_path
       else

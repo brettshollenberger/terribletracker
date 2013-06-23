@@ -27,6 +27,9 @@
             <tr>
               <td><%= member.full_name %></td>
               <td><%= member.email %></td>
+              <% if @team.owner == current_user %>
+                <td><%= link_to "Remove Member", membership_path(member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first), method: :delete %></td>
+              <% end %>
             </tr>
           <% end %>
         </tbody>
