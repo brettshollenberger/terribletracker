@@ -3,7 +3,19 @@ require 'spec_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature "user can add clients to project" do
+feature "user can add clients to project", %q{
+  As a collaborator,
+  I would like to add clients to my projects,
+  so that I can keep them informed on our progress.
+} do
+
+  # Acceptance Criteria:
+  # User visits project, and clicks "Add Client."
+  # User fills in the clients' email (who already has an account),
+  # and clicks "Add Client."
+  # The client is sent a project invitation, and can
+  # login to accept or decline.
+
   background do
     @membership = FactoryGirl.create(:active_ownership)
     @project = @membership.project

@@ -3,14 +3,15 @@ require 'spec_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'collaborators and clients can see their invitations', %q{
+feature 'collaborators and clients can accept project invitations', %q{
   As a collaborator or client,
-  I would like to see the projects I am invited to,
-  so that I can decide whether or not to join them.
+  I would like to accept my invitations,
+  so that I can join projects.
 } do
   # Acceptance Criteria:
-  # user stories have a title, story, estimate (in increments of .25 days), an actual time spent, and a complexity.
-  # They belong to projects and users (assigned to them).
+  # User visits their homepage, and sees that they have an invitation.
+  # They click the accept button, and the story is added to their
+  # projects list on their homepage and in their navbar.
 
   context 'as a collaborator' do
     let(:ownership)        { FactoryGirl.create(:active_ownership) }
@@ -33,15 +34,11 @@ feature 'collaborators and clients can see their invitations', %q{
       visit projects_path
     end
 
-    scenario 'seeing invitations' do
-      expect(page).to have_content("Invitations")
-      expect(page).to have_content(@project.owner.first_name)
-      expect(page).to have_content(@project.owner.last_name)
-      expect(page).to have_content(@collaborator.first_name)
-      expect(page).to have_content(@collaborator.last_name)
-      expect(page).to have_content("My Awesome Project")
-      expect(page).to have_content("Accept")
-      expect(page).to have_content("Decline")
+    scenario 'accepting invitations' do
+      click_link "Accept"
+
+      expect(page).to have_content("You're a collaborator!")
+      expect(page).to have_content(@project.title)
     end
   end
 end

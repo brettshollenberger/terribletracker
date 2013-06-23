@@ -11,6 +11,7 @@ describe Membership do
   let(:pending_clientship)       { FactoryGirl.create(:pending_clientship) }
   let(:active_clientship)        { FactoryGirl.create(:active_clientship) }
   let(:closed_clientship)        { FactoryGirl.create(:closed_clientship) }
+  let(:active_team_ownership)    { FactoryGirl.create(:active_team_ownership) }
 
   it "is valid" do
     expect(membership).to be_valid
@@ -23,6 +24,9 @@ describe Membership do
     expect(pending_clientship).to be_valid
     expect(active_clientship).to be_valid
     expect(closed_clientship).to be_valid
+    expect(active_team_ownership).to be_valid
+    expect(active_team_ownership.team).to be_valid
+    expect(active_team_ownership.team.owner).to be_valid
   end
 
   it "is not valid with a non-standard role" do

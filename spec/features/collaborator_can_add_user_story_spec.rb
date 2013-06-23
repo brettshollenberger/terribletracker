@@ -5,9 +5,12 @@ feature 'collaborator adds user story', %q{
   I want to add user stories to a project and see that they are associated with it afterwards
   so that I can define the project scope.
 } do
+
   # Acceptance Criteria:
-  # user stories have a title, story, estimate (in increments of .25 days), an actual time spent, and a complexity.
-  # They belong to projects and users (assigned to them).
+  # User visits a project page, and clicks the add user story button.
+  # The link raises the new story form; on save, the user is informed that
+  # they have added the story successfully, and they can see the new
+  # story on the project page.
 
   context 'as a collaborator' do
     let(:membership) { FactoryGirl.create(:active_collaboratorship) }

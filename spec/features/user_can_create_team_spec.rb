@@ -9,8 +9,7 @@ feature 'user creates team', %q{
   so that I can add team members to projects.
 } do
   # Acceptance Criteria:
-  # user stories have a title, story, estimate (in increments of .25 days), an actual time spent, and a complexity.
-  # They belong to projects and users (assigned to them).
+  # Users can create teams, and then see them.
 
   context 'as a collaborator' do
     let(:user) { FactoryGirl.create(:user) }

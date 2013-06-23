@@ -12,7 +12,7 @@ feature 'collaborator deletes user story', %q{
   # User visits a project page, and clicks the user story title to edit it.
   # The link raises the edit form; on save, the user is informed that
   # they have updated the story successfully, and they can see the updated
-  # story on the projects page.
+  # story on the project page.
 
   context 'as a collaborator' do
     let(:membership) { FactoryGirl.create(:active_collaboratorship) }

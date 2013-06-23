@@ -3,7 +3,19 @@ require 'spec_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature "user can add collaborators to project" do
+feature "user can add collaborators to project", %q{
+  As a user,
+  I would like to add collaborators to my projects,
+  so that I can get my whole team working together.
+} do
+
+  # Acceptance Criteria:
+  # User visits project, and clicks "Add Collaborator."
+  # User fills in the collaborators' email (who already has an account),
+  # and clicks "Add Collaborator."
+  # The collaborator is sent a project invitation, and can
+  # login to accept or decline.
+
   background do
     @membership = FactoryGirl.create(:active_ownership)
     @project = @membership.project

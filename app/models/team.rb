@@ -15,18 +15,21 @@ class Team < ActiveRecord::Base
   }
 
   def owner
-    User.where(id: owner_id).first
+    owner = User.where(id: owner_id).first
+    return owner unless owner == nil
+    owner = Membership.where(joinable_id: id, joinable_type: "Team", role: "owner", state: "active").first.user
+    return owner
   end
 
   def projects
     Project.where(team_id: id)
   end
 
-  # def clients
-  #   client_list = []
-  #   Membership.where(joinable_id: id, joinable_type: "Team", role: "client").all.each { |membership| client_list.push(membership.user) }
-  #   return client_list
-  # end
+  def clients
+    client_list = []
+    Membership.where(joinable_id: id, joinable_type: "Team", role: "client").all.each { |membership| client_list.push(membership.user) }
+    return client_list
+  end
 
   def members
     members_list = []

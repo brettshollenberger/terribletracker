@@ -27,20 +27,8 @@
           <div class="nav-collapse collapse">
             <ul class="nav">
               <% if current_user %>
-                 <% unless current_user.active_projects.empty? %>
-                   <li class="dropdown">
-                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.first_name %>'s Projects <b class="caret"></b></a>
-                     <ul class="dropdown-menu">
-                       <% current_user.active_projects.each do |project| %>
-                         <li>
-                           <% if project %>
-                             <%= link_to "#{project.title}", project_path(project) %>
-                           <% end %>
-                         </li>
-                       <% end %>
-                     </ul>
-                   </li>
-                 <% end %>
+                <%= current_user.projects_dropdown %>
+                <%= current_user.teams_dropdown %>
                   <% if current_page?(new_project_path) %>
                     <li class="active">
                   <% else %>
