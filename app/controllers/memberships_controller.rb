@@ -94,6 +94,9 @@ class MembershipsController < ApplicationController
   def accept_team
     @membership = Membership.find(params[:id])
     if @membership.approve_membership
+      @membership.team.projects.each do |project|
+        Membership.create(joinable: project, user: @membership.user, role: "collaborator", state: "active")
+      end
       if current_user != @membership.user
         redirect_to logout_path
       else
