@@ -16,6 +16,21 @@
       </div>
       <br>
       <br>
+      <% unless @team.projects.empty? %>
+        <h2>Projects</h2>
+        <table class="table table-hover">
+          <thead>
+            <th>Name</th>
+          </thead>
+          <tbody>
+            <% @team.projects.each do |project| %>
+              <tr>
+                <td><%= link_to "#{project.title}", project_path(project) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
       <h2>Members</h2>
       <table class="table table-hover">
         <thead>
