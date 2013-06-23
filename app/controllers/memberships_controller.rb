@@ -80,4 +80,18 @@ class MembershipsController < ApplicationController
     redirect_to new_team_membership_path(team: @team)
   end
 
+  def accept_team
+    @membership = Membership.find(params[:id])
+    if @membership.approve_membership
+      if current_user != @membership.user
+        redirect_to logout_path
+      else
+        flash[:notice] = "You're a #{@membership.role}!"
+        redirect_to @membership.team
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
 end

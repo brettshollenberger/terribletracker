@@ -54,8 +54,12 @@ class Membership < ActiveRecord::Base
   end
 
   def email_accepted_confirmations
-    InvitationAcceptedMailer.invitation_accepted_email_owner(user, project).deliver unless project.owner == inviter
-    InvitationAcceptedMailer.invitation_accepted_email_inviter(user, project).deliver
+    if joinable_type == "Project"
+      InvitationAcceptedMailer.invitation_accepted_email_owner(user, project).deliver unless project.owner == inviter
+      InvitationAcceptedMailer.invitation_accepted_email_inviter(user, project).deliver
+    elsif joinable_type == "Team"
+      puts "Invitation accepted"
+    end
   end
 
   def email_pending_confirmations

@@ -22,6 +22,7 @@ Terribletracker::Application.routes.draw do
 
   get "/membership/:id/accept", to: "memberships#accept"
   get "/membership/:id/decline", to: "memberships#decline"
+  get "/membership/:id/accept_team", to: "memberships#accept_team"
   get "/new/team_membership", to: "memberships#new_team_membership"
   post "/create_team_membership", to: "memberships#create_team_membership"
 
