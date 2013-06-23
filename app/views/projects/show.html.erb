@@ -4,9 +4,10 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
-      <h2>
-        <%= @project.title %>
-      </h2>
+      <h2><%= @project.title %></h2>
+      <% if @project.team %>
+        <h3><%= @project.team.name %></h3>
+      <% end %>
       <div class="project_description">
         <%= @project.description %>
       </div>
@@ -20,7 +21,8 @@
         <br>
         <%= render '/user_stories/list_user_stories' %>
 
-        <%= button_to "Add Story", new_project_user_story_path(@project), :class => 'btn btn-primary', method: "get" %>
+        <%= link_to "Add Story", new_project_user_story_path(@project), :class => 'btn btn-primary', method: "get" %>
+        <%= link_to "Add to Team", add_project_to_team_path(project: @project), :class => 'btn btn-primary', method: "get" %>
         </div>
       </div>
     </div>

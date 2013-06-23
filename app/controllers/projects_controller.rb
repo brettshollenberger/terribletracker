@@ -62,4 +62,21 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def add_project_to_team
+    @project = Project.find(params[:project])
+  end
+
+  def save_team_project_join
+    @project = Project.find(params[:project][:project_id])
+    @team = Team.where(name: params[:project][:team]).first
+
+    if @project.update_attributes(team: @team)
+      flash[:notice] = "Project added to #{@team.name}"
+      redirect_to @project
+    else
+      flash[:notice] = "There was an error adding this project to that team"
+      redirect_to add_project_to_team_path(@project)
+    end
+  end
+
 end

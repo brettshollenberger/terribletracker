@@ -4,40 +4,38 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 feature 'project members can add their projects to teams', %q{
-  As a team owner,
-  I want to remove members,
-  In case I don't want to work with them anymore.
+  As a project member,
+  I want to add my project to a team,
+  So that the team can collaborate more easily.
 } do
 
   # Acceptance Criteria:
-  # Team owner visits team page, and sees team list.
-  # They click "Remove Member," and that member is
-  # removed from the team. No other team members have
-  # member removal abilities.
+  # Project member visits project page, and sees option to add
+  # it to one of their teams. They do so, and it appears
+  # on the team's page.
 
   context 'as a collaborator' do
-    let(:ownership)  { FactoryGirl.create(:active_team_ownership) }
-    let(:membership) { FactoryGirl.create(:active_team_collaboratorship) }
+    let(:ownership)  { FactoryGirl.create(:active_ownership) }
 
     scenario 'adding a user story to a project' do
-      @team = ownership.team
+      @project = ownership.project
       @owner = ownership.user
-      @collaborator = membership.user
-      membership.joinable = @team
-      membership.save
-
-      login_as(@collaborator, scope: :user)
-      visit team_path(@team)
-      expect(page).to_not have_content("Remove Member")
-      logout(@collaborator)
+      @team_ownership = FactoryGirl.create(:active_team_ownership)
+      @team_ownership.user = @owner
+      @team_ownership.save
+      @team_ownership.reload
+      @team = @team_ownership.team
 
       login_as(@owner, scope: :user)
-      visit team_path(@team)
-      all('a').select {|link| link.text == "Remove Member" }.first.click
+      visit project_path(@project)
 
-      expect(page).to have_content("Member removed")
-      expect(page).to_not have_content(@collaborator.email)
-      expect(@team.members.length).to eql(1)
+      click_on "Add to Team"
+
+      fill_in "project[team]", with: @team.name
+
+      expect(page).to have_content(@team.name)
+      visit team_path(@team)
+      expect(page).to have_content(@project.title)
     end
   end
 end
