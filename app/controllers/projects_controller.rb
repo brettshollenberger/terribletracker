@@ -71,6 +71,9 @@ class ProjectsController < ApplicationController
     @team = Team.where(name: params[:project][:team]).first
 
     if @project.update_attributes(team: @team)
+      @team.members.each do |member|
+        Membership.create(joinable: @project, user: member, role: "collaborator", state: "active")
+      end
       flash[:notice] = "Project added to #{@team.name}"
       redirect_to @project
     else
