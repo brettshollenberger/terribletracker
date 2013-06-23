@@ -58,7 +58,8 @@ class Membership < ActiveRecord::Base
       InvitationAcceptedMailer.invitation_accepted_email_owner(user, project).deliver unless project.owner == inviter
       InvitationAcceptedMailer.invitation_accepted_email_inviter(user, project).deliver
     elsif joinable_type == "Team"
-      puts "Invitation accepted"
+      InvitationAcceptedMailer.team_invitation_accepted_email_owner(user, team).deliver unless team.owner == inviter
+      InvitationAcceptedMailer.team_invitation_accepted_email_inviter(user, team).deliver
     end
   end
 
