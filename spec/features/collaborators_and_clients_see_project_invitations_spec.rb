@@ -36,10 +36,8 @@ feature 'collaborators and clients can see their project invitations', %q{
 
     scenario 'seeing invitations' do
       expect(page).to have_content("Invitations")
-      expect(page).to have_content(@project.owner.first_name)
-      expect(page).to have_content(@project.owner.last_name)
-      expect(page).to have_content(@collaborator.first_name)
-      expect(page).to have_content(@collaborator.last_name)
+      expect(page).to have_content(@project.owner.decorate.full_name)
+      expect(page).to have_content(@collaborator.decorate.full_name)
       expect(page).to have_content("My Awesome Project")
       expect(page).to have_content("Accept")
       expect(page).to have_content("Decline")
