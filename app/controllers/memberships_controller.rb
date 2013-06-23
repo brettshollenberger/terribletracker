@@ -72,9 +72,10 @@ class MembershipsController < ApplicationController
     @membership = Membership.new(user: @user, joinable: @team, inviter_id: current_user.id)
 
     if @membership.save
+      TeamInvitationMailer.team_invitation_email(@user, @team).deliver
       flash[:notice] = "Member invited"
     else
-      flash[:notice] = "There was an error inviting this memeber"
+      flash[:notice] = "There was an error inviting this member"
     end
     redirect_to new_team_membership_path(team: @team)
   end

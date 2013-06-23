@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Congratulations <%= @user.first_name %>!</h1>
+
+    <p><%= "#{@inviter.first_name} #{@inviter.last_name}" %> has invited you to <%= link_to "#{@team.name}", @url %></p>
+
+    <p><%= link_to "Click here to accept the invitation!", @accept_url %></p>
+
+  </body>
+</html>
