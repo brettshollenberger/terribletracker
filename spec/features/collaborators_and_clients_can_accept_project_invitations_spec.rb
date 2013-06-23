@@ -10,7 +10,7 @@ feature 'collaborators and clients can accept project invitations', %q{
 } do
   # Acceptance Criteria:
   # User visits their homepage, and sees that they have an invitation.
-  # They click the accept button, and the story is added to their
+  # They click the accept button, and the project is added to their
   # projects list on their homepage and in their navbar.
 
   context 'as a collaborator' do

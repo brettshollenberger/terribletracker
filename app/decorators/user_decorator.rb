@@ -11,7 +11,7 @@ class UserDecorator < Draper::Decorator
     return active_projects_list
   end
 
-  def invitations
+  def project_invitations
     invitation_list = []
     self.memberships.each do |membership|
       if membership.joinable_type == "Project"
@@ -30,6 +30,17 @@ class UserDecorator < Draper::Decorator
       end
     end
     return active_teams_list
+  end
+
+  def team_invitations
+    team_invitation_list = []
+    self.memberships.each do |membership|
+      if membership.joinable_type == "Team"
+        team_invitation_list.push(membership) if membership.state == "pending"
+      end
+    end
+    team_invitation_list.compact!
+    return MembershipDecorator.decorate_collection(team_invitation_list)
   end
 
   def gravatar

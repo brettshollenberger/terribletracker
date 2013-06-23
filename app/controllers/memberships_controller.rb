@@ -42,7 +42,7 @@ class MembershipsController < ApplicationController
         redirect_to logout_path
       else
         flash[:notice] = "You're a #{@membership.role}!"
-        redirect_to @membership.project
+        redirect_to @membership.joinable
       end
     else
       redirect_to root_path
