@@ -1,7 +1,11 @@
 class UserStory < ActiveRecord::Base
-  attr_accessible :state, :complexity, :estimate_in_quarter_days, :project_id, :story, :title
+  attr_accessible :state, :complexity, :estimate_in_quarter_days, :project_id, :story, :title, :user
 
   belongs_to :project, {
+    inverse_of: :user_stories
+  }
+
+  belongs_to :user, {
     inverse_of: :user_stories
   }
 

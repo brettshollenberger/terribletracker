@@ -28,4 +28,8 @@ class Project < ActiveRecord::Base
       return membership.user if membership.role == "owner"
     end
   end
+
+  def active_users
+    self.memberships.where(state: "active").collect { |membership| membership.user }
+  end
 end

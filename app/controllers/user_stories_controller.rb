@@ -68,4 +68,13 @@ class UserStoriesController < ApplicationController
     redirect_to @project
   end
 
+  def assign
+    @user = User.find(params[:id])
+    @user_story = UserStory.find(params[:user_story_id])
+    @user_story.user = @user
+    @user_story.save
+    flash[:notice] = "#{@user.decorate.full_name} assigned"
+    redirect_to @user_story.project
+  end
+
 end

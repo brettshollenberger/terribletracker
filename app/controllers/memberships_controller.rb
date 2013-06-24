@@ -108,4 +108,33 @@ class MembershipsController < ApplicationController
     end
   end
 
+  def remove_team
+    @membership = Membership.find(params[:id])
+    @user = @membership.user
+    @team = @membership.joinable
+    if @membership.delete
+      @team.projects.each do |project|
+        destroy_project_membership(project)
+        remove_user_from_team_project(project)
+      end
+      flash[:notice] = "Member removed"
+    else
+      flash[:notice] = "There was an error removing this member."
+    end
+    redirect_to @team
+  end
+
+  def destroy_project_membership(project)
+    Membership.where(user_id: @user.id, joinable_id: project.id, joinable_type: "Project").first.destroy
+  end
+
+  def remove_user_from_team_project(project)
+    project.user_stories.each do |user_story|
+      if user_story.user_id == @user.id
+        user_story.user_id = nil
+        user_story.save
+      end
+    end
+  end
+
 end

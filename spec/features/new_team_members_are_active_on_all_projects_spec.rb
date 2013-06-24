@@ -39,7 +39,7 @@ feature 'new team members are automatically added to all projects', %q{
     end
 
     scenario 'accepts invitation' do
-      save_and_open_page
+
       click_link "Accept"
 
       expect(page).to have_content("You're a collaborator!")

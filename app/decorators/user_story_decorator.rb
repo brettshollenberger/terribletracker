@@ -11,6 +11,12 @@ class UserStoryDecorator < Draper::Decorator
       :class => "btn-group"
   end
 
+  def assign_button
+    h.content_tag :div,
+      assign_button_link + assign_dropdowns,
+      :class => "btn-group"
+  end
+
 private
 
   def plurify(num, word)
@@ -74,6 +80,36 @@ private
 
   def finished_link
     h.link_to "Finished", "/user_story/#{id}/finished"
+  end
+
+  def assign_button_link
+    h.link_to "#{assign_link}
+      <span class = 'caret'>".html_safe,
+      "#",
+      :class => "btn dropdown-toggle assign-button",
+      "data-toggle" => "dropdown"
+  end
+
+  def assign_link
+    return self.user.decorate.full_name unless self.user == nil
+    "Assign"
+  end
+
+  def assign_dropdowns
+    h.content_tag :ul, :class => "dropdown-menu" do
+      assign_dropdown_links.collect do |link|
+        h.content_tag :li, link
+      end.join.html_safe
+    end
+  end
+
+  def assign_dropdown_links
+    dropdown_links = []
+    self.project.active_users.each do |user|
+      dropdown_links.push(h.link_to "#{user.decorate.full_name}",
+        "/user_story/#{id}/assign/#{user.id}")
+    end
+    return dropdown_links
   end
 
 end

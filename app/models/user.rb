@@ -31,4 +31,8 @@ class User < ActiveRecord::Base
     source_type: 'Team'
   }
 
+  has_many :user_stories, {
+    inverse_of: :user
+  }
+
 end

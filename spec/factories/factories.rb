@@ -5,7 +5,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "yoda@dagobah#{n}.com" }
     password "foobar29"
-    first_name "Yoda"
+    sequence(:first_name) { |n| "Yoda#{n}" }
     last_name "The Great One"
 
     trait :one do
