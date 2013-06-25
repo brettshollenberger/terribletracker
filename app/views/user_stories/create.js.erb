@@ -1,3 +1,7 @@
-$('#new_user_story_link').show();
-$('#new_story_form').hide();
 $('#stories_table').append('<%= j render("user_story") %>');
+
+$('#new_story_form').each(function(){
+  this.reset();
+});
+
+$('#user_story_title').focus();

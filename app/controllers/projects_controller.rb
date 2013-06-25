@@ -9,6 +9,7 @@ class ProjectsController < ApplicationController
     begin
       @project = current_user.projects.find(params[:id])
       @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+      @user_story = UserStory.new
     rescue
       redirect_to root_path
     end

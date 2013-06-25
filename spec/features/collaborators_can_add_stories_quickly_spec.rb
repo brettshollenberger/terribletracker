@@ -27,8 +27,6 @@ feature 'collaborators can add user stories quickly', %q{
 
       visit project_path(project)
 
-      click_on 'Add Story'
-      save_and_open_page
       expect(page).to have_content(project.title)
       expect(page).to have_content(project.budget)
 

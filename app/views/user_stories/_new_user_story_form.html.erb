@@ -1,6 +1,6 @@
 <%= form_for [@project, @user_story], remote: true, :html => { :class => "terrible_story_bro", :id => "new_story_form" } do |f| %>
 
-  <%= f.text_field :title, :placeholder => "Title" %>
+  <%= f.text_field :title, :placeholder => "Title", autofocus: true %>
   <br>
   <%= f.text_area :story, :placeholder => "User story hipster ipsum yolo sit amet" %>
   <br>
