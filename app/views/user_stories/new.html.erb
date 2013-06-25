@@ -3,19 +3,7 @@
     <div class="span12">
       <div class="terrible_form">
         <h2>Add A Story.</h2>
-        <%= form_for [@project, @user_story] do |f| %>
-
-          <%= f.text_field :title, :placeholder => "Title" %>
-          <br>
-          <%= f.text_area :story, :placeholder => "User story hipster ipsum yolo sit amet" %>
-          <br>
-          <%= f.text_field :estimate_in_quarter_days, :placeholder => "Estimate in quarter days" %>
-          <br>
-          <%= f.text_field :complexity, :placeholder => "Complexity" %>
-          <br>
-          <%= f.submit("Create Story", :class => "btn btn-success new-project-btn") %>
-
-        <% end %>
+          <%= render 'new_user_story_form' %>
       </div>
 
     </div>

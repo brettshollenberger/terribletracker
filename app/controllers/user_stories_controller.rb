@@ -2,18 +2,26 @@ class UserStoriesController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @user_story = UserStory.new
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
     @project = Project.find(params[:project_id])
-    @user_story = @project.user_stories.new
+    @user_story = @project.user_stories.new.decorate
 
     if @user_story.update_attributes(params[:user_story])
       flash[:notice] = "User story added"
     else
       flash[:error] = "There was an error adding your user story"
     end
-    redirect_to project_path(@project)
+    respond_to do |format|
+      format.html { redirect_to @project }
+      format.js
+    end
   end
 
   def edit

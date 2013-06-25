@@ -1,0 +1,9 @@
+<tr>
+  <td><%= link_to "#{@user_story.title}", edit_project_user_story_path(@project, @user_story) %></td>
+  <td><%= @user_story.story %></td>
+  <td><%= @user_story.estimated %></td>
+  <td><%= @user_story.complexity %></td>
+  <td><%= @user_story.assign_button %></td>
+  <td><%= @user_story.state_button %></td>
+  <td><%= link_to "Delete", project_user_story_path(@project, @user_story), method: :delete %></td>
+</tr>

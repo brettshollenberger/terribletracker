@@ -16,8 +16,8 @@ FactoryGirl.define do
   factory :project do
     sequence(:title) { |n| "My Awesome Project #{n}" }
     description "My project is incredible!"
-    budget 1
-    weekly_rate 1
+    budget 1000000000
+    weekly_rate 10
   end
 
   factory :membership do
