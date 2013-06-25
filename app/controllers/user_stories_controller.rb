@@ -2,11 +2,6 @@ class UserStoriesController < ApplicationController
   def new
     @project = Project.find(params[:project_id])
     @user_story = UserStory.new
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
   end
 
   def create

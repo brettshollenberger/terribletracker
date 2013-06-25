@@ -23,6 +23,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'pry-rails'
+  gem 'poltergeist'
 end
 
 group :test do
