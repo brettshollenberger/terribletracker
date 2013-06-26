@@ -1,5 +1,7 @@
+// Render the project's show page in the main body
 $('#body-main').html('').append('<%= j render("/projects/show_project") %>');
 
+// If another project was previously checked, uncheck it
 <% if @checked_project %>
   <% unless @checked_project.nil? %>
     $('.project_checked').each(function() {
@@ -13,6 +15,7 @@ $('#body-main').html('').append('<%= j render("/projects/show_project") %>');
   <% end %>
 <% end %>
 
+// Add the project_checked hidden_field to all project_sidebar forms
 $('.project_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
 });

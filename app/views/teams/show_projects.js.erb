@@ -1,6 +1,12 @@
+// Display projects for a team
 $('#project_sidebar_<%= @team.id %>').addClass('visible').slideToggle();
+
+// Render the team's show page in the body of the document
 $('#body-main').html('').append('<%= j render("/teams/show_team") %>');
 
+
+// If another team was previously checked, we want to uncheck the team they were
+// previously working on, and the project they were working on, if any.
 <% if @checked %>
   <% unless @checked.nil? %>
     $('.team_checked').each(function() {
@@ -19,9 +25,14 @@ $('#body-main').html('').append('<%= j render("/teams/show_team") %>');
   <% end %>
 <% end %>
 
+// Remove the project_checked hidden_field from whichever project was checked, so we don't have
+// a double-down issue later. The field has been unchecked, so we should also remove
+// the hidden_field
+$('.project_checked').each(function() { $(this).remove(); });
+
+// Add the team_checked hidden field to all team_sidebar forms, so we'll know which team
+// to hide when the user navigates away
 $('.team_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
 });
-
-$('.project_checked').each(function() { $(this).remove(); });
 

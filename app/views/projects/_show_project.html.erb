@@ -4,6 +4,7 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
+      <%= link_to "Add Collaborator", new_membership_path(project: @project), :class => 'btn btn-primary collaborator-btn' %>
       <h2><%= @project.title %></h2>
       <% if @project.team %>
         <h3><%= @project.team.name %></h3>

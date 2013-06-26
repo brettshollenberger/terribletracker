@@ -1,4 +1,8 @@
+// Render the team's show page in the body of the document; it's the previous context
 $('#body-main').html('').append('<%= j render("/teams/show_team") %>');
+
+// Remove the project_checked hidden_field from the project forms
 $('.project_checked').each(function() { $(this).remove(); });
 
+// And set its checked attribute to false
 $('input[name=project_<%= @project.id %>]').attr('checked', false);
