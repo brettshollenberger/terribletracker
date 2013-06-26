@@ -18,18 +18,24 @@
         <br>
         <% if current_user %>
         <!-- ################## Teams ######################## -->
-          <% current_user.teams.each do |team| %>
-          <label class="checkbox" for="checkbox1">
-            <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox">
-            <%= team.name %>
-          </label>
-        <!-- ################# Projects ###################### -->
-            <% team.projects.each do |project| %>
-              <label class="checkbox" for="checkbox2">
-              <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox">
-              <%= project.title %>
-            </label>
+          <% current_user.active_teams.each do |team| %>
+            <%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar", remote: true) do %>
+              <%= label_tag(:name, :class => "checkbox") do %>
+                <%= check_box_tag :name, :value => "#{team.name}", :id => "name", data: {toggle: "checkbox"} %>
+                <%= hidden_field_tag :id, "#{team.id}" %>
+                <%= team.name %>
+              <% end %>
+              <%= submit_tag "Submit" %>
             <% end %>
+        <!-- ################# Projects ###################### -->
+            <div class="projects_sidebar">
+              <% team.projects.each do |project| %>
+                <label class="checkbox" for="checkbox2">
+                <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox">
+                <%= project.title %>
+              </label>
+              <% end %>
+            </div>
           <% end %><br>
         <!-- ################## Login ###################### -->
         <%= link_to "Edit Profile", edit_user_registration_path(user: current_user), :class => "btn btn-block profile" %><br>

@@ -30,4 +30,24 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
   end
 
+  def show_projects
+    if params[:checked] == "1"
+      hide_projects
+    else
+      @team = Team.find(params[:id])
+
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
+      end
+    end
+  end
+
+  def hide_projects
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js { render "hide_projects" }
+    end
+  end
+
 end

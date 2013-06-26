@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <% if notice %>
+        <div class="notice"><%= notice %></div>
+      <% end %>
+      <h2><%= @team.name %></h2>
+      <div class="team_description">
+        <%= @team.description %>
+      </div>
+      <div class="team_website">
+        <%= @team.website %>
+      </div>
+      <div class="team_owner">
+        <%= @team.owner.first_name %>
+      </div>
+      <br>
+      <br>
+      <% unless @team.projects.empty? %>
+        <h2>Projects</h2>
+        <table class="table table-hover">
+          <thead>
+            <th>Name</th>
+          </thead>
+          <tbody>
+            <% @team.projects.each do |project| %>
+              <tr>
+                <td><%= link_to "#{project.title}", project_path(project) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+      <h2>Members</h2>
+      <table class="table table-hover">
+        <thead>
+          <th>Name</th>
+          <th>Email</th>
+        </thead>
+        <tbody>
+          <% @team.members.each do |member| %>
+            <tr>
+              <td><%= member.full_name %></td>
+              <td><%= member.email %></td>
+              <% unless member == current_user %>
+                <% if @team.owner == current_user %>
+                  <td><%= link_to "Remove Member", "/membership/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}/remove_team", method: :delete %></td>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to "Add Team Member", new_team_membership_path(team: @team), :class => 'btn btn-primary', method: "get" %>
+    </div>
+  </div>
+</div>
