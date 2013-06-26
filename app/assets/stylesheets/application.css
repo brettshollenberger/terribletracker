@@ -218,3 +218,7 @@ input.todo-search-field.placeholder {
 .btn-block:hover {
   background-color: #ECF0F1 !important;
 }
+
+.nested_project {
+  margin: 0 0 0 10px !important;
+}

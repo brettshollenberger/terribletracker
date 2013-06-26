@@ -24,29 +24,26 @@
                 <%= check_box_tag "team_#{team.id}", "#{team.name}", false, :id => "team_#{team.id}", data: {toggle: "checkbox"} %>
                 <%= hidden_field_tag :id, "#{team.id}" %>
                 <%= team.name %>
-              <% end %>
+              <% end %><!-- End label_tag -->
               <%= submit_tag "Submit" %>
-            <% end %>
+            <% end %><!-- End team_sidebar form -->
+            <% team.projects.each do |project| %>
         <!-- ################# Projects ###################### -->
-            <div class="projects_sidebar">
-              <% team.projects.each do |project| %>
-                <div class='projects_sidebar_<%= team.id %>'>
-                  <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar", remote: true) do %>
-                    <%= label_tag("project_#{project.id}", :class => "checkbox") do %>
-                      <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"} %>
-                      <%= hidden_field_tag :id, "#{project.id}" %>
-                      <%= project.title %>
-                    <% end %>
-                    <%= submit_tag "Submit" %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          <% end %><br>
+              <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar_#{team.id}", remote: true) do %>
+                <%= label_tag("project_#{project.id}", :class => "checkbox nested_project") do %>
+                  <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
+                  <%= hidden_field_tag :id, "#{project.id}" %>
+                  <%= project.title %>
+                <% end %><!-- End label_tag -->
+                <%= submit_tag "Submit" %>
+              <% end %><!-- End project_sidebar form -->
+            <% end %><!-- End team.projects.each -->
+          <% end %><!-- End active_teams.each -->
+        <br>
         <!-- ################## Login ###################### -->
         <%= link_to "Edit Profile", edit_user_registration_path(user: current_user), :class => "btn btn-block profile" %><br>
         <%= link_to "Logout", logout_path, :class => "btn btn-block profile" %>
-        <% end %>
+        <% end %><!-- End if current_user -->
       </div>
     </div>
     <div class="span9" id="body-main"><%= yield %></div>

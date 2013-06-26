@@ -1,0 +1,4 @@
+$('#body-main').html('').append('<%= j render("/teams/show_team") %>');
+$('.project_checked').each(function() { $(this).remove(); });
+
+$('input[name=project_<%= @project.id %>]').attr('checked', false);

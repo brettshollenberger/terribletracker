@@ -52,14 +52,26 @@ class TeamsController < ApplicationController
   end
 
   def show_project
+    @checked_project = params[:checked].to_i if params[:checked]
     @project = Project.find(params[:id])
     @team = @project.team
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
     @user_story = UserStory.new
 
+    if @project.id == @checked_project
+      hide_project
+    else
+      respond_to do |format|
+        format.html { redirect_to project_path(@project) }
+        format.js
+      end
+    end
+  end
+
+  def hide_project
     respond_to do |format|
-      format.html { redirect_to project_path(@project) }
-      format.js
+      format.html { redirect_to team_path(@team) }
+      format.js { render "hide_project" }
     end
   end
 

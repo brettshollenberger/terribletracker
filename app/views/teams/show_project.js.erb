@@ -1,2 +1,18 @@
 $('#body-main').html('').append('<%= j render("/projects/show_project") %>');
-$('#projects_sidebar_<%= @team.id %>').append('<%= j hidden_field_tag :checked, "#{@project.id}", :id => "project_checked_#{@project.id}" %>');
+
+<% if @checked_project %>
+  <% unless @checked_project.nil? %>
+    $('.project_checked').each(function() {
+      $(this).remove();
+    });
+    $('label').each(function() {
+      var for_label = $(this).attr('for');
+      if ( for_label == "project_<%= @checked_project %>" ) { $(this).removeClass('checked'); }
+    });
+    $('input[name=project_<%= @checked_project %>]').attr('checked', false);
+  <% end %>
+<% end %>
+
+$('.project_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+});

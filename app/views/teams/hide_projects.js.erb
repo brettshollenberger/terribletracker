@@ -1,7 +1,17 @@
-$('.projects_sidebar_<%= @team.id %>').addClass('visible').slideToggle();
+$('#project_sidebar_<%= @team.id %>').addClass('visible').slideToggle();
 
 $('#body-main').html('').append('<%= j render("/projects/projects_index") %>');
 $('.team_checked').each(function() { $(this).remove(); });
 
 $('input[name=team_<%= @team.id %>]').attr('checked', false);
 
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+});
+
+$('input[class=project_checkbox]').each(function() {
+  $(this).attr('checked', false);
+});
+
+$('.project_checked').each(function() { $(this).remove(); });
