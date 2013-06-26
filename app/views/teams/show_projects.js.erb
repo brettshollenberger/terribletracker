@@ -1,3 +1,21 @@
 $('.projects_sidebar_<%= @team.id %>').addClass('visible').slideToggle();
 $('#body-main').html('').append('<%= j render("/teams/show_team") %>');
-$('#team_sidebar_<%= @team.id %>').append('<%= j hidden_field_tag :checked, "#{@team.id}", :id => "team_checked_#{@team.id}" %>');
+
+<% if @checked %>
+  <% unless @checked.nil? %>
+    $('.team_checked').each(function() {
+      $(this).remove();
+    });
+    $('.projects_sidebar_<%= @checked %>').removeClass('visible').slideToggle();
+    $('label').each(function() {
+      var for_label = $(this).attr('for');
+      if ( for_label == "team_<%= @checked %>" ) { $(this).removeClass('checked'); }
+    });
+    $('input[name=team_<%= @checked %>]').attr('checked', false);
+  <% end %>
+<% end %>
+
+$('.team_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
+});
+

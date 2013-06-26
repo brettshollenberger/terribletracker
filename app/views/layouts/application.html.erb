@@ -17,8 +17,8 @@
         </div>
         <br>
         <% if current_user %>
-        <!-- ################## Teams ######################## -->
           <% current_user.active_teams.each do |team| %>
+        <!-- ################## Teams ######################## -->
             <%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar", remote: true) do %>
               <%= label_tag("team_#{team.id}", :class => "checkbox") do %>
                 <%= check_box_tag "team_#{team.id}", "#{team.name}", false, :id => "team_#{team.id}", data: {toggle: "checkbox"} %>

@@ -1,3 +1,7 @@
-$('.projects_sidebar').addClass('visible').slideToggle();
+$('.projects_sidebar_<%= @team.id %>').addClass('visible').slideToggle();
+
 $('#body-main').html('').append('<%= j render("/projects/projects_index") %>');
-$('#team_checked_<%= @team.id %>').remove();
+$('.team_checked').each(function() { $(this).remove(); });
+
+$('input[name=team_<%= @team.id %>]').attr('checked', false);
+

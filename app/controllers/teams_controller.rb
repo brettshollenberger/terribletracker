@@ -31,12 +31,12 @@ class TeamsController < ApplicationController
   end
 
   def show_projects
+    @checked = params[:checked].to_i if params[:checked]
     @team = Team.find(params[:id])
 
-    if params[:checked] == "1"
+    if @team.id == @checked
       hide_projects
     else
-
       respond_to do |format|
         format.html { redirect_to root_path }
         format.js
