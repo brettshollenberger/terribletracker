@@ -1,0 +1,2 @@
+$('#body-main').html('').append('<%= j render("/projects/show_project") %>');
+$('#projects_sidebar_<%= @team.id %>').append('<%= j hidden_field_tag :checked, "#{@project.id}", :id => "project_checked_#{@project.id}" %>');

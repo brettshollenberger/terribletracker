@@ -1,5 +1,5 @@
 $(function() {
-  $('.projects_sidebar').hide();
+  $('.projects_sidebar').find('div').hide();
 });
 
 jQuery.fn.submitOnCheck = function() {
@@ -13,3 +13,8 @@ jQuery.fn.submitOnCheck = function() {
 $(function() {
   $('.team_sidebar').submitOnCheck();
 });
+
+$(function() {
+  $('.projects_sidebar').submitOnCheck();
+});
+

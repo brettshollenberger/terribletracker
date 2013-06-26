@@ -11,7 +11,7 @@
   <div class="row-fluid">
     <div class="span3" id="sidebar">
       <div class="inner-sidebar">
-        <span class="terrible">terrible</span><br><span class="tracker"><h1>TRACKER</h1></span>
+        <%= link_to "<span class='terrible'>terrible</span><br><span class='tracker'><h1>TRACKER</h1></span>".html_safe, root_path, :class => "logo" %>
         <div class="todo-search">
           <input class="todo-search-field" type="search" value="" placeholder="Search">
         </div>
@@ -20,8 +20,8 @@
         <!-- ################## Teams ######################## -->
           <% current_user.active_teams.each do |team| %>
             <%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar", remote: true) do %>
-              <%= label_tag(:name, :class => "checkbox") do %>
-                <%= check_box_tag :name, :value => "#{team.name}", :id => "name", data: {toggle: "checkbox"} %>
+              <%= label_tag("team_#{team.id}", :class => "checkbox") do %>
+                <%= check_box_tag "team_#{team.id}", "#{team.name}", false, :id => "team_#{team.id}", data: {toggle: "checkbox"} %>
                 <%= hidden_field_tag :id, "#{team.id}" %>
                 <%= team.name %>
               <% end %>
@@ -30,10 +30,16 @@
         <!-- ################# Projects ###################### -->
             <div class="projects_sidebar">
               <% team.projects.each do |project| %>
-                <label class="checkbox" for="checkbox2">
-                <input type="checkbox" value="" id="checkbox2" data-toggle="checkbox">
-                <%= project.title %>
-              </label>
+                <div class='projects_sidebar_<%= team.id %>'>
+                  <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar", remote: true) do %>
+                    <%= label_tag("project_#{project.id}", :class => "checkbox") do %>
+                      <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"} %>
+                      <%= hidden_field_tag :id, "#{project.id}" %>
+                      <%= project.title %>
+                    <% end %>
+                    <%= submit_tag "Submit" %>
+                  <% end %>
+                </div>
               <% end %>
             </div>
           <% end %><br>

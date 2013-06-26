@@ -1,3 +1,3 @@
 $('.projects_sidebar').addClass('visible').slideToggle();
 $('#body-main').html('').append('<%= j render("/projects/projects_index") %>');
-$('#team_sidebar').append('<%= j hidden_field_tag :checked, 0 %>');
+$('#team_checked_<%= @team.id %>').remove();
