@@ -8,11 +8,8 @@ class UserStoriesController < ApplicationController
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.new.decorate
 
-    if @user_story.update_attributes(params[:user_story])
-      flash[:notice] = "User story added"
-    else
-      flash[:error] = "There was an error adding your user story"
-    end
+    @user_story.update_attributes(params[:user_story])
+
     respond_to do |format|
       format.html { redirect_to @project }
       format.js
@@ -39,13 +36,12 @@ class UserStoriesController < ApplicationController
   def destroy
     @story = UserStory.find(params[:id])
     @project = @story.project
+    @story.destroy
 
-    if @story.delete
-      flash[:notice] = "Story Deleted"
-    else
-      flash[:notice] = "There was an error deleting your story"
+    respond_to do |format|
+      format.html { redirect_to @project }
+      format.js
     end
-    redirect_to @project
   end
 
   def unstarted

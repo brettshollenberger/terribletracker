@@ -30,20 +30,15 @@
               <%= project.title %>
             </label>
             <% end %>
-          <% end %>
+          <% end %><br>
         <!-- ################## Login ###################### -->
-          <select name="user_actions" class="select-block span12 terrible-dropdown">
-            <option value="X-Men" selected="selected"><%= current_user.full_name %></option>
-            <option value="0"><%= link_to "Profile", edit_user_registration_path(user: current_user) %></option>
-            <option value="1"><%= link_to "Logout", logout_path %></option>
-          </select>
+        <%= link_to "Edit Profile", edit_user_registration_path(user: current_user), :class => "btn btn-block profile" %><br>
+        <%= link_to "Logout", logout_path, :class => "btn btn-block profile" %>
         <% end %>
       </div>
     </div>
     <div class="span9" id="body-main"><%= yield %></div>
   </div>
-
-
 
 </body>
 </html>
