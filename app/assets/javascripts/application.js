@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+//= require flat-ui
 
 String.prototype.repeat = function(num) {
     return new Array(num + 1).join(this);

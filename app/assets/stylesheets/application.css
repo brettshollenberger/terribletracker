@@ -10,6 +10,7 @@
  *
  *= require_self
  *= require_tree .
+ *= require flat-ui
  */
 
 .container-body {
@@ -91,4 +92,118 @@
 
 body {
   background-color: white;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,700italic,900,400italic,300");
+@font-face {
+  font-family: 'Flat-UI-Icons';
+  src: url('http://designmodo.github.io/Flat-UI/fonts/Flat-UI-Icons.eot');
+  src: url('http://designmodo.github.io/Flat-UI/fonts/Flat-UI-Icons.eot?#iefix') format('embedded-opentype'), url('http://designmodo.github.io/Flat-UI/fonts/Flat-UI-Icons.woff') format('woff'), url('http://designmodo.github.io/Flat-UI/fonts/Flat-UI-Icons.ttf') format('truetype'), url('http://designmodo.github.io/Flat-UI/fonts/Flat-UI-Icons.svg#Flat-UI-Icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.row-fluid {
+  height: 100%;
+}
+
+#sidebar {
+  background-color: #E74C3C;
+  height: 100%;
+}
+
+.inner-sidebar {
+  padding: 10px;
+  text-align: center;
+}
+
+.inner-sidebar .terrible {
+  font-family: pacifico;
+  font-size: 5em;
+  letter-spacing: normal;
+  color: #ECF0F1;
+}
+.inner-sidebar .tracker {
+  letter-spacing: normal;
+  color: #ECF0F1;
+  position: relative;
+  top: -1em;
+}
+
+body, html {
+  height: 100%;
+  background-color: #ECF0F1;
+}
+
+.todo-search {
+  position: relative;
+  background: #C0392B !important;
+  border-radius: 6px !important;
+  color: #ECF0F1 !important;
+  padding: 5px !important;
+}
+
+.todo-search:before {
+  position: absolute;
+  font-family: 'Flat-UI-Icons' !important;
+  content: "\e01c" !important;
+  font-size: 16px;
+  display: inline-block;
+  top: 50%;
+  left: 92%;
+  margin: -0.5em 0 0 -1em;
+}
+
+input.todo-search-field {
+  width: 80% !important;
+  background: none;
+  border: 0;
+  color: #ECF0F1 !important;
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 0 -60px !important;
+  line-height: 23px;
+  padding: 5px 0;
+  text-indent: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+input.todo-search-field:-moz-placeholder {
+  color: #ECF0F1 !important;
+}
+input.todo-search-field::-webkit-input-placeholder {
+  color: #ECF0F1 !important;
+}
+input.todo-search-field.placeholder {
+  color: #ECF0F1 !important;
+}
+
+.dk_toggle {
+  background-color: #C0392B !important;
+}
+
+.select-icon {
+  background: #ECF0F1 !important;
+}
+
+.dk_options {
+  width: 100% !important;
+}
+
+.dk_options a:hover {
+  background: #E74C3C !important;
+}
+
+.dk_option_current a {
+  background: #E74C3C !important;
+}
+
+.checkbox:hover {
+  color: #ECF0F1 !important;
+}
+
+.checkbox.checked .icons,
+.radio.checked .icons {
+  color: #ECF0F1 !important;
 }
