@@ -1,0 +1,21 @@
+ # PostgreSQL. Versions 7.4 and 8.x are supported.
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: t_tracker_development
+  pool: 5
+  username: app
+  password: qwerty
+  host: 127.0.0.1
+
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: t_tracker_test
+  pool: 5
+  username: app
+  password: qwerty
+  host: 127.0.0.1
+
