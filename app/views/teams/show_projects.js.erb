@@ -2,10 +2,10 @@
 $('#project_sidebar_<%= @team.id %>').addClass('visible').show('normal');
 
 // Change new team link to reflect the fact that the team is checked
-$('#new_team_link').html('').append('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
+$('#new_team_link').html('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
 
 // Render the team's show page in the body of the document
-$('#body-main').html('').append('<%= j render("/teams/show_team") %>');
+$('#body-main').html('<%= j render("/teams/show_team") %>');
 
 // If another team was previously checked, we want to uncheck the team they were
 // previously working on, and the project they were working on, if any.

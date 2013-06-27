@@ -1,5 +1,5 @@
 // Display new project form in project body
-$('#body-main').html('').append('<%= j render("show_project") %>');
+$('#body-main').html('<%= j render("show_project") %>');
 
 // Add team to user's nav
 $('#user-specific-navbar').append('<%= j render("/layouts/add_project_to_user_specific_navbar") %>');

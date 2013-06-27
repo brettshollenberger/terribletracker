@@ -2,7 +2,7 @@
 $('#project_sidebar_<%= @team.id %>').addClass('visible').hide('normal');
 
 // Revert to the projects index page in the body of the document
-$('#body-main').html('').append('<%= j render("/projects/projects_index") %>');
+$('#body-main').html('<%= j render("/projects/projects_index") %>');
 
 // Remove the team_checked hidden_field from the team forms
 $('.team_checked').each(function() { $(this).remove(); });
