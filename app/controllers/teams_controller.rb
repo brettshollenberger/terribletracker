@@ -7,6 +7,10 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
@@ -15,14 +19,14 @@ class TeamsController < ApplicationController
 
     if @team.save
       @membership = Membership.new(joinable: @team, user: current_user, role: "owner", state: "active")
+      @membership.save
 
-      if @membership.save
-        flash[:notice] = "Team created successfully"
-        redirect_to @team
+      respond_to do |format|
+        format.html
+        format.js
       end
     else
-      flash[:error] = "Oops. There was an error creating your team!"
-      redirect_to new_team_path
+      format.js { render "new" }
     end
   end
 

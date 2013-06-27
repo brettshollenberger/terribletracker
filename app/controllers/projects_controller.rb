@@ -3,6 +3,10 @@ class ProjectsController < ApplicationController
 
   def index
     @user = current_user
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show

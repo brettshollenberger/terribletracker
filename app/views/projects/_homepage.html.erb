@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="span12">
+      <% if notice %>
+        <div class="notice"><%= notice %></div>
+      <% end %>
+        <% unless current_user.project_invitations.empty? %>
+          <%= render 'invitations' %>
+        <% end %>
+        <% unless current_user.team_invitations.empty? %>
+          <%= render 'team_invitations' %>
+        <% end %>
+        <% if current_user.active_projects.empty? %>
+          <%= render 'welcome_page' %>
+        <% else %>
+          <%= render 'projects_page' %>
+        <% end %>
+        <%= link_to "Create Project", new_project_path, :class => "btn btn-primary" %>
+        <%= link_to "Create Team", new_team_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+</div>

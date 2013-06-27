@@ -1,0 +1,44 @@
+// Display new team form in project body
+$('#body-main').html('').append('<%= j render("show_team") %>');
+
+// Add team to user's nav
+$('#user-specific-navbar').append('<%= j render("/layouts/add_to_user_specific_navbar") %>');
+
+// Since the new team will be checked by default, first remove the
+// team_checked hidden_field from the team forms
+$('.team_checked').each(function() { $(this).remove(); });
+
+// Remove the checked class from the label for all other teams and
+// remove project checked classes
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label != "team_<%= @team.id %>" ) { $(this).removeClass('checked'); }
+  if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+});
+
+// Remove checked attribute for all other team checkboxes
+$('input[class=team_checkbox]').each(function() {
+  var id_for_team_checkbox = $(this).attr('id');
+  if ( id_for_team_checkbox != "team_<$= @team.id %>" ) { $(this).attr('checked', false); }
+});
+
+// Remove checked attribute for all project checkboxes
+$('input[class=project_checkbox]').each(function() {
+  $(this).attr('checked', false);
+});
+
+// Since team is checked on creation, append the team_checked field
+$('.team_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
+});
+
+// Perform submitOnCheck for the new team sidebar once loaded
+jQuery.fn.submitOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
+  });
+  return this;
+};
+
+$('.team_sidebar').submitOnCheck();

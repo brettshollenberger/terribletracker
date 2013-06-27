@@ -28,15 +28,15 @@ feature 'collaborator deletes user story', %q{
     end
 
     scenario 'adding a user story to a project' do
+      expect(page).to have_content('Terrible Story')
+      expect(page).to have_content('As a user, I want to take over the world, so I can be its sole leader.')
+      expect(page).to have_content('0.25 days')
 
       click_on "Delete"
 
-      expect(page).to have_content("Story Deleted")
-
-      expect(page).to_not have_content('New user story')
-      expect(page).to_not have_content('foo bar baz')
+      expect(page).to_not have_content('Terrible Story')
+      expect(page).to_not have_content('As a user, I want to take over the world, so I can be its sole leader.')
       expect(page).to_not have_content('0.25 days')
-      expect(page).to_not have_content('Complexity: 1')
     end
   end
 end

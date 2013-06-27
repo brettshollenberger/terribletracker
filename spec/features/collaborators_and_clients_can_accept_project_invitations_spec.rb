@@ -14,24 +14,14 @@ feature 'collaborators and clients can accept project invitations', %q{
   # projects list on their homepage and in their navbar.
 
   context 'as a collaborator' do
-    let(:ownership)        { FactoryGirl.create(:active_ownership) }
-    let(:collaboratorship) { FactoryGirl.create(:active_collaboratorship) }
-    let(:new_collaborator) { FactoryGirl.create(:user) }
+    let(:collaboratorship) { FactoryGirl.create(:pending_collaboratorship) }
 
     background do
-      @owner = ownership.user
-      @project = ownership.project
-      collaboratorship.joinable = @project
-      collaboratorship.save
-      @collaborator = collaboratorship.user
+      @collaborator = collaboratorship.user.decorate
+      @project = collaboratorship.joinable
+
       login_as(@collaborator, scope: :user)
-      visit project_path(@project)
-      click_link "Add Collaborator"
-      fill_in "User's Email", with: new_collaborator.email
-      click_button "Add Collaborator"
-      logout(@collaborator)
-      login_as(new_collaborator, scope: :user)
-      visit projects_path
+      visit root_path
     end
 
     scenario 'accepting invitations' do

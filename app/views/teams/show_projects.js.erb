@@ -4,7 +4,6 @@ $('#project_sidebar_<%= @team.id %>').addClass('visible').slideToggle();
 // Render the team's show page in the body of the document
 $('#body-main').html('').append('<%= j render("/teams/show_team") %>');
 
-
 // If another team was previously checked, we want to uncheck the team they were
 // previously working on, and the project they were working on, if any.
 <% if @checked %>
@@ -16,9 +15,11 @@ $('#body-main').html('').append('<%= j render("/teams/show_team") %>');
     $('label').each(function() {
       var for_label = $(this).attr('for');
       if ( for_label == "team_<%= @checked %>" ) { $(this).removeClass('checked'); }
+      if ( for_label == "team_<%= @team.id %>")  { $(this).addClass('checked'); }
       if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
     });
     $('input[name=team_<%= @checked %>]').attr('checked', false);
+    $('input[name=team_<%= @team.id %>]').attr('checked', true);
     $('input[class=project_checkbox]').each(function() {
       $(this).attr('checked', false);
     });

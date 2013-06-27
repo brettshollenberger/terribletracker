@@ -18,6 +18,7 @@ FactoryGirl.define do
     description "My project is incredible!"
     budget 1000000000
     weekly_rate 10
+    team
   end
 
   factory :membership do
