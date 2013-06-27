@@ -219,6 +219,12 @@ input.todo-search-field.placeholder {
   background-color: #ECF0F1 !important;
 }
 
+.team_sidebar label {
+  font-family: 'Lato';
+  font-weight: 900;
+}
+
 .nested_project {
   margin: 0 0 0 10px !important;
+  font-style: italic;
 }
