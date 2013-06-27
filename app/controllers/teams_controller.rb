@@ -7,6 +7,8 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
+    @checked = params[:checked].to_i if params[:checked]
+
     respond_to do |format|
       format.html
       format.js
