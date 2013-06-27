@@ -18,16 +18,21 @@ $('#body-main').html('<%= j render("/teams/show_team") %>');
     $('label').each(function() {
       var for_label = $(this).attr('for');
       if ( for_label == "team_<%= @checked %>" ) { $(this).removeClass('checked'); }
-      if ( for_label == "team_<%= @team.id %>")  { $(this).addClass('checked'); }
       if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
     });
     $('input[name=team_<%= @checked %>]').attr('checked', false);
-    $('input[name=team_<%= @team.id %>]').attr('checked', true);
     $('input[class=project_checkbox]').each(function() {
       $(this).attr('checked', false);
     });
   <% end %>
 <% end %>
+
+$('label').each(function() {
+  var la = $(this).attr('for');
+  if ( la == "team_<%= @team.id %>" ) { $(this).addClass('checked'); }
+});
+
+$('input[name=team_<%= @team.id %>]').attr('checked', true);
 
 // Remove the project_checked hidden_field from whichever project was checked, so we don't have
 // a double-down issue later. The field has been unchecked, so we should also remove

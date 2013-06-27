@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
 
   def index
     @user = current_user
+    @team = Team.new
     respond_to do |format|
       format.html
       format.js

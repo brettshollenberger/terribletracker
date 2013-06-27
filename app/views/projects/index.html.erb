@@ -15,8 +15,7 @@
         <% else %>
           <%= render 'projects_page' %>
         <% end %>
-        <%= link_to "Create Project", new_project_path, :class => "btn btn-primary" %>
-        <%= link_to "Create Team", new_team_path, :class => "btn btn-primary" %>
+        <%= render '/teams/new_team' %>
     </div>
   </div>
 </div>

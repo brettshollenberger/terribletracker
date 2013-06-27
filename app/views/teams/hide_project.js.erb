@@ -6,3 +6,8 @@ $('.project_checked').each(function() { $(this).remove(); });
 
 // And set its checked attribute to false
 $('input[name=project_<%= @project.id %>]').attr('checked', false);
+
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+});
