@@ -30,6 +30,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
+    @team = Team.find(params[:project][:team_id])
     @project = Project.new(params[:project])
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
     @user_story = UserStory.new

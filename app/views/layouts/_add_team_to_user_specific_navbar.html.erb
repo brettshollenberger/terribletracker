@@ -1,21 +1,12 @@
-<%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar", remote: true) do %>
-  <%= label_tag("team_#{@team.id}", :class => "checkbox checked") do %>
-    <span class="icon"></span>
-    <span class="icon-to-fade"></span>
-    <%= check_box_tag "team_#{@team.id}", "#{@team.name}", false, :id => "team_#{@team.id}", :class => "team_checkbox", data: {toggle: "checkbox"} %>
-    <%= hidden_field_tag :id, "#{@team.id}" %>
-    <%= @team.name %>
-  <% end %><!-- End label_tag -->
-  <%= submit_tag "Submit" %>
-<% end %><!-- End team_sidebar form -->
-<% @team.projects.each do |project| %>
-<!-- ################# Projects ###################### -->
-  <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar_#{@team.id}", remote: true) do %>
-    <%= label_tag("project_#{project.id}", :class => "checkbox nested_project") do %>
-      <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
-      <%= hidden_field_tag :id, "#{project.id}" %>
-      <%= project.title %>
+<div id="team_sidebar_#{team.id}">
+    <!-- ################# Team ###################### -->
+  <%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar_#{@team.id}", remote: true) do %>
+    <%= label_tag("team_#{@team.id}", :class => "checkbox checked") do %>
+      <span class="icon"></span>
+      <span class="icon-to-fade"></span>
+      <%= check_box_tag "team_#{@team.id}", "#{@team.name}", false, :id => "team_#{@team.id}", :class => "team_checkbox", data: {toggle: "checkbox"} %>
+      <%= hidden_field_tag :id, "#{@team.id}" %>
+      <%= @team.name %>
     <% end %><!-- End label_tag -->
     <%= submit_tag "Submit" %>
-  <% end %><!-- End project_sidebar form -->
-<% end %><!-- End team.projects.each -->
+  <% end %><!-- End team_sidebar form -->

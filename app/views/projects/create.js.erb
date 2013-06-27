@@ -1,8 +1,31 @@
 // Display new project form in project body
 $('#body-main').html('<%= j render("show_project") %>');
 
-// Add team to user's nav
-$('#user-specific-navbar').append('<%= j render("/layouts/add_project_to_user_specific_navbar") %>');
+// Add project to user's nav
+$('#team_sidebar_<%= @team.id %>').append('<%= j render("/layouts/add_project_to_user_specific_navbar") %>');
 
 // Display projects for a team
 $('#project_sidebar_<%= @team.id %>').addClass('visible').show('normal');
+
+// Since project is checked on creation, append the project_checked field
+$('.project_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+});
+
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label == "project_<%= @project.id %>") { $(this).addClass('checked'); }
+});
+
+$('input[name=project_<%= @project.id %>]').attr('checked', true);
+
+// Perform submitOnCheck for the new team sidebar once loaded
+jQuery.fn.submitOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
+  });
+  return this;
+};
+
+$('.project_sidebar').submitOnCheck();
