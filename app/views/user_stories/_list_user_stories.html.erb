@@ -4,20 +4,23 @@
     <th>User Story</th>
     <th>Estimate</th>
     <th>Complexity</th>
+    <th>Assignee</th>
     <th>Status</th>
     <th>Delete</th>
   </thead>
   <tbody>
     <% @user_stories.each do |story| %>
-      <tr id="user_story_<%= story.id %>">
-        <td><%= link_to "#{story.title}", edit_project_user_story_path(@project, story) %></td>
-        <td><%= story.story %></td>
-        <td><%= story.estimated %></td>
-        <td><%= story.complexity %></td>
-        <td><%= story.assign_button %></td>
-        <td><%= story.state_button %></td>
-        <td><%= link_to "Delete", project_user_story_path(@project, story), method: :delete, remote: true %></td>
-      </tr>
+      <div id="story_<%= story.id %>">
+        <tr id="user_story_<%= story.id %>">
+          <td><%= link_to "#{story.title}", edit_project_user_story_path(@project, story) %></td>
+          <td><%= story.story %></td>
+          <td><%= story.estimated %></td>
+          <td><%= story.complexity %></td>
+          <td><%= story.assign_button %></td>
+          <td><%= story.state_button %></td>
+          <td><%= link_to "Delete", project_user_story_path(@project, story), method: :delete, remote: true %></td>
+        </tr>
+      </div>
     <% end %>
   </tbody>
 </table>

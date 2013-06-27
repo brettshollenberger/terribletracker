@@ -62,18 +62,28 @@ class UserStoriesController < ApplicationController
 
   def change_state(&block)
     @story = UserStory.find(params[:id])
+    @story = @story.decorate
     @project = @story.project
     yield(@story)
-    redirect_to @project
+
+    respond_to do |format|
+      format.html { redirect_to @project }
+      format.js { render "update_story" }
+    end
   end
 
   def assign
     @user = User.find(params[:id])
-    @user_story = UserStory.find(params[:user_story_id])
-    @user_story.user = @user
-    @user_story.save
+    @story = UserStory.find(params[:user_story_id])
+    @story = @story.decorate
+    @story.user = @user
+    @story.save
+    @project = @story.project
     flash[:notice] = "#{@user.decorate.full_name} assigned"
-    redirect_to @user_story.project
+    respond_to do |format|
+      format.html { redirect_to @story.project }
+      format.js   { render "update_story" }
+    end
   end
 
 end
