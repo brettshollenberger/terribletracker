@@ -1,8 +1,12 @@
 class TeamsController < ApplicationController
   before_filter :authenticate_user!
+  respond_to :html
+  respond_to :json, only: [:index]
 
   def index
-    @team = current_user.teams
+    @teams = current_user.teams
+
+    respond_with @teams
   end
 
   def new

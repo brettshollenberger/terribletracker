@@ -39,7 +39,7 @@ String.prototype.repeat = function(num) {
     });
 
     // Custom Select
-    $("select[name='herolist']").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
+    // $("select[name='herolist']").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
 
     // Tooltips
     $("[data-toggle=tooltip]").tooltip("show");
@@ -77,7 +77,7 @@ String.prototype.repeat = function(num) {
     });
 
     // Switch
-    $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
+    // $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
 
   });
 
