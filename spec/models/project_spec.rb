@@ -17,4 +17,9 @@ describe User do
     project.description = nil
     expect(project).to_not be_valid
   end
+
+  it "is not valid without a team" do
+    project.team = nil
+    expect(project).to_not be_valid
+  end
 end

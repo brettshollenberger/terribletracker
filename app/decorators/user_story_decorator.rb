@@ -67,19 +67,19 @@ private
   end
 
   def unstarted_link
-    h.link_to "Unstarted", "/user_story/#{id}/unstarted"
+    h.link_to "Unstarted", "/user_story/#{id}/unstarted", remote: true
   end
 
   def started_link
-    h.link_to "Started", "/user_story/#{id}/started"
+    h.link_to "Started", "/user_story/#{id}/started", remote: true
   end
 
   def review_link
-    h.link_to "Review", "/user_story/#{id}/review"
+    h.link_to "Review", "/user_story/#{id}/review", remote: true
   end
 
   def finished_link
-    h.link_to "Finished", "/user_story/#{id}/finished"
+    h.link_to "Finished", "/user_story/#{id}/finished", remote: true
   end
 
   def assign_button_link
@@ -107,7 +107,7 @@ private
     dropdown_links = []
     self.project.active_users.each do |user|
       dropdown_links.push(h.link_to "#{user.decorate.full_name}",
-        "/user_story/#{id}/assign/#{user.id}")
+        "/user_story/#{id}/assign/#{user.id}", remote: true)
     end
     return dropdown_links
   end

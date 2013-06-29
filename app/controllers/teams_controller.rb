@@ -7,6 +7,12 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
+    @checked = params[:checked].to_i if params[:checked]
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
@@ -15,19 +21,84 @@ class TeamsController < ApplicationController
 
     if @team.save
       @membership = Membership.new(joinable: @team, user: current_user, role: "owner", state: "active")
+      @membership.save
 
-      if @membership.save
-        flash[:notice] = "Team created successfully"
-        redirect_to @team
+      respond_to do |format|
+        format.html
+        format.js
       end
     else
-      flash[:error] = "Oops. There was an error creating your team!"
-      redirect_to new_team_path
+      format.js { render "new" }
     end
   end
 
   def show
     @team = Team.find(params[:id])
+  end
+
+  def show_projects
+    @checked = params[:checked].to_i if params[:checked]
+    @team = Team.find(params[:id])
+    @projects = @team.projects.order("created_at")
+
+    if @team.id == @checked
+      hide_projects
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
+      end
+    end
+  end
+
+  def hide_projects
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js { render "hide_projects" }
+    end
+  end
+
+  def show_project
+    @checked_project = params[:checked].to_i if params[:checked]
+    @project = Project.find(params[:id])
+    @team = @project.team
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
+
+    if @project.id == @checked_project
+      hide_project
+    else
+      respond_to do |format|
+        format.html { redirect_to project_path(@project) }
+        format.js
+      end
+    end
+  end
+
+  def hide_project
+    respond_to do |format|
+      format.html { redirect_to team_path(@team) }
+      format.js { render "hide_project" }
+    end
+  end
+
+private
+
+  def find_team
+    params.each do |name, value|
+      if name =~ /^project_(.+)/
+        return $1
+      end
+    end
+  end
+
+  def find_project
+    params.each do |name, value|
+      if name =~ /^project_(.+)/
+        return $1
+      end
+    end
   end
 
 end

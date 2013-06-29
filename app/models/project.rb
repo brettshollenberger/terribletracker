@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
-  attr_accessible :budget, :description, :title, :weekly_rate, :team
+  attr_accessible :budget, :description, :title, :weekly_rate, :team, :team_id
 
-  validates :title, :description, {
+  validates :title, :description, :team, {
     presence: true
   }
 

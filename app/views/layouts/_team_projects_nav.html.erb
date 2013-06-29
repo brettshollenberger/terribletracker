@@ -1,0 +1,14 @@
+<% @team.projects.order('created_at').each do |project| %>
+  <!-- ################# Projects ###################### -->
+    <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar_#{@team.id}", remote: true) do %>
+      <%= label_tag("project_#{project.id}", :class => "checkbox nested_project") do %>
+        <span class="icon"></span>
+        <span class="icon-to-fade"></span>
+        <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
+        <%= hidden_field_tag :id, "#{project.id}" %>
+        <%= project.title %>
+      <% end %><!-- End label_tag -->
+        <%= submit_tag "Submit" %>
+      <% end %><!-- End project_sidebar form -->
+    <% end %><!-- End team.projects.each -->
+    </div><!-- End team_sidebar_(id) div -->

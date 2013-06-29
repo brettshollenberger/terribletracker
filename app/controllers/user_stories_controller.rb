@@ -8,11 +8,8 @@ class UserStoriesController < ApplicationController
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.new.decorate
 
-    if @user_story.update_attributes(params[:user_story])
-      flash[:notice] = "User story added"
-    else
-      flash[:error] = "There was an error adding your user story"
-    end
+    @user_story.update_attributes(params[:user_story])
+
     respond_to do |format|
       format.html { redirect_to @project }
       format.js
@@ -39,13 +36,12 @@ class UserStoriesController < ApplicationController
   def destroy
     @story = UserStory.find(params[:id])
     @project = @story.project
+    @story.destroy
 
-    if @story.delete
-      flash[:notice] = "Story Deleted"
-    else
-      flash[:notice] = "There was an error deleting your story"
+    respond_to do |format|
+      format.html { redirect_to @project }
+      format.js
     end
-    redirect_to @project
   end
 
   def unstarted
@@ -66,18 +62,28 @@ class UserStoriesController < ApplicationController
 
   def change_state(&block)
     @story = UserStory.find(params[:id])
+    @story = @story.decorate
     @project = @story.project
     yield(@story)
-    redirect_to @project
+
+    respond_to do |format|
+      format.html { redirect_to @project }
+      format.js { render "update_story" }
+    end
   end
 
   def assign
     @user = User.find(params[:id])
-    @user_story = UserStory.find(params[:user_story_id])
-    @user_story.user = @user
-    @user_story.save
+    @story = UserStory.find(params[:user_story_id])
+    @story = @story.decorate
+    @story.user = @user
+    @story.save
+    @project = @story.project
     flash[:notice] = "#{@user.decorate.full_name} assigned"
-    redirect_to @user_story.project
+    respond_to do |format|
+      format.html { redirect_to @story.project }
+      format.js   { render "update_story" }
+    end
   end
 
 end

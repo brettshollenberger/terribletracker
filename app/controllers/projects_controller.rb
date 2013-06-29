@@ -3,6 +3,11 @@ class ProjectsController < ApplicationController
 
   def index
     @user = current_user
+    @team = Team.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def show
@@ -17,21 +22,35 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @team = Team.find(params[:team])
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create
+    @team = Team.find(params[:project][:team_id])
     @project = Project.new(params[:project])
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
 
     if @project.save
       @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
 
       if @membership.save
-        flash[:notice] = "Project created successfully"
-        redirect_to @project
+        respond_to do |format|
+          format.html { redirect_to @project }
+          format.js
+        end
+      else
+        respond_to do |format|
+          format.html { redirect_to new_project_path }
+          format.js   { "new" }
+        end
       end
-    else
-      flash[:error] = "Oops. There was an error creating your project!"
-      redirect_to new_project_path
     end
   end
 
@@ -41,13 +60,15 @@ class ProjectsController < ApplicationController
 
   def update
     @project = Project.find(params[:id])
-
+    @team = @project.team
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
     if @project.update_attributes(params[:project])
-      flash[:notice] = "Project updated!"
-      redirect_to @project
-    else
-      flash[:error] = "There was an error updating your project!"
-      redirect_to edit_project_path(@project)
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
   end
 

@@ -1,0 +1,29 @@
+// Hide the team's projects in the navbar
+$('#project_sidebar_<%= @team.id %>').addClass('visible').hide('normal');
+
+// Revert to the projects index page in the body of the document
+$('#body-main').html('<%= j render("/projects/projects_index") %>');
+
+// Remove the team_checked hidden_field from the team forms
+$('.team_checked').each(function() { $(this).remove(); });
+
+// Also remove the the project_checked hidden_field from the project forms;
+// we're back in a team context
+$('.project_checked').each(function() { $(this).remove(); });
+
+// Set the team's check attribute to false
+$('input[name=team_<%= @team.id %>]').attr('checked', false);
+
+// And for all its child projects
+$('input[class=project_checkbox]').each(function() {
+  $(this).attr('checked', false);
+});
+
+// Also, remove the "checked" class from the label for the project and team checkboxes. I don't know
+// why that wasn't working implicitly.
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label == "team_<%= @team.id %>" ) { $(this).removeClass('checked'); }
+  if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+});
+
