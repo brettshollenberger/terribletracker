@@ -1,0 +1,35 @@
+// Display new project form in project body
+$('#body-main').html('<%= j render("show_project") %>');
+
+// Remove project from sidebar
+$('#project_sidebar_<%= @team.id %>').remove();
+
+// Add project back to sidebar with new name
+$('#team_sidebar_<%= @team.id %>').append('<%= j render("/layouts/team_projects_nav") %>');
+
+// Since project is active, add the project checked tag
+$('.project_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+});
+
+// Add the checked class
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label == "project_<%= @project.id %>") { $(this).addClass('checked'); }
+});
+
+// Add the checked attribute
+$('input[name=project_<%= @project.id %>]').attr('checked', true);
+
+// Perform submitOnCheck for the new team sidebar once loaded
+jQuery.fn.submitOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
+  });
+  return this;
+};
+
+$('.project_sidebar').submitOnCheck();
+
+

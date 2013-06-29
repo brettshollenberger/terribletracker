@@ -228,3 +228,18 @@ input.todo-search-field.placeholder {
   margin: 0 0 0 10px !important;
   font-style: italic;
 }
+
+.edit-project {
+  width: 50%;
+  height: 30px !important;
+}
+
+input.edit-project {
+  font-size: 25px !important;
+  font-family: Lato !important;
+}
+
+.gravatar-projects-page {
+  width: 50px !important;
+  float: right;
+}

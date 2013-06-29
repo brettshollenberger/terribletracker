@@ -4,16 +4,15 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
-      <%= link_to "Add Collaborator", new_membership_path(project: @project), :class => 'btn btn-primary collaborator-btn' %>
-      <h2><%= @project.title %></h2>
-      <% if @project.team %>
-        <h3><%= @project.team.name %></h3>
-      <% else %>
-        <%= link_to "Add to Team", add_project_to_team_path(project: @project), :class => 'btn btn-primary', method: "get" %>
+      <% @users.each do |user| %>
+        <span class="gravatar-projects-page"><%= user.gravatar_project_page %></span>
       <% end %>
-      <div class="project_description">
-        <%= @project.description %>
-      </div>
+      <%= form_for @project, remote: true do |f| %>
+        <%= f.text_field :title, placeholder: "Title", autofocus: true, :class => "edit-project" %>
+      <% end %>
+      <%= link_to "Invite Collaborator", new_membership_path(project: @project), :class => 'btn btn-primary collaborator-btn' %>
+
+
       <div class="project_budget">
         <%= @project.budget %>
       </div>
@@ -30,3 +29,12 @@
     </div>
   </div>
 </div>
+
+<script>
+$('#project_title').keydown(function(e) {
+  if (e.keyCode === 9) {
+    e.preventDefault();
+      $('#project_title').submit();
+  }
+});
+</script>

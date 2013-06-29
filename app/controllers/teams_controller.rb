@@ -39,6 +39,7 @@ class TeamsController < ApplicationController
   def show_projects
     @checked = params[:checked].to_i if params[:checked]
     @team = Team.find(params[:id])
+    @projects = @team.projects.order("created_at")
 
     if @team.id == @checked
       hide_projects
@@ -63,6 +64,7 @@ class TeamsController < ApplicationController
     @team = @project.team
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
     @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
 
     if @project.id == @checked_project
       hide_project

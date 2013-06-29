@@ -35,6 +35,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
     @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
 
     if @project.save
       @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
@@ -59,13 +60,15 @@ class ProjectsController < ApplicationController
 
   def update
     @project = Project.find(params[:id])
-
+    @team = @project.team
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
     if @project.update_attributes(params[:project])
-      flash[:notice] = "Project updated!"
-      redirect_to @project
-    else
-      flash[:error] = "There was an error updating your project!"
-      redirect_to edit_project_path(@project)
+      respond_to do |format|
+        format.html
+        format.js
+      end
     end
   end
 
