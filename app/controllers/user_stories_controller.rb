@@ -94,4 +94,11 @@ class UserStoriesController < ApplicationController
     end
   end
 
+  def sort
+    params[:user_story].each_with_index do |id, index|
+      UserStory.update_all({position: index+1}, {id: id})
+    end
+    render nothing: true
+  end
+
 end

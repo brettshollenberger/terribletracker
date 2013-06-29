@@ -5,7 +5,7 @@
     <th>Status</th>
     <th>Delete</th>
   </thead>
-  <tbody id="user_stories">
+  <tbody id="user_stories" data-update-url="<%= sort_user_stories_url %>">
     <% @user_stories.each do |story| %>
         <div id="story_<%= story.id %>">
         <%= content_tag_for :tr, story do %>
@@ -20,5 +20,13 @@
 </table>
 
 <script>
-  $('#user_stories').sortable();
+  $('#user_stories').sortable({
+    axis: 'y',
+    update: function(event, ui) {
+      $.post($(this).data('update-url'), $(this).sortable('serialize'))
+    }
+  });
+  $('#user_stories').hover(function() {
+    $(this).css('cursor','move');
+  });
 </script>
