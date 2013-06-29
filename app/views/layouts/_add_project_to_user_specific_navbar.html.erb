@@ -1,5 +1,5 @@
 <!-- ################# Projects ###################### -->
-  <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar_#{@project.id}", remote: true) do %>
+  <%= form_tag("/show_project", :class => "project_sidebar", :id => "project_sidebar_#{@team.id}", remote: true) do %>
     <%= label_tag("project_#{@project.id}", :class => "checkbox nested_project checked") do %>
       <span class="icon"></span>
       <span class="icon-to-fade"></span>
