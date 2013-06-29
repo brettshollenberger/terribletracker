@@ -15,29 +15,24 @@ feature 'collaborators and clients can see their project invitations', %q{
 
   context 'as a collaborator' do
     let(:ownership)        { FactoryGirl.create(:active_ownership) }
-    let(:collaboratorship) { FactoryGirl.create(:active_collaboratorship) }
-    let(:new_collaborator) { FactoryGirl.create(:user) }
+    let(:collaboratorship) { FactoryGirl.create(:pending_collaboratorship) }
 
     background do
       @owner = ownership.user
-      @project = ownership.project
-      collaboratorship.joinable = @project
+      collaboratorship.inviter_id = @owner.id
+      collaboratorship.joinable = ownership.project
       collaboratorship.save
-      @collaborator = collaboratorship.user
+      collaboratorship.reload
+      @collaborator = collaboratorship.user.decorate
+      @project = collaboratorship.joinable
+
       login_as(@collaborator, scope: :user)
-      visit project_path(@project)
-      click_link "Add Collaborator"
-      fill_in "User's Email", with: new_collaborator.email
-      click_button "Add Collaborator"
-      logout(@collaborator)
-      login_as(new_collaborator, scope: :user)
-      visit projects_path
+      visit root_path
     end
 
     scenario 'seeing invitations' do
       expect(page).to have_content("Invitations")
       expect(page).to have_content(@project.owner.decorate.full_name)
-      expect(page).to have_content(@collaborator.decorate.full_name)
       expect(page).to have_content("My Awesome Project")
       expect(page).to have_content("Accept")
       expect(page).to have_content("Decline")
