@@ -8,9 +8,10 @@
         <span class="gravatar-projects-page"><%= user.gravatar_project_page %></span>
       <% end %>
       <%= form_for @project, remote: true do |f| %>
-        <%= f.text_field :title, placeholder: "Title", autofocus: true, :class => "edit-project" %>
+        <%= f.text_field :title, placeholder: "Title", :class => "edit-project" %>
       <% end %>
       <%= link_to "Invite Collaborator", new_membership_path(project: @project), :class => 'btn btn-primary collaborator-btn' %>
+      <%= link_to "New Story", "#", :class => 'btn btn-primary collaborator-btn', :id => "new-story-btn" %>
 
 
       <div class="project_budget">
@@ -22,10 +23,24 @@
         <br>
         <br>
         <%= render '/user_stories/list_user_stories' %>
-
-        <%= render '/user_stories/new_user_story_form' %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+$('#project_title').keydown(function(e) {
+  if (e.keyCode === 9) {
+      $('#project_title').submit();
+  }
+});
+
+$('#new-story-btn').click(function() {
+  $('#body-main').switchClass('span9', 'span6', function() {
+    $('#right-sidebar').show('normal');
+  });
+});
+
+
+</script>

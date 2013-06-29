@@ -1,3 +1,4 @@
+<%= link_to "x", "#", :id => "close" %><h2 class="right-sidebar">New Story</h2>
 <%= form_for [@project, @user_story], remote: true, :html => { :class => "terrible_story_bro", :id => "new_story_form" } do |f| %>
 
   <%= f.text_field :title, :placeholder => "Title", autofocus: true %>
@@ -11,3 +12,11 @@
   <%= f.submit("Create Story", :class => "btn btn-success new-project-btn") %>
 
 <% end %>
+
+<script>
+$('#close').click(function() {
+  $('#right-sidebar').hide('normal', function() {
+    $('#body-main').switchClass('span6', 'span9');
+  });
+});
+</script>

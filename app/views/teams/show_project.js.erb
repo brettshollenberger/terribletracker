@@ -1,5 +1,6 @@
 // Render the project's show page in the main body
 $('#body-main').html('<%= j render("/projects/show_project") %>');
+$('#right-sidebar').html('<%= j render "/user_stories/new_user_story_form" %>');
 
 // If another project was previously checked, uncheck it
 <% if @checked_project %>
@@ -27,4 +28,7 @@ $('.project_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
 });
 
-// Prop checked
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').show('normal');
+});
+
