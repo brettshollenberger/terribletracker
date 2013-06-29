@@ -19,23 +19,25 @@ feature 'collaborator edits user story', %q{
 
     background do
       @project = membership.project
+      @team = @project.team
       @user = membership.user
       @story = FactoryGirl.create(:user_story)
       @story.project = @project
       @story.save
       login_as(@user, scope: :user)
-      visit project_path(@project)
+      visit root_path
+
+      click_on @project.title
     end
 
-    scenario 'adding a user story to a project' do
-
+    scenario 'adding a user story to a project', :js => true do
       click_on @story.title
-
-      fill_in 'Title', with: 'Fast Times'
+      save_and_open_page
+      fill_in 'user_story[title]', with: 'Fast Times'
       fill_in 'user_story[story]', with: 'As a student at Ridgemont High, I would like to
         enjoy fast times.'
-      fill_in 'Estimate in quarter days', with: 2
-      fill_in 'Complexity', with: 7
+      fill_in 'user_story[estimate_in_quarter_days]', with: 2
+      fill_in 'user_story[complexity]', with: 7
 
       click_on 'Update Story'
 

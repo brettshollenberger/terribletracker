@@ -14,9 +14,15 @@ feature 'collaborators and clients can accept project invitations', %q{
   # projects list on their homepage and in their navbar.
 
   context 'as a collaborator' do
+    let(:ownership)        { FactoryGirl.create(:active_ownership) }
     let(:collaboratorship) { FactoryGirl.create(:pending_collaboratorship) }
 
     background do
+      @owner = ownership.user
+      collaboratorship.inviter_id = @owner.id
+      collaboratorship.joinable = ownership.project
+      collaboratorship.save
+      collaboratorship.reload
       @collaborator = collaboratorship.user.decorate
       @project = collaboratorship.joinable
 
