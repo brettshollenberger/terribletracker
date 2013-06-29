@@ -28,4 +28,7 @@ $('.project_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
 });
 
-// Prop checked
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').show('normal');
+});
+

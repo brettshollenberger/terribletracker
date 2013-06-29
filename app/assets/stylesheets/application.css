@@ -252,3 +252,14 @@ input.edit-project {
 h2.right-sidebar {
   margin: 10px 0px 0 10px !important;
 }
+
+#new-story-btn {
+  margin: 0 10px 0 0;
+}
+
+#close {
+  font-size: 16px;
+  margin: 5px 5px 0 0;
+  float: right;
+  text-decoration: none;
+}
