@@ -11,7 +11,7 @@
         <%= f.text_field :title, placeholder: "Title", :class => "edit-project" %>
       <% end %>
       <%= link_to "Invite Collaborator", new_membership_path(project: @project), :class => 'btn btn-primary collaborator-btn' %>
-      <%= link_to "New Story", "#", :class => 'btn btn-primary collaborator-btn', :id => "new-story-btn" %>
+      <%= link_to "New Story", new_project_user_story_path(@project), :class => 'btn btn-primary collaborator-btn', :id => "new-story-btn", remote: true %>
 
 
       <div class="project_budget">
@@ -35,12 +35,4 @@ $('#project_title').keydown(function(e) {
       $('#project_title').submit();
   }
 });
-
-$('#new-story-btn').click(function() {
-  $('#body-main').switchClass('span9', 'span6', function() {
-    $('#right-sidebar').show('normal');
-  });
-});
-
-
 </script>

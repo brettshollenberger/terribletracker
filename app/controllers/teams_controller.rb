@@ -62,7 +62,7 @@ class TeamsController < ApplicationController
     @checked_project = params[:checked].to_i if params[:checked]
     @project = Project.find(params[:id])
     @team = @project.team
-    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
     @user_story = UserStory.new
     @users = UserDecorator.decorate_collection(@project.users)
 
