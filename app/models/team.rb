@@ -42,4 +42,10 @@ class Team < ActiveRecord::Base
     members_list.push(owner)
     return UserDecorator.decorate_collection(members_list)
   end
+
+  def pending_members
+    members_list = []
+    Membership.where(joinable_id: id, joinable_type: "Team", role: "collaborator", state: "pending").all.each { |membership| members_list.push(membership.user) }
+    return UserDecorator.decorate_collection(members_list)
+  end
 end

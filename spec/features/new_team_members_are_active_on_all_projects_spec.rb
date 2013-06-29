@@ -15,36 +15,32 @@ feature 'new team members are automatically added to all projects', %q{
   # view the teams' projects on the team page, and in their nav.
 
   context 'as a new member' do
+    let(:ownership)        { FactoryGirl.create(:active_team_ownership) }
+    let(:collaboratorship) { FactoryGirl.create(:pending_team_membership) }
+    let(:project)          { FactoryGirl.create(:project) }
 
     background do
-      @ownership = FactoryGirl.create(:active_team_ownership)
-      @project_ownership = FactoryGirl.create(:active_ownership)
-      @new_collaborator = FactoryGirl.create(:user)
-      @owner = @ownership.user
-      @team = @ownership.team
-      @project = @project_ownership.project
-      @project_ownership.user = @owner
-      @project_ownership.save
-      @project_ownership.reload
+      @owner = ownership.user
+      collaboratorship.inviter_id = @owner.id
+      collaboratorship.joinable = ownership.team
+      collaboratorship.save
+      collaboratorship.reload
+      @collaborator = collaboratorship.user.decorate
+      @team = collaboratorship.joinable
+      project.team = @team
+      project.save
+      project.reload
 
-      login_as(@owner, scope: :user)
-      visit team_path(@team)
-      click_link "Add Team Member"
-      fill_in "User's Email", with: @new_collaborator.email
-      click_button "Add Member"
-      logout(@owner)
-
-      login_as(@new_collaborator, scope: :user)
+      login_as(@collaborator, scope: :user)
       visit root_path
     end
 
     scenario 'accepts invitation' do
-
       click_link "Accept"
 
       expect(page).to have_content("You're a collaborator!")
       expect(page).to have_content(@team.name)
-      expect(page).to have_content(@project.title)
+      expect(page).to have_content(project.title)
     end
   end
 end
