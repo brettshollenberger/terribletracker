@@ -114,8 +114,12 @@ class MembershipsController < ApplicationController
     @team = @membership.joinable
     if @membership.delete
       @team.projects.each do |project|
-        destroy_project_membership(project)
-        remove_user_from_team_project(project)
+        begin
+          destroy_project_membership(project)
+          remove_user_from_team_project(project)
+        rescue
+          next
+        end
       end
       flash[:notice] = "Member removed"
     else
@@ -125,7 +129,7 @@ class MembershipsController < ApplicationController
   end
 
   def destroy_project_membership(project)
-    Membership.where(user_id: @user.id, joinable_id: project.id, joinable_type: "Project").first.destroy
+    Membership.where(user_id: @user.id, joinable_id: project.id, joinable_type: "Project").first.delete
   end
 
   def remove_user_from_team_project(project)
