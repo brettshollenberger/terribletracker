@@ -1,0 +1,12 @@
+<div id="team_sidebar_<%= @team.id %>">
+    <!-- ################# Team ###################### -->
+  <%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar_#{@team.id}", remote: true) do %>
+    <%= label_tag("team_#{@team.id}", :class => "checkbox checked") do %>
+      <span class="icon"></span>
+      <span class="icon-to-fade"></span>
+      <%= check_box_tag "team_#{@team.id}", "#{@team.name}", false, :id => "team_#{@team.id}", :class => "team_checkbox", checked: "checked", data: {toggle: "checkbox"} %>
+      <%= hidden_field_tag :id, "#{@team.id}" %>
+      <%= @team.name %>
+    <% end %><!-- End label_tag -->
+    <%= submit_tag "Submit" %>
+  <% end %><!-- End team_sidebar form -->

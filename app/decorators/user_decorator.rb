@@ -50,6 +50,11 @@ class UserDecorator < Draper::Decorator
     end
   end
 
+  def gravatar_project_page
+    gravatar_id = Digest::MD5.hexdigest(self.email.downcase)
+    h.image_tag "http://gravatar.com/avatar/#{gravatar_id}.png?s=150"
+  end
+
   def full_name
     "#{self.first_name} #{self.last_name}"
   end

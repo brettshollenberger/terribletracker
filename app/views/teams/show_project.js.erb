@@ -1,0 +1,30 @@
+// Render the project's show page in the main body
+$('#body-main').html('<%= j render("/projects/show_project") %>');
+
+// If another project was previously checked, uncheck it
+<% if @checked_project %>
+  <% unless @checked_project.nil? %>
+    $('.project_checked').each(function() {
+      $(this).remove();
+    });
+    $('label').each(function() {
+      var for_label = $(this).attr('for');
+      if ( for_label == "project_<%= @checked_project %>" ) { $(this).removeClass('checked'); }
+    });
+    $('input[name=project_<%= @checked_project %>]').attr('checked', false);
+    $('input[name=project_<%= @project.id %>]').attr('checked', true);
+  <% end %>
+<% end %>
+
+// Always add class true to the new checkbox
+$('label').each(function() {
+  var la = $(this).attr('for');
+  if ( la == "project_<%= @project.id %>" ) { $(this).addClass('checked'); }
+});
+
+// Add the project_checked hidden_field to all project_sidebar forms
+$('.project_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+});
+
+// Prop checked

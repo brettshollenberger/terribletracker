@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require flat-ui
 //= require_tree .
 
 String.prototype.repeat = function(num) {

@@ -15,7 +15,7 @@
         <% else %>
           <%= render 'projects_page' %>
         <% end %>
-        <%= render '/teams/new_team' %>
+        <%= link_to "Create Team", new_team_path, :class => "btn btn-primary homepage-btn", remote: true %>
     </div>
   </div>
 </div>

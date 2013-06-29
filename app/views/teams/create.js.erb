@@ -1,0 +1,24 @@
+// Display new team form in project body
+$('#body-main').html('').append('<%= j render("show_team") %>');
+
+// Add team to user's nav
+$('#user-specific-navbar').append('<%= j render("/layouts/add_team_to_user_specific_navbar") %>');
+
+// Since team is checked on creation, append the team_checked field
+$('.team_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
+});
+
+// Change new team link to reflect the fact that the team is checked
+$('#new_team_link').html('').append('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
+
+// Perform submitOnCheck for the new team sidebar once loaded
+jQuery.fn.submitOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
+  });
+  return this;
+};
+
+$('.team_sidebar').submitOnCheck();
