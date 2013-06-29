@@ -1,3 +1,4 @@
+<h2 class="right-sidebar">New Story</h2>
 <%= form_for [@project, @user_story], remote: true, :html => { :class => "terrible_story_bro", :id => "new_story_form" } do |f| %>
 
   <%= f.text_field :title, :placeholder => "Title", autofocus: true %>

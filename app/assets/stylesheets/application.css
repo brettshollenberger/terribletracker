@@ -243,3 +243,12 @@ input.edit-project {
   width: 50px !important;
   float: right;
 }
+
+#right-sidebar {
+  height: 100%;
+  background-color: #ECF0F1;
+}
+
+h2.right-sidebar {
+  margin: 10px 0px 0 10px !important;
+}
