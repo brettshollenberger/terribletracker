@@ -263,3 +263,8 @@ h2.right-sidebar {
   float: right;
   text-decoration: none;
 }
+
+.clickable-story {
+  display: block;
+  border: 2px solid black;
+}
