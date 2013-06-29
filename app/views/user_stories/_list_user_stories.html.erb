@@ -1,26 +1,32 @@
 <table class="table table-hover" id="stories_table">
   <thead>
     <th>Title</th>
-    <th>User Story</th>
-    <th>Estimate</th>
-    <th>Complexity</th>
     <th>Assignee</th>
     <th>Status</th>
     <th>Delete</th>
   </thead>
-  <tbody>
+  <tbody id="user_stories" data-update-url="<%= sort_user_stories_url %>">
     <% @user_stories.each do |story| %>
-      <div id="story_<%= story.id %>">
-        <tr id="user_story_<%= story.id %>">
-          <td><%= link_to "#{story.title}", edit_project_user_story_path(@project, story) %></td>
-          <td><%= story.story %></td>
-          <td><%= story.estimated %></td>
-          <td><%= story.complexity %></td>
+        <div id="story_<%= story.id %>">
+        <%= content_tag_for :tr, story do %>
+          <td><%= link_to story.title, edit_project_user_story_path(@project, story), remote: true %></td>
           <td><%= story.assign_button %></td>
           <td><%= story.state_button %></td>
           <td><%= link_to "Delete", project_user_story_path(@project, story), method: :delete, remote: true %></td>
-        </tr>
+        <% end %>
       </div>
     <% end %>
   </tbody>
 </table>
+
+<script>
+  $('#user_stories').sortable({
+    axis: 'y',
+    update: function(event, ui) {
+      $.post($(this).data('update-url'), $(this).sortable('serialize'))
+    }
+  });
+  $('#user_stories').hover(function() {
+    $(this).css('cursor','move');
+  });
+</script>
