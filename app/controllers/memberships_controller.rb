@@ -101,18 +101,17 @@ class MembershipsController < ApplicationController
 
   def accept_team
     @membership = Membership.find(params[:id])
+    @team = @membership.joinable
+    @users = UserDecorator.decorate_collection(@team.members)
+    @project = @team.projects.new
     if @membership.approve_membership
       @membership.team.projects.each do |project|
         Membership.create(joinable: project, user: @membership.user, role: "collaborator", state: "active")
       end
-      if current_user != @membership.user
-        redirect_to logout_path
-      else
-        flash[:notice] = "You're a #{@membership.role}!"
-        redirect_to @membership.team
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
       end
-    else
-      redirect_to root_path
     end
   end
 
@@ -148,5 +147,4 @@ class MembershipsController < ApplicationController
       end
     end
   end
-
 end
