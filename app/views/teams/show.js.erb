@@ -45,4 +45,10 @@ $('#new_team_link').html('<%= j link_to "New Team", new_team_path(checked: @team
 // Render the team's show page in the body of the document
 $('#body-main').html('<%= j render("show_team") %>');
 
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').show('slide', {direction: "right"});
+});
+
+$('#right-sidebar').html('<%= j render("/projects/new_project_form") %>');
+
 

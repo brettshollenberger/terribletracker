@@ -1,4 +1,5 @@
-<%= link_to "x", "#", :id => "close" %><h2 class="right-sidebar">New Story</h2>
+<%= link_to "x", "#", :id => "close" %>
+<h2 class="right-sidebar">New Story</h2>
 <%= form_for [@project, @user_story], remote: true, :html => { :class => "terrible_story_bro", :id => "new_story_form" } do |f| %>
 
   <%= f.text_field :title, :placeholder => "Title", autofocus: true %>
@@ -15,7 +16,7 @@
 
 <script>
 $('#close').click(function() {
-  $('#right-sidebar').hide('normal', function() {
+  $('#right-sidebar').hide('slide', {direction: "right"}, function() {
     $('#body-main').switchClass('span6', 'span9');
   });
 });

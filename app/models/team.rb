@@ -5,6 +5,10 @@ class Team < ActiveRecord::Base
     presence: true
   }
 
+  validates :name, {
+    uniqueness: true
+  }
+
   validates :owner_id, {
     numericality: true
   }

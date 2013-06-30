@@ -18,6 +18,8 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(params[:team])
     @team.owner_id = current_user.id
+    @users = UserDecorator.decorate_collection(@team.members)
+    @project = @team.projects.new
 
     if @team.save
       @membership = Membership.new(joinable: @team, user: current_user, role: "owner", state: "active")
@@ -28,7 +30,7 @@ class TeamsController < ApplicationController
         format.js
       end
     else
-      format.js { render "new" }
+      render "new.js"
     end
   end
 
@@ -36,6 +38,7 @@ class TeamsController < ApplicationController
     @checked = params[:checked].to_i if params[:checked]
     @team = Team.find(params[:id])
     @projects = @team.projects.order("created_at")
+    @project = @team.projects.new
     @users = UserDecorator.decorate_collection(@team.members)
 
     if @team.id == @checked
@@ -85,6 +88,7 @@ class TeamsController < ApplicationController
   end
 
   def hide_project
+    @project = Project.new
     respond_to do |format|
       format.html { redirect_to team_path(@team) }
       format.js { render "hide_project" }

@@ -6,7 +6,7 @@
       <span class="icon-to-fade"></span>
       <%= check_box_tag "team_#{@team.id}", "#{@team.name}", false, :id => "team_#{@team.id}", :class => "team_checkbox", checked: "checked", data: {toggle: "checkbox"} %>
       <%= hidden_field_tag :id, "#{@team.id}" %>
-      <span id="team_name_<%= team.id %>"><%= @team.name %></span>
+      <span id="team_name_<%= @team.id %>"><%= @team.name %></span>
     <% end %><!-- End label_tag -->
     <%= submit_tag "Submit" %>
   <% end %><!-- End team_sidebar form -->
