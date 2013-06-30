@@ -305,3 +305,9 @@ div.right-sidebar {
 .team_name {
   display:inline !important;
 }
+
+.description {
+  height: 100px;
+  max-height: 100px;
+  max-width: 90%;
+}
