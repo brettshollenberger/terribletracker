@@ -229,17 +229,19 @@ input.todo-search-field.placeholder {
   font-style: italic;
 }
 
-.edit-project {
+.edit-project,
+.edit-team {
   width: 50%;
   height: 30px !important;
 }
 
-input.edit-project {
+input.edit-project,
+input.edit-team {
   font-size: 25px !important;
   font-family: Lato !important;
 }
 
-.gravatar-projects-page {
+.gravatar-small {
   width: 50px !important;
   float: right;
 }

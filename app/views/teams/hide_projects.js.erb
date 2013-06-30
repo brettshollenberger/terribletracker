@@ -1,8 +1,8 @@
+// Revert to the projects index page in the body of the document
+$('#body-main').show('normal').html('<%= j render("/projects/projects_index") %>');
+
 // Hide the team's projects in the navbar
 $('#project_sidebar_<%= @team.id %>').addClass('visible').hide('normal');
-
-// Revert to the projects index page in the body of the document
-$('#body-main').html('<%= j render("/projects/projects_index") %>');
 
 // Remove the team_checked hidden_field from the team forms
 $('.team_checked').each(function() { $(this).remove(); });

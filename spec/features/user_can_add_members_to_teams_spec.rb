@@ -22,7 +22,7 @@ feature 'user adds member to team', %q{
       login_as(owner, scope: :user)
       visit root_path
 
-      click_on "The Merry Men"
+      visit team_path(team)
     end
 
     scenario 'adding a member to a team' do

@@ -5,7 +5,7 @@
       <span class="icon-to-fade"></span>
       <%= check_box_tag "project_#{@project.id}", "#{@project.title}", false, :id => "project_#{@project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
       <%= hidden_field_tag :id, "#{@project.id}" %>
-      <%= @project.title %>
+      <span id="project_title_<%= project.id %>"><%= @project.title %></span>
     <% end %><!-- End label_tag -->
     <%= submit_tag "Submit" %>
   <% end %><!-- End project_sidebar form -->

@@ -1,12 +1,3 @@
-// Display projects for a team
-$('#project_sidebar_<%= @team.id %>').addClass('visible').show('normal');
-
-// Change new team link to reflect the fact that the team is checked
-$('#new_team_link').html('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
-
-// Render the team's show page in the body of the document
-$('#body-main').html('<%= j render("/teams/show_team") %>');
-
 // If another team was previously checked, we want to uncheck the team they were
 // previously working on, and the project they were working on, if any.
 <% if @checked %>
@@ -44,5 +35,14 @@ $('.project_checked').each(function() { $(this).remove(); });
 $('.team_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
 });
+
+// Display projects for a team
+$('#project_sidebar_<%= @team.id %>').addClass('visible').show('normal');
+
+// Change new team link to reflect the fact that the team is checked
+$('#new_team_link').html('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
+
+// Render the team's show page in the body of the document
+$('#body-main').html('<%= j render("show_team") %>');
 
 

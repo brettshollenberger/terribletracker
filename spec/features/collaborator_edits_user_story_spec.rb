@@ -15,11 +15,10 @@ feature 'collaborator edits user story', %q{
   # story on the projects page.
 
   context 'as a collaborator' do
-    let(:membership) { FactoryGirl.create(:active_collaboratorship) }
+    let(:membership) { FactoryGirl.create(:active_team_collaboratorship) }
 
     background do
-      @project = membership.project
-      @team = @project.team
+      @team = membership.team
       @user = membership.user
       @story = FactoryGirl.create(:user_story)
       @story.project = @project

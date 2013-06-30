@@ -51,6 +51,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= link_to "New Project", new_project_path(team: @team), :class => 'btn btn-primary', method: "get", remote: true %>
       <%= link_to "Add Team Member", new_team_membership_path(team: @team), :class => 'btn btn-primary', method: "get" %>
     </div>
   </div>

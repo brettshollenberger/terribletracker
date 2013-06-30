@@ -17,9 +17,9 @@ describe InvitationAcceptedMailer do
     login_as(owner, scope: :user)
     visit project_path(project)
 
-    click_link "Add Collaborator"
+    click_link "Invite Collaborator"
     fill_in "User's Email", with: new_collaborator.email
-    click_button "Add Collaborator"
+    click_button "Invite Collaborator"
 
     @new_membership = new_collaborator.memberships.first
 

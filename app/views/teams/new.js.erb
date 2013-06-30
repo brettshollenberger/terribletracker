@@ -1,6 +1,3 @@
-// Display new team form in project body
-$('#body-main').html('<%= j render("new_team") %>');
-
 <% if @checked %>
     // Untoggle any active teams
     $('#project_sidebar_<%= @checked %>').removeClass('visible').hide('normal');

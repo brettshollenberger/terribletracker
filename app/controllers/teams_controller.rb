@@ -33,19 +33,27 @@ class TeamsController < ApplicationController
   end
 
   def show
-    @team = Team.find(params[:id])
-  end
-
-  def show_projects
     @checked = params[:checked].to_i if params[:checked]
     @team = Team.find(params[:id])
     @projects = @team.projects.order("created_at")
+    @users = UserDecorator.decorate_collection(@team.members)
 
     if @team.id == @checked
       hide_projects
     else
       respond_to do |format|
         format.html { redirect_to root_path }
+        format.js
+      end
+    end
+  end
+
+  def update
+    @team = Team.find(params[:id])
+    @users = UserDecorator.decorate_collection(@team.members)
+    if @team.update_attributes(params[:team])
+      respond_to do |format|
+        format.html
         format.js
       end
     end
