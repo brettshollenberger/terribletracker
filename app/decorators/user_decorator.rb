@@ -50,7 +50,7 @@ class UserDecorator < Draper::Decorator
     end
   end
 
-  def gravatar_project_page
+  def gravatar_small
     gravatar_id = Digest::MD5.hexdigest(self.email.downcase)
     h.image_tag "http://gravatar.com/avatar/#{gravatar_id}.png?s=150"
   end
@@ -117,17 +117,5 @@ class UserDecorator < Draper::Decorator
     end
     return inners
   end
-
-  # <% unless current_user.active_teams.empty? %>
-  #                <li class="dropdown">
-  #                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Teams <b class="caret"></b></a>
-  #                  <ul class="dropdown-menu">
-  #                    <% current_user.active_teams.each do |team| %>
-  #                      <li>
-  #                         <%= link_to "#{team.name}", team_path(team) %>
-  #                      </li>
-  #                    <% end %>
-  #                  </ul>
-  #                </li>
 
 end

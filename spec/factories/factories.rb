@@ -71,6 +71,8 @@ FactoryGirl.define do
     factory :closed_clientship, traits: [:closed, :client, :joinable_project]
     factory :active_team_ownership, traits: [:active, :owner, :joinable_team]
     factory :active_team_collaboratorship, traits: [:active, :collaborator, :joinable_team]
+    factory :pending_team_membership, traits: [:pending, :collaborator, :joinable_team]
+    factory :active_team_membership, traits: [:active, :collaborator, :joinable_team]
   end
 
   factory :user_story do

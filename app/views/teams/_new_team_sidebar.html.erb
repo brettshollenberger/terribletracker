@@ -1,0 +1,21 @@
+<%= form_for @team, remote: true do |f| %>
+  <label class="checkbox team_name" for="team_name">
+  <span class="icon team_name"></span>
+  <span class="icon-to-fade team_name"></span>
+  </label>
+  <%= f.text_field :name, :placeholder => "Team Name", autofocus: true, :class => "team_name" %>
+  <%= f.submit("Create Team", :class => "btn btn-success new-project-btn") %>
+
+<% end %>
+
+<script>
+jQuery.fn.submitOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
+  });
+  return this;
+};
+
+$('#new_team').submitOnCheck();
+</script>

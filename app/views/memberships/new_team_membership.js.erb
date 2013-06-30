@@ -1,0 +1,3 @@
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').html('<%= j render("/memberships/new_collaborator") %>').show('normal');
+});

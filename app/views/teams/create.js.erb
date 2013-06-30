@@ -1,4 +1,4 @@
-// Display new team form in project body
+// Display new team in project body
 $('#body-main').html('').append('<%= j render("show_team") %>');
 
 // Add team to user's nav
@@ -22,3 +22,11 @@ jQuery.fn.submitOnCheck = function() {
 };
 
 $('.team_sidebar').submitOnCheck();
+
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').show('normal');
+});
+
+$('#right-sidebar').html('<%= j render("/projects/new_project_form") %>');
+$('#new_team').remove();
+

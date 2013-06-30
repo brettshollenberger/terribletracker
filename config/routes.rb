@@ -15,8 +15,9 @@ Terribletracker::Application.routes.draw do
 
   resources :teams
 
-  post "/show_projects", to: "teams#show_projects"
+  post "/teams/:id", to: "teams#show"
   post "/show_project", to: "teams#show_project"
+  get "/homepage", to: "projects#homepage"
 
   get "user_story/:id/unstarted", to: "user_stories#unstarted"
   get "user_story/:id/started", to: "user_stories#started"

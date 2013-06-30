@@ -6,15 +6,25 @@
     <th>Delete</th>
   </thead>
   <tbody id="user_stories" data-update-url="<%= sort_user_stories_url %>">
-    <% @user_stories.each do |story| %>
-        <div id="story_<%= story.id %>">
-        <%= content_tag_for :tr, story do %>
-          <td><%= link_to story.title, edit_project_user_story_path(@project, story), remote: true %></td>
-          <td><%= story.assign_button %></td>
-          <td><%= story.state_button %></td>
-          <td><%= link_to "Delete", project_user_story_path(@project, story), method: :delete, remote: true %></td>
-        <% end %>
-      </div>
+    <% if !@user_stories.empty? %>
+      <% @user_stories.each do |story| %>
+          <div id="story_<%= story.id %>">
+          <%= content_tag_for :tr, story do %>
+            <td><%= link_to story.title, edit_project_user_story_path(@project, story), remote: true %></td>
+            <td><%= story.assign_button %></td>
+            <td><%= story.state_button %></td>
+            <td><%= link_to "Delete", project_user_story_path(@project, story), method: :delete, remote: true %></td>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <tr id="first_story">
+        <td>Add your first user story</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
     <% end %>
   </tbody>
 </table>

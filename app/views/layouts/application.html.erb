@@ -11,8 +11,8 @@
 <body>
   <div class="row-fluid">
     <div class="span3" id="sidebar">
-      <div class="inner-sidebar">
-        <%= link_to "<span class='terrible'>terrible</span><br><span class='tracker'><h1>TRACKER</h1></span>".html_safe, root_path, :class => "logo", remote: true %>
+      <div class="inner-sidebar" id="inner-sidebar">
+        <%= link_to "<span class='terrible'>terrible</span><br><span class='tracker'><h1>TRACKER</h1></span>".html_safe, homepage_path, :class => "logo", remote: true %>
         <div class="todo-search">
           <input class="todo-search-field" type="search" value="" placeholder="Search">
         </div>
@@ -22,11 +22,11 @@
             <% current_user.active_teams.each do |team| %>
               <div id="team_sidebar_<%= team.id %>">
           <!-- ################## Team ######################## -->
-                <%= form_tag("/show_projects", :class => "team_sidebar", :id => "team_sidebar", remote: true) do %>
+                <%= form_tag(team_path(team), :class => "team_sidebar", :id => "team_sidebar", remote: true) do %>
                   <%= label_tag("team_#{team.id}", :class => "checkbox") do %>
                     <%= check_box_tag "team_#{team.id}", "#{team.name}", false, :id => "team_#{team.id}", :class => "team_checkbox", data: {toggle: "checkbox"} %>
                     <%= hidden_field_tag :id, "#{team.id}" %>
-                    <%= team.name %>
+                    <span id="team_name_<%= team.id %>"><%= team.name %></span>
                   <% end %><!-- End label_tag -->
                   <%= submit_tag "Submit" %>
                 <% end %><!-- End team_sidebar form -->
@@ -36,7 +36,7 @@
                     <%= label_tag("project_#{project.id}", :class => "checkbox nested_project") do %>
                       <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
                       <%= hidden_field_tag :id, "#{project.id}" %>
-                      <%= project.title %>
+                      <span id="project_title_<%= project.id %>"><%= project.title %></span>
                     <% end %><!-- End label_tag -->
                     <%= submit_tag "Submit" %>
                   <% end %><!-- End project_sidebar form -->

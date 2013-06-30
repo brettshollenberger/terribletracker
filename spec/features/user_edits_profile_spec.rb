@@ -7,10 +7,11 @@ feature "user can edit their profile" do
   background do
     @user = FactoryGirl.create(:user)
     login_as(@user, :scope => :user)
-    visit edit_user_registration_path(@user)
+    visit root_path
   end
 
   scenario "user edits their profile" do
+    click_on "Edit Profile"
     fill_in "First Name", with: "Darth"
     fill_in "Last Name", with: "Vader"
     fill_in "Current Password", with: @user.password

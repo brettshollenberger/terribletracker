@@ -1,5 +1,5 @@
 $('#body-main').switchClass('span9', 'span6', function() {
-  $('#right-sidebar').show('normal');
+  $('#right-sidebar').show('slide', {direction: "right"});
 });
 
 $('#right-sidebar').html('<%= j render("new_user_story_form") %>');

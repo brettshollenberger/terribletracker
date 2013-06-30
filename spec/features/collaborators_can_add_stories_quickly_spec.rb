@@ -17,15 +17,17 @@ feature 'collaborators can add user stories quickly', %q{
   # without needing to reload the entire page.
 
   context 'as a collaborator' do
-    let(:membership) { FactoryGirl.create(:active_collaboratorship) }
+    let(:membership) { FactoryGirl.create(:active_ownership) }
 
-    scenario 'adding a user story to a project' do
+    scenario 'adding a user story to a project', :js => true do
       project = membership.project
       user = membership.user
+      team = project.team
 
       login_as(user, scope: :user)
 
-      visit project_path(project)
+      visit root_path
+      click_on project.title
 
       expect(page).to have_content(project.title)
       expect(page).to have_content(project.budget)

@@ -20,8 +20,6 @@ feature 'user creates team', %q{
     end
 
     scenario 'adding a user story to a project' do
-      click_on "Create Team"
-
       fill_in "team[name]", with: "The Merry Men"
       fill_in "team[description]", with: "Four very funny guys that do stuff"
       click_button "Create Team"

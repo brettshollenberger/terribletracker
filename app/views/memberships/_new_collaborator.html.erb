@@ -1,0 +1,14 @@
+<%= link_to "x", "#", :id => "close" %>
+<h2 class="right-sidebar">Add Team Member</h2>
+  <%= form_for @membership, remote: true, url: { action: "create_team_membership", controller: "memberships" }, :html => { :class => "terrible_story_bro", :id => "new_collaborator_form", :method => "post" } do |f| %>
+
+  <%= f.text_field :user, :placeholder => "User's Email", autofocus: true %>
+  <br>
+  <%= f.hidden_field :team, :value => @team.id %>
+
+  <%= f.submit("Add Member", :class => "btn btn-success new-project-btn") %>
+
+<% end %>
+
+<div id="collaborator_notice" class="right-sidebar">
+</div>
