@@ -13,6 +13,7 @@
 //= require jquery-1.9.1
 //= require jquery-ui-1.10.3.custom
 //= require jquery_ujs
+//= require click-outside
 //= require twitter/bootstrap
 //= require flat-ui
 //= require_tree .

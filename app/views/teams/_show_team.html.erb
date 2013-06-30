@@ -42,9 +42,19 @@
 </div>
 
 <script>
+
+// Tabbed submission
 $('#team_name').keydown(function(e) {
   if (e.keyCode === 9) {
       $('#team_name').submit();
   }
 });
+
+// Click outside submission
+$('#team_name').keydown(function() {
+  $("#team_name").bind( "clickoutside", function(event){
+    $('#team_name').submit();
+  });
+})
+
 </script>

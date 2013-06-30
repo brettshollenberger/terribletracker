@@ -1,2 +1,5 @@
-<%= @comment.user.decorate.full_name %>
+<strong><%= @comment.user.decorate.full_name %></strong>
 <%= @comment.body %>
+<br>
+<span class="pretty-created-at"><%= @comment.pretty_created_at %></span>
+<br><br>

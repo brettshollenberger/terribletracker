@@ -5,9 +5,8 @@
   <br>
   <%= f.text_area :story, :placeholder => "User story hipster ipsum yolo sit amet", :class => "description" %>
   <br>
-  <%= f.text_field :estimate_in_quarter_days, :placeholder => "Estimate in quarter days" %>
-  <br>
-  <%= f.text_field :complexity, :placeholder => "Complexity" %>
+  <%= f.text_field :estimate_in_quarter_days, :placeholder => "Estimate in quarter days", :class => "half-form-width" %>
+  <%= f.text_field :complexity, :placeholder => "Complexity", :class => "half-form-width" %>
   <br>
   <%= f.submit("Edit Story", :class => "btn btn-success new-project-btn") %>
 
@@ -19,4 +18,30 @@ $('#close').click(function() {
     $('#body-main').switchClass('span6', 'span9');
   });
 });
+
+jQuery.fn.removeSubmit = function() {
+  this.find('input[type=submit]').remove();
+  return this;
+};
+
+$('#edit_story_form').removeSubmit();
+
+$('#edit_story_form').keydown(function(e) {
+  if (e.keyCode === 9) {
+      $('#edit_story_form').submit();
+  }
+  if (e.keyCode === 13) {
+      $('#edit_story_form').submit();
+  }
+});
+
+// Click outside submission
+$('#edit_story_form').keydown(function() {
+  $("#edit_story_form").bind( "clickoutside", function(event){
+    $('#edit_story_form').submit();
+  });
+  $('#edit_story_form').click(function() {
+    $('#edit_story_form').submit();
+  })
+})
 </script>

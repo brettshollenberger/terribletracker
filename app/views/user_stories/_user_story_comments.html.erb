@@ -1,14 +1,18 @@
-<br>
 <hr class="right-sidebar-hr">
-<div id="user_story_<%= @user_story.id %>_comments" class="right-sidebar">
-  <% @comments.each do |comment| %>
-    <% unless comment.body.nil? %>
-      <strong><%= comment.user.decorate.full_name %></strong>
-      <%= comment.body %>
-      <br>
+  <div id="user_story_<%= @user_story.id %>_comments" class="right-sidebar comments-list">
+    <% @comments.each do |comment| %>
+      <% unless comment.body.nil? %>
+        <strong><%= comment.user.decorate.full_name %></strong>
+        <%= comment.body %>
+        <br>
+        <span class="pretty-created-at"><%= comment.pretty_created_at %></span>
+        <br><br>
+      <% end %>
     <% end %>
-  <% end %>
-</div><br>
+  </div>
+<% unless @comments.first.body.nil? %>
+  <hr class="right-sidebar-hr">
+<% end %>
 <%= form_for [@project, @user_story, @comment], url: { action: "new_user_story_comment", controller: "comments" }, remote: true, :html => { :class => "terrible_story_bro", :id => "new_user_story_comment_form" } do |f| %>
 
   <%= f.text_area :body, :placeholder => "Comment", :class => "description" %>
@@ -17,3 +21,22 @@
   <%= f.submit("Comment", :class => "btn btn-success new-project-btn") %>
 
 <% end %>
+
+<div class="comment_errors right-sidebar" id="user_story_comment_errors">
+</div>
+
+<script>
+// Tabbed submission
+$('#new_user_story_comment_form').keydown(function(e) {
+  if (e.keyCode === 9) {
+      $('#new_user_story_comment_form').submit();
+  }
+});
+
+// Click outside submission
+$('#new_user_story_comment_form').keydown(function() {
+  $("#new_user_story_comment_form").bind( "clickoutside", function(event){
+    $('#new_user_story_comment_form').submit();
+  });
+})
+</script>

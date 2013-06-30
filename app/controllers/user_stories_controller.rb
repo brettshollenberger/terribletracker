@@ -24,7 +24,7 @@ class UserStoriesController < ApplicationController
   def edit
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.find(params[:id])
-    @comments = @user_story.comments
+    @comments = CommentDecorator.decorate_collection(@user_story.comments.order("created_at DESC"))
     @comment = @user_story.comments.new
 
     render "edit.js"
@@ -33,7 +33,7 @@ class UserStoriesController < ApplicationController
   def update
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.find(params[:id])
-    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
     @users = UserDecorator.decorate_collection(@project.users)
     @team = @project.team
 

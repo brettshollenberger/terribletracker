@@ -18,4 +18,13 @@ jQuery.fn.submitOnCheck = function() {
 };
 
 $('#new_team').submitOnCheck();
+
+$('#new_team').keydown(function(e) {
+  if (e.keyCode === 9) {
+    $('#new_team').submit();
+  }
+  if (e.keyCode === 13) {
+    $('#new_team').submit();
+  }
+});
 </script>

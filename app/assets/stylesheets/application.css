@@ -315,3 +315,17 @@ div.right-sidebar {
 .dropdown-menu a {
   text-decoration: none;
 }
+
+.comments-list {
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+.half-form-width {
+  width: 42.5% !important;
+}
+
+.pretty-created-at {
+  color: #95A5A6;
+  font-size: .7rem;
+}
