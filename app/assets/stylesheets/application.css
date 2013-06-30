@@ -307,8 +307,8 @@ div.right-sidebar {
 }
 
 .description {
-  height: 100px;
-  max-height: 100px;
+  height: 80px;
+  max-height: 80px;
   max-width: 90%;
 }
 

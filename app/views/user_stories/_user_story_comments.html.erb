@@ -1,0 +1,19 @@
+<br>
+<hr class="right-sidebar-hr">
+<div id="user_story_<%= @user_story.id %>_comments" class="right-sidebar">
+  <% @comments.each do |comment| %>
+    <% unless comment.body.nil? %>
+      <strong><%= comment.user.decorate.full_name %></strong>
+      <%= comment.body %>
+      <br>
+    <% end %>
+  <% end %>
+</div><br>
+<%= form_for [@project, @user_story, @comment], url: { action: "new_user_story_comment", controller: "comments" }, remote: true, :html => { :class => "terrible_story_bro", :id => "new_user_story_comment_form" } do |f| %>
+
+  <%= f.text_area :body, :placeholder => "Comment", :class => "description" %>
+  <br>
+  <%= f.hidden_field :user_story, :value => @user_story.id %>
+  <%= f.submit("Comment", :class => "btn btn-success new-project-btn") %>
+
+<% end %>

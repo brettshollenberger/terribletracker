@@ -9,6 +9,8 @@ class Comment < ActiveRecord::Base
     numericality: true
   }
 
+  validates_uniqueness_of :body, scope: [:user_id, :commentable_id, :commentable_type]
+
   validates :commentable_type, {
     inclusion: { :in => %w(UserStory Project) }
   }

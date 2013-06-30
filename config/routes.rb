@@ -8,7 +8,10 @@ Terribletracker::Application.routes.draw do
   end
 
   resources :projects do
-    resources :user_stories
+    resources :comments
+    resources :user_stories do
+      resources :comments
+    end
   end
 
   resources :memberships
@@ -34,5 +37,7 @@ Terribletracker::Application.routes.draw do
   post "/create_team_membership", to: "memberships#create_team_membership"
   get "/add_project_to_team", to: "projects#add_project_to_team"
   put "/save_team_project_join", to: "projects#save_team_project_join"
+
+  post "user_story/:id/comments/new", to: "comments#new_user_story_comment"
 
 end

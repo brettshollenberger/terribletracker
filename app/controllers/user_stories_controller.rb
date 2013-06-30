@@ -24,6 +24,8 @@ class UserStoriesController < ApplicationController
   def edit
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.find(params[:id])
+    @comments = @user_story.comments
+    @comment = @user_story.comments.new
 
     render "edit.js"
   end
