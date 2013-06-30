@@ -118,16 +118,4 @@ class UserDecorator < Draper::Decorator
     return inners
   end
 
-  # <% unless current_user.active_teams.empty? %>
-  #                <li class="dropdown">
-  #                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Teams <b class="caret"></b></a>
-  #                  <ul class="dropdown-menu">
-  #                    <% current_user.active_teams.each do |team| %>
-  #                      <li>
-  #                         <%= link_to "#{team.name}", team_path(team) %>
-  #                      </li>
-  #                    <% end %>
-  #                  </ul>
-  #                </li>
-
 end

@@ -1,3 +1,4 @@
+$('#first_story').remove();
 $('#stories_table').append('<%= j render("user_story") %>');
 
 $('#new_story_form').each(function(){
@@ -5,3 +6,5 @@ $('#new_story_form').each(function(){
 });
 
 $('#user_story_title').focus();
+
+$('#new_team').remove();

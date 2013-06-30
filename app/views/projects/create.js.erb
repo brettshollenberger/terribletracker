@@ -34,3 +34,5 @@ $('#right-sidebar').hide('slide', {direction: "right"}, function() {
   $('#right-sidebar').html('<%= j render "/user_stories/new_user_story_form" %>');
   $('#right-sidebar').delay(100).show('slide', {direction: "right"});
 });
+
+$('#new_team').remove();

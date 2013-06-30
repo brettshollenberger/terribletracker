@@ -1,6 +1,3 @@
-// Revert to the projects index page in the body of the document
-$('#body-main').show('normal').html('<%= j render("/projects/projects_index") %>');
-
 // Hide the team's projects in the navbar
 $('#project_sidebar_<%= @team.id %>').addClass('visible').hide('normal');
 
@@ -26,4 +23,10 @@ $('label').each(function() {
   if ( for_label == "team_<%= @team.id %>" ) { $(this).removeClass('checked'); }
   if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
 });
+
+$('#right-sidebar').hide('slide', {direction: "right"}, function() {
+  // Revert to the projects index page in the body of the document
+  $('#body-main').html('<%= j render("/projects/homepage") %>').switchClass('span6', 'span9');
+});
+
 

@@ -11,8 +11,8 @@
 <body>
   <div class="row-fluid">
     <div class="span3" id="sidebar">
-      <div class="inner-sidebar">
-        <%= link_to "<span class='terrible'>terrible</span><br><span class='tracker'><h1>TRACKER</h1></span>".html_safe, root_path, :class => "logo", remote: true %>
+      <div class="inner-sidebar" id="inner-sidebar">
+        <%= link_to "<span class='terrible'>terrible</span><br><span class='tracker'><h1>TRACKER</h1></span>".html_safe, homepage_path, :class => "logo", remote: true %>
         <div class="todo-search">
           <input class="todo-search-field" type="search" value="" placeholder="Search">
         </div>

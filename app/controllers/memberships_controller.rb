@@ -75,6 +75,11 @@ class MembershipsController < ApplicationController
   def new_team_membership
     @team = Team.find(params[:team])
     @membership = Membership.new
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create_team_membership
@@ -88,7 +93,10 @@ class MembershipsController < ApplicationController
     else
       flash[:notice] = "There was an error inviting this member"
     end
-    redirect_to new_team_membership_path(team: @team)
+    respond_to do |format|
+      format.html { redirect_to new_team_membership_path(team: @team) }
+      format.js
+    end
   end
 
   def accept_team
@@ -121,11 +129,11 @@ class MembershipsController < ApplicationController
           next
         end
       end
-      flash[:notice] = "Member removed"
-    else
-      flash[:notice] = "There was an error removing this member."
     end
-    redirect_to @team
+    respond_to do |format|
+      format.html { redirect_to @team }
+      format.js
+    end
   end
 
   def destroy_project_membership(project)
