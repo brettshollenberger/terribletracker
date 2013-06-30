@@ -21,6 +21,10 @@ class UserStory < ActiveRecord::Base
     inclusion: { :in => %w(unstarted started review finished) }
   }
 
+  has_many :comments,
+    :as => :commentable,
+    :dependent => :destroy
+
   state_machine :state, :initial => :unstarted do
     after_transition any => :started, :do => :add_to_active_stories
     after_transition any => :review, :do => :add_to_review_stories

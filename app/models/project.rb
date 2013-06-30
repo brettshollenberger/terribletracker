@@ -19,6 +19,10 @@ class Project < ActiveRecord::Base
     inverse_of: :project
   }
 
+  has_many :comments,
+    :as => :commentable,
+    :dependent => :destroy
+
   belongs_to :team, {
     inverse_of: :projects
   }

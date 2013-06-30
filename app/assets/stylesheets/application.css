@@ -311,3 +311,7 @@ div.right-sidebar {
   max-height: 100px;
   max-width: 90%;
 }
+
+.dropdown-menu a {
+  text-decoration: none;
+}
