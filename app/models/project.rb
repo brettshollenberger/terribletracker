@@ -1,7 +1,7 @@
 class Project < ActiveRecord::Base
   attr_accessible :budget, :description, :title, :weekly_rate, :team, :team_id
 
-  validates :title, :description, :team, {
+  validates :title, :team, {
     presence: true
   }
 
@@ -18,6 +18,10 @@ class Project < ActiveRecord::Base
     dependent: :destroy,
     inverse_of: :project
   }
+
+  has_many :comments,
+    :as => :commentable,
+    :dependent => :destroy
 
   belongs_to :team, {
     inverse_of: :projects

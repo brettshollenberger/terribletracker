@@ -1,4 +1,5 @@
 class UserStory < ActiveRecord::Base
+
   attr_accessible :state, :complexity, :estimate_in_quarter_days, :project_id, :story, :title, :user, :position
 
   belongs_to :project, {
@@ -20,6 +21,14 @@ class UserStory < ActiveRecord::Base
   validates :state, {
     inclusion: { :in => %w(unstarted started review finished) }
   }
+
+  has_many :comments,
+    :as => :commentable,
+    :dependent => :destroy
+
+  has_many :activities,
+    :as => :trackable,
+    dependent: :destroy
 
   state_machine :state, :initial => :unstarted do
     after_transition any => :started, :do => :add_to_active_stories

@@ -1,2 +1,3 @@
-// Display new project form in project body
-$('#body-main').html('<%= j render("new_project") %>');
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').html('<%= j render("new_project_form") %>').show('normal');
+});

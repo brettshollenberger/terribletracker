@@ -71,10 +71,12 @@ FactoryGirl.define do
     factory :closed_clientship, traits: [:closed, :client, :joinable_project]
     factory :active_team_ownership, traits: [:active, :owner, :joinable_team]
     factory :active_team_collaboratorship, traits: [:active, :collaborator, :joinable_team]
+    factory :pending_team_membership, traits: [:pending, :collaborator, :joinable_team]
+    factory :active_team_membership, traits: [:active, :collaborator, :joinable_team]
   end
 
   factory :user_story do
-    title "Terrible Story"
+    sequence(:title) { |n| "Awesome Story #{n}"}
     story "As a user, I want to take over the world, so I can be its sole leader."
     estimate_in_quarter_days 1
     complexity 1
@@ -103,6 +105,12 @@ FactoryGirl.define do
     description "A very funny group of men"
     owner_id 1
     website "themerrymen.com"
+  end
+
+  factory :comment do
+    body "Cool dog!"
+    user
+    association :commentable, factory: :user_story
   end
 
 end

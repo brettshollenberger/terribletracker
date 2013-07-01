@@ -4,10 +4,13 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 feature "user can add projects" do
+  let(:ownership) { FactoryGirl.create(:active_team_ownership) }
+
   background do
-    user = FactoryGirl.create(:user)
-    login_as(user, :scope => :user)
-    visit root_path
+    @team = ownership.team
+    @owner = @team.owner
+    login_as(@owner, :scope => :user)
+    visit team_path(@team)
   end
 
   scenario "user sees empty project page" do

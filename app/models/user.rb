@@ -31,8 +31,20 @@ class User < ActiveRecord::Base
     source_type: 'Team'
   }
 
+  has_many :comments,
+    :as => :commentable,
+    :dependent => :destroy
+
   has_many :user_stories, {
     inverse_of: :user
   }
+
+  has_many :activities
+
+  def activities_for_teams
+    activities_array = []
+    self.teams.each { |team| activities_array.push(team.activities) }
+    return activities_array.flatten!
+  end
 
 end

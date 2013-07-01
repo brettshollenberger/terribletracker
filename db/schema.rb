@@ -11,7 +11,29 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130626232311) do
+ActiveRecord::Schema.define(:version => 20130701020631) do
+
+  create_table "activities", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "action"
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "information"
+  end
+
+  add_index "activities", ["trackable_id"], :name => "index_activities_on_trackable_id"
+  add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
+
+  create_table "comments", :force => true do |t|
+    t.text     "body",             :null => false
+    t.integer  "user_id",          :null => false
+    t.integer  "commentable_id",   :null => false
+    t.string   "commentable_type", :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
   create_table "memberships", :force => true do |t|
     t.integer  "user_id",                                   :null => false
@@ -26,7 +48,7 @@ ActiveRecord::Schema.define(:version => 20130626232311) do
 
   create_table "projects", :force => true do |t|
     t.string   "title",       :null => false
-    t.text     "description", :null => false
+    t.text     "description"
     t.integer  "budget"
     t.integer  "weekly_rate"
     t.datetime "created_at",  :null => false
@@ -36,7 +58,7 @@ ActiveRecord::Schema.define(:version => 20130626232311) do
 
   create_table "teams", :force => true do |t|
     t.string   "name",        :null => false
-    t.text     "description", :null => false
+    t.text     "description"
     t.integer  "owner_id",    :null => false
     t.string   "website"
     t.datetime "created_at",  :null => false
@@ -53,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20130626232311) do
     t.datetime "updated_at",                                        :null => false
     t.string   "state",                    :default => "unstarted", :null => false
     t.integer  "user_id"
+    t.integer  "position"
   end
 
   create_table "users", :force => true do |t|

@@ -1,6 +1,3 @@
-// Render the team's show page in the body of the document; it's the previous context
-$('#body-main').html('<%= j render("/teams/show_team") %>');
-
 // Remove the project_checked hidden_field from the project forms
 $('.project_checked').each(function() { $(this).remove(); });
 
@@ -11,3 +8,8 @@ $('label').each(function() {
   var for_label = $(this).attr('for');
   if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
 });
+
+$('#body-main').html('<%= j render("show_team") %>');
+
+$('#right-sidebar').html('<%= j render "/projects/new_project_form" %>');
+$('#new_team').remove();

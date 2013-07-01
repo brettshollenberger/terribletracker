@@ -1,13 +1,13 @@
-<%= link_to "x", "#", :id => "close" %><h2 class="right-sidebar">New Story</h2>
+<%= link_to "x", "#", :id => "close" %>
+<h2 class="right-sidebar">New Story</h2>
 <%= form_for [@project, @user_story], remote: true, :html => { :class => "terrible_story_bro", :id => "new_story_form" } do |f| %>
 
   <%= f.text_field :title, :placeholder => "Title", autofocus: true %>
   <br>
-  <%= f.text_area :story, :placeholder => "User story hipster ipsum yolo sit amet" %>
+  <%= f.text_area :story, :placeholder => "User story hipster ipsum yolo sit amet", :class => "description" %>
   <br>
-  <%= f.text_field :estimate_in_quarter_days, :placeholder => "Estimate in quarter days" %>
-  <br>
-  <%= f.text_field :complexity, :placeholder => "Complexity" %>
+  <%= f.text_field :estimate_in_quarter_days, :placeholder => "Estimate in quarter days", :class => "half-form-width" %>
+  <%= f.text_field :complexity, :placeholder => "Complexity", :class => "half-form-width" %>
   <br>
   <%= f.submit("Create Story", :class => "btn btn-success new-project-btn") %>
 
@@ -15,7 +15,7 @@
 
 <script>
 $('#close').click(function() {
-  $('#right-sidebar').hide('normal', function() {
+  $('#right-sidebar').hide('slide', {direction: "right"}, function() {
     $('#body-main').switchClass('span6', 'span9');
   });
 });

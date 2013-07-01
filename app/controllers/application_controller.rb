@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
     UserDecorator.decorate(super) unless super.nil?
   end
 
+  def track_activity(trackable, information=nil, action=params[:action])
+    current_user.activities.create! action: action, trackable: trackable, information: information
+  end
+
 end

@@ -1,0 +1,26 @@
+<%= link_to "x", "#", :id => "close" %>
+<h2 class="right-sidebar">New Project</h2>
+  <%= form_for @project, remote: true, url: { action: "create", controller: "projects" }, :html => { :class => "terrible_story_bro", :id => "new_project_form", :method => "post" } do |f| %>
+
+    <%= f.text_field :title, :placeholder => "Project Name", :autofocus => true %>
+    <br>
+    <%= f.text_area :description, :placeholder => "Description hipster ipsum yolo sit amet", :class => "description" %>
+    <br>
+    <%= f.text_field :budget, :placeholder => "Budget" %>
+    <br>
+    <%= f.text_field :weekly_rate, :placeholder => "Weekly Rate" %>
+    <br>
+    <%= f.hidden_field :team_id, :value => @team.id %>
+    <br>
+    <%= f.submit("Create Project", :class => "btn btn-success new-project-btn") %>
+
+  <% end %>
+</div>
+
+<script>
+$('#close').click(function() {
+  $('#right-sidebar').hide('normal', function() {
+    $('#body-main').switchClass('span6', 'span9');
+  });
+});
+</script>
