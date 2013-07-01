@@ -44,7 +44,8 @@ class User < ActiveRecord::Base
   def activities_for_teams
     activities_array = []
     self.teams.each { |team| activities_array.push(team.activities) }
-    return activities_array.flatten!
+    activities_array.flatten!.sort! { |a,b| a.created_at <=> b.created_at }
+    return activities_array.reverse
   end
 
 end
