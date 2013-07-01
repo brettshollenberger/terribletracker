@@ -1,11 +1,8 @@
 // Display new project form in project body
 $('#body-main').html('<%= j render("show_project") %>');
 
-// Remove project from sidebar
-$('#project_sidebar_<%= @team.id %>').remove();
-
-// Add project back to sidebar with new name
-$('#team_sidebar_<%= @team.id %>').append('<%= j render("/layouts/team_projects_nav") %>');
+// Add to sidebar with new name
+$('#project_title_<%= @project.id %>').html('<%= @project.title %>');
 
 // Since project is active, add the project checked tag
 $('.project_sidebar').each(function() {

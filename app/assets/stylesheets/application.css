@@ -229,19 +229,22 @@ input.todo-search-field.placeholder {
   font-style: italic;
 }
 
-.edit-project {
+.edit-project,
+.edit-team {
   width: 50%;
   height: 30px !important;
 }
 
-input.edit-project {
+input.edit-project,
+input.edit-team {
   font-size: 25px !important;
   font-family: Lato !important;
 }
 
-.gravatar-projects-page {
+.gravatar-small {
   width: 50px !important;
   float: right;
+  margin: 0 0 0 4px;
 }
 
 #right-sidebar {
@@ -249,7 +252,8 @@ input.edit-project {
   background-color: #ECF0F1;
 }
 
-h2.right-sidebar {
+h2.right-sidebar,
+div.right-sidebar {
   margin: 10px 0px 0 10px !important;
 }
 
@@ -267,4 +271,66 @@ h2.right-sidebar {
 .clickable-story {
   display: block;
   border: 2px solid black;
+}
+
+#new_team input#team_name {
+  text-align: center;
+  width: 100% !important;
+  background: none;
+  border: 0;
+  position: relative;
+  top: -5px;
+  left: 45px;
+  color: #2C3E50 !important;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 0 -60px !important;
+  line-height: 23px;
+  padding: 5px 0;
+  text-indent: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+#new_team input#team_name:-moz-placeholder {
+  color: #2C3E50 !important;
+}
+#new_team input#team_name::-webkit-input-placeholder {
+  color: #2C3E50 !important;
+}
+#new_team input#team_name.placeholder {
+  color: #2C3E50 !important;
+}
+
+.team_name {
+  display:inline !important;
+}
+
+.description {
+  height: 80px;
+  max-height: 80px;
+  max-width: 90%;
+}
+
+.dropdown-menu a {
+  text-decoration: none;
+}
+
+.comments-list {
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+.half-form-width {
+  width: 42.5% !important;
+}
+
+.pretty-created-at {
+  color: #95A5A6;
+  font-size: .7rem;
+}
+
+.assign-btn {
+  width: 50px;
 }

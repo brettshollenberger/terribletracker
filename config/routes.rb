@@ -1,4 +1,7 @@
 Terribletracker::Application.routes.draw do
+  resources :activities
+
+
   root to: "projects#index"
 
   devise_for :users do
@@ -8,15 +11,19 @@ Terribletracker::Application.routes.draw do
   end
 
   resources :projects do
-    resources :user_stories
+    resources :comments
+    resources :user_stories do
+      resources :comments
+    end
   end
 
   resources :memberships
 
   resources :teams
 
-  post "/show_projects", to: "teams#show_projects"
+  post "/teams/:id", to: "teams#show"
   post "/show_project", to: "teams#show_project"
+  get "/homepage", to: "projects#homepage"
 
   get "user_story/:id/unstarted", to: "user_stories#unstarted"
   get "user_story/:id/started", to: "user_stories#started"
@@ -24,6 +31,7 @@ Terribletracker::Application.routes.draw do
   get "user_story/:id/finished", to: "user_stories#finished"
   get "user_story/:user_story_id/assign/:id", to: "user_stories#assign"
   post "sort/user_stories", to: "user_stories#sort"
+  get "user_story/:id/show", to: "user_stories#show"
 
   get "/membership/:id/accept", to: "memberships#accept"
   get "/membership/:id/decline", to: "memberships#decline"
@@ -33,5 +41,7 @@ Terribletracker::Application.routes.draw do
   post "/create_team_membership", to: "memberships#create_team_membership"
   get "/add_project_to_team", to: "projects#add_project_to_team"
   put "/save_team_project_join", to: "projects#save_team_project_join"
+
+  post "user_story/:id/comments/new", to: "comments#new_user_story_comment"
 
 end

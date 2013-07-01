@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   def index
     @user = current_user
     @team = Team.new
+    @activities = current_user.activities_for_teams
     respond_to do |format|
       format.html
       format.js
@@ -21,8 +22,8 @@ class ProjectsController < ApplicationController
   end
 
   def new
-    @project = Project.new
     @team = Team.find(params[:team])
+    @project = @team.projects.new
 
     respond_to do |format|
       format.html
@@ -101,6 +102,16 @@ class ProjectsController < ApplicationController
     else
       flash[:notice] = "There was an error adding this project to that team"
       redirect_to add_project_to_team_path(@project)
+    end
+  end
+
+  def homepage
+    @user = current_user
+    @activities = current_user.activities_for_teams
+    @team = Team.new
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 

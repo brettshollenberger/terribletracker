@@ -1,0 +1,55 @@
+// Display new team in project body
+$('#body-main').html('').append('<%= j render("/teams/show_team") %>');
+
+// Add team to user's nav
+$('#user-specific-navbar').append('<%= j render("/layouts/add_team_with_projects_to_nav") %>');
+
+// Since team is checked on creation, append the team_checked field
+$('.team_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
+});
+
+<% if @checked %>
+  <% unless @checked.nil? %>
+    $('.team_checked').each(function() {
+      $(this).remove();
+    });
+    $('#project_sidebar_<%= @checked %>').removeClass('visible').hide('normal');
+    $('label').each(function() {
+      var for_label = $(this).attr('for');
+      if ( for_label == "team_<%= @checked %>" ) { $(this).removeClass('checked'); }
+      if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+    });
+    $('input[name=team_<%= @checked %>]').attr('checked', false);
+    $('input[class=project_checkbox]').each(function() {
+      $(this).attr('checked', false);
+    });
+  <% end %>
+<% end %>
+
+$('label').each(function() {
+  var la = $(this).attr('for');
+  if ( la == "team_<%= @team.id %>" ) { $(this).addClass('checked'); }
+});
+
+// Change new team link to reflect the fact that the team is checked
+$('#new_team_link').html('').append('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
+
+// Perform submitOnCheck for the new team sidebar once loaded
+jQuery.fn.submitOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
+  });
+  return this;
+};
+
+$('.team_sidebar').submitOnCheck();
+$('.project_sidebar').submitOnCheck();
+
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').show('normal');
+});
+
+$('#right-sidebar').html('<%= j render("/projects/new_project_form") %>');
+$('#new_team').remove();

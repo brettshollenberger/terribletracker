@@ -39,7 +39,7 @@ private
   end
 
   def decline
-    h.link_to "Decline", "/membership/#{id}/decline"
+    h.link_to "Decline", "/membership/#{id}/decline", remote: true
   end
 
   def team_dropdowns
@@ -55,7 +55,7 @@ private
   end
 
   def accept_team
-    h.link_to "Accept", "/membership/#{id}/accept_team"
+    h.link_to "Accept", "/membership/#{id}/accept_team",remote: true
   end
 
 end

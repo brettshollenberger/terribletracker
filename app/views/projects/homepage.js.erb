@@ -1,0 +1,39 @@
+// Render the homepage in project body
+$('#body-main').html('<%= j render("homepage") %>');
+
+// Remove new team form, if active
+$('#new_team').remove();
+
+// Hide all projects
+$('.project_sidebar').each(function() {
+  $(this).removeClass('visible').hide('normal');
+});
+
+// Remove the team_checked hidden_field from the team forms
+$('.team_checked').each(function() { $(this).remove(); });
+
+// Also remove the the project_checked hidden_field from the project forms;
+// we're back in a team context
+$('.project_checked').each(function() { $(this).remove(); });
+
+// Set checked to false for all teams
+$('input[class=team_checkbox]').each(function() {
+  $(this).attr('checked', false);
+});
+
+// And set it to false for all projects
+$('input[class=project_checkbox]').each(function() {
+  $(this).attr('checked', false);
+});
+
+// Also, remove the "checked" class from all labels
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label.substring(0, 5) == "team_" ) { $(this).removeClass('checked'); }
+  if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+});
+
+$('#right-sidebar').hide('slide', {direction: "right"}, function() {
+  // Render the homepage in project body
+  $('#body-main').html('<%= j render("homepage") %>').switchClass("span6", "span9");
+});

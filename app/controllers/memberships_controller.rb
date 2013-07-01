@@ -75,6 +75,11 @@ class MembershipsController < ApplicationController
   def new_team_membership
     @team = Team.find(params[:team])
     @membership = Membership.new
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def create_team_membership
@@ -88,23 +93,25 @@ class MembershipsController < ApplicationController
     else
       flash[:notice] = "There was an error inviting this member"
     end
-    redirect_to new_team_membership_path(team: @team)
+    respond_to do |format|
+      format.html { redirect_to new_team_membership_path(team: @team) }
+      format.js
+    end
   end
 
   def accept_team
     @membership = Membership.find(params[:id])
+    @team = @membership.joinable
+    @users = UserDecorator.decorate_collection(@team.members)
+    @project = @team.projects.new
     if @membership.approve_membership
       @membership.team.projects.each do |project|
         Membership.create(joinable: project, user: @membership.user, role: "collaborator", state: "active")
       end
-      if current_user != @membership.user
-        redirect_to logout_path
-      else
-        flash[:notice] = "You're a #{@membership.role}!"
-        redirect_to @membership.team
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
       end
-    else
-      redirect_to root_path
     end
   end
 
@@ -114,18 +121,22 @@ class MembershipsController < ApplicationController
     @team = @membership.joinable
     if @membership.delete
       @team.projects.each do |project|
-        destroy_project_membership(project)
-        remove_user_from_team_project(project)
+        begin
+          destroy_project_membership(project)
+          remove_user_from_team_project(project)
+        rescue
+          next
+        end
       end
-      flash[:notice] = "Member removed"
-    else
-      flash[:notice] = "There was an error removing this member."
     end
-    redirect_to @team
+    respond_to do |format|
+      format.html { redirect_to @team }
+      format.js
+    end
   end
 
   def destroy_project_membership(project)
-    Membership.where(user_id: @user.id, joinable_id: project.id, joinable_type: "Project").first.destroy
+    Membership.where(user_id: @user.id, joinable_id: project.id, joinable_type: "Project").first.delete
   end
 
   def remove_user_from_team_project(project)
@@ -136,5 +147,4 @@ class MembershipsController < ApplicationController
       end
     end
   end
-
 end

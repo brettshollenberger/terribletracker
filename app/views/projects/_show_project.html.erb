@@ -5,14 +5,12 @@
         <div class="notice"><%= notice %></div>
       <% end %>
       <% @users.each do |user| %>
-        <span class="gravatar-projects-page"><%= user.gravatar_project_page %></span>
+        <span class="gravatar-small"><%= user.gravatar_small %></span>
       <% end %>
       <%= form_for @project, remote: true do |f| %>
         <%= f.text_field :title, placeholder: "Title", :class => "edit-project" %>
       <% end %>
-      <%= link_to "Invite Collaborator", new_membership_path(project: @project), :class => 'btn btn-primary collaborator-btn' %>
       <%= link_to "New Story", new_project_user_story_path(@project), :class => 'btn btn-primary collaborator-btn', :id => "new-story-btn", remote: true %>
-
 
       <div class="project_budget">
         <%= @project.budget %>
@@ -22,6 +20,7 @@
       </div>
         <br>
         <br>
+        <h2>User Stories</h2>
         <%= render '/user_stories/list_user_stories' %>
         </div>
       </div>
@@ -30,9 +29,17 @@
 </div>
 
 <script>
+// Tabbed submission
 $('#project_title').keydown(function(e) {
   if (e.keyCode === 9) {
       $('#project_title').submit();
   }
+});
+
+// Click outside submission
+$('#project_title').keydown(function() {
+  $("#project_title").bind( "clickoutside", function(event){
+    $('#project_title').submit();
+  });
 });
 </script>
