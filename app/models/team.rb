@@ -23,6 +23,10 @@ class Team < ActiveRecord::Base
     inverse_of: :team
   }
 
+  has_many :activities,
+    :as => :trackable,
+    dependent: :destroy
+
   def owner
     owner = User.where(id: owner_id).first
     return owner unless owner == nil
@@ -54,8 +58,6 @@ class Team < ActiveRecord::Base
   end
 
   def activities
-    activities_array = []
-    self.members.each { |member| activities_array.push(Activity.where(user_id: member.id).all) }
-    return activities_array.flatten!
+    Activity.where(team_id: self.id).order("created_at desc").all
   end
 end

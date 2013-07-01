@@ -27,10 +27,11 @@ class UserStoriesController < ApplicationController
   def create
     @project = Project.find(params[:project_id])
     @user_story = @project.user_stories.new.decorate
+    @team = @project.team
 
     @user_story.update_attributes(params[:user_story])
 
-    track_activity(@user_story)
+    track_activity(@user_story, team=@team)
 
     respond_to do |format|
       format.html { redirect_to @project }
@@ -91,8 +92,9 @@ class UserStoriesController < ApplicationController
     @story = UserStory.find(params[:id])
     @story = @story.decorate
     @project = @story.project
+    @team = @project.team
     yield(@story)
-    track_activity(@story, information=@story.state, action="change_state")
+    track_activity(@story, team=@team, information=@story.state, action="change_state")
     respond_to do |format|
       format.html { redirect_to @project }
       format.js { render "update_story" }
@@ -106,7 +108,8 @@ class UserStoriesController < ApplicationController
     @story.user = @user
     @story.save
     @project = @story.project
-    track_activity(@story, information=@user.id)
+    @team = @project.team
+    track_activity(@story, team=@team, information=@user.id)
     flash[:notice] = "#{@user.decorate.full_name} assigned"
     respond_to do |format|
       format.html { redirect_to @story.project }

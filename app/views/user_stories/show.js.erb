@@ -10,29 +10,49 @@ $('#right-sidebar').append('<%= j render("user_story_comments") %>');
 
 $('#new_team').remove();
 
-// If another project was previously checked, uncheck it
-<% if @checked_project %>
-  <% unless @checked_project.nil? %>
-    $('.project_checked').each(function() {
+// If another team was previously checked, we want to uncheck the team they were
+// previously working on, and the project they were working on, if any.
+<% if @checked %>
+  <% unless @checked.nil? %>
+    $('.team_checked').each(function() {
       $(this).remove();
     });
+    $('#project_sidebar_<%= @checked %>').removeClass('visible').hide('normal');
     $('label').each(function() {
       var for_label = $(this).attr('for');
-      if ( for_label == "project_<%= @checked_project %>" ) { $(this).removeClass('checked'); }
+      if ( for_label == "team_<%= @checked %>" ) { $(this).removeClass('checked'); }
+      if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
     });
-    $('input[name=project_<%= @checked_project %>]').attr('checked', false);
-    $('input[name=project_<%= @project.id %>]').attr('checked', true);
+    $('input[name=team_<%= @checked %>]').attr('checked', false);
+    $('input[class=project_checkbox]').each(function() {
+      $(this).attr('checked', false);
+    });
   <% end %>
 <% end %>
 
-// Always add class checked to the new checkbox
+// Add the checked label to the team and project
 $('label').each(function() {
   var la = $(this).attr('for');
-  if ( la == "project_<%= @project.id %>" ) { $(this).addClass('checked'); }
+  if ( la == "team_<%= @team.id %>" ) { $(this).addClass('checked'); }
+  if ( la == "project_<%= @project.id %>") { $(this).addClass('checked'); }
 });
 
-// Add the project_checked hidden_field to all project_sidebar forms
-$('.project_sidebar').each(function() {
-  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+$('input[name=team_<%= @team.id %>]').attr('checked', true);
+$('input[name=team_<%= @project.id %>]').attr('checked', true);
+
+// Remove the project_checked hidden_field from whichever project was checked, so we don't have
+// a double-down issue later. The field has been unchecked, so we should also remove
+// the hidden_field
+$('.project_checked').each(function() { $(this).remove(); });
+
+// Add the team_checked hidden field to all team_sidebar forms, so we'll know which team
+// to hide when the user navigates away
+$('.team_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
 });
 
+// Display projects for a team
+$('#project_sidebar_<%= @team.id %>').addClass('visible').show('normal');
+
+// Change new team link to reflect the fact that the team is checked
+$('#new_team_link').html('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
