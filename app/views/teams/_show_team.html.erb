@@ -14,6 +14,20 @@
       <%= link_to "New Project", new_project_path(team: @team), :class => 'btn btn-primary project-btn', :id => "new-project-btn", remote: true %>
         <br>
         <br>
+        <% unless @activities.nil? %>
+          <h2>Recent Activity</h2>
+          <table class="table table-hover">
+            <tbody>
+              <% @activities.each do |activity| %>
+                <tr>
+                  <td><%= link_to activity.user.decorate.full_name, "#" %>
+                  <%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
+                  </td>
+                </tr>
+             <% end %>
+            </tbody>
+          </table>
+        <% end %>
 
         <h2>Members</h2>
           <table class="table table-hover">

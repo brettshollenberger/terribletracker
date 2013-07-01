@@ -1,0 +1,14 @@
+<h2>Recent Activity</h2>
+<table class="table table-hover">
+  <tbody>
+    <% @activities.each do |activity| %>
+      <% unless activity.trackable_id.nil? %>
+        <tr>
+          <td><%= activity.user.decorate.full_name %>
+          <%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
+          </td>
+        </tr>
+      <% end %>
+   <% end %>
+  </tbody>
+</table>

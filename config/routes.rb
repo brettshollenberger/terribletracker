@@ -1,4 +1,7 @@
 Terribletracker::Application.routes.draw do
+  resources :activities
+
+
   root to: "projects#index"
 
   devise_for :users do
@@ -28,6 +31,7 @@ Terribletracker::Application.routes.draw do
   get "user_story/:id/finished", to: "user_stories#finished"
   get "user_story/:user_story_id/assign/:id", to: "user_stories#assign"
   post "sort/user_stories", to: "user_stories#sort"
+  get "user_story/:id/show", to: "user_stories#show"
 
   get "/membership/:id/accept", to: "memberships#accept"
   get "/membership/:id/decline", to: "memberships#decline"

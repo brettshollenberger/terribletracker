@@ -32,11 +32,4 @@ $('#new_user_story_comment_form').keydown(function(e) {
       $('#new_user_story_comment_form').submit();
   }
 });
-
-// Click outside submission
-$('#new_user_story_comment_form').keydown(function() {
-  $("#new_user_story_comment_form").bind( "clickoutside", function(event){
-    $('#new_user_story_comment_form').submit();
-  });
-})
 </script>

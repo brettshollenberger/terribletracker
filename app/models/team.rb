@@ -52,4 +52,10 @@ class Team < ActiveRecord::Base
     Membership.where(joinable_id: id, joinable_type: "Team", role: "collaborator", state: "pending").all.each { |membership| members_list.push(membership.user) }
     return UserDecorator.decorate_collection(members_list)
   end
+
+  def activities
+    activities_array = []
+    self.members.each { |member| activities_array.push(Activity.where(user_id: member.id).all) }
+    return activities_array.flatten!
+  end
 end

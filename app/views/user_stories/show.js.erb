@@ -1,6 +1,13 @@
-// Render the project's show page in the main body
+$('#body-main').switchClass('span9', 'span6', function() {
+  $('#right-sidebar').show('normal');
+});
+
 $('#body-main').html('<%= j render("/projects/show_project") %>');
-$('#right-sidebar').html('<%= j render "/user_stories/new_user_story_form" %>');
+
+$('#right-sidebar').html('<%= j render("edit_user_story") %>');
+
+$('#right-sidebar').append('<%= j render("user_story_comments") %>');
+
 $('#new_team').remove();
 
 // If another project was previously checked, uncheck it
@@ -27,9 +34,5 @@ $('label').each(function() {
 // Add the project_checked hidden_field to all project_sidebar forms
 $('.project_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
-});
-
-$('#body-main').switchClass('span9', 'span6', function() {
-  $('#right-sidebar').show('normal');
 });
 

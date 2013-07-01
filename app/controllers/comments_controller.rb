@@ -10,7 +10,8 @@ class CommentsController < ApplicationController
         format.js
       end
     else
-      @comment_notice = "There was an error posting your comment"
+      @comment_notice = "You've already said that here."
+      @comment_notice = "" if @comment.body.length == 0
       respond_to do |format|
         format.html { redirect_to @user_story.project }
         format.js { render "comment_error.js" }

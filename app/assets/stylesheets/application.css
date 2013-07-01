@@ -244,6 +244,7 @@ input.edit-team {
 .gravatar-small {
   width: 50px !important;
   float: right;
+  margin: 0 0 0 4px;
 }
 
 #right-sidebar {
@@ -328,4 +329,8 @@ div.right-sidebar {
 .pretty-created-at {
   color: #95A5A6;
   font-size: .7rem;
+}
+
+.assign-btn {
+  width: 50px;
 }

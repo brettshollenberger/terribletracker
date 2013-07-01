@@ -34,14 +34,4 @@ $('#edit_story_form').keydown(function(e) {
     $('#edit_story_form').submit();
   }
 });
-
-// Click outside submission
-$('#edit_story_form').keydown(function() {
-  $("#edit_story_form").bind( "clickoutside", function(event){
-    $('#edit_story_form').submit();
-  });
-  $('#edit_story_form').click(function() {
-    $('#edit_story_form').submit();
-  })
-})
 </script>

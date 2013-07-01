@@ -39,4 +39,12 @@ class User < ActiveRecord::Base
     inverse_of: :user
   }
 
+  has_many :activities
+
+  def activities_for_teams
+    activities_array = []
+    self.teams.each { |team| activities_array.push(team.activities) }
+    return activities_array.flatten!
+  end
+
 end

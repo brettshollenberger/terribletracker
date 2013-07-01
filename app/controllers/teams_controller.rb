@@ -40,6 +40,7 @@ class TeamsController < ApplicationController
     @projects = @team.projects.order("created_at")
     @project = @team.projects.new
     @users = UserDecorator.decorate_collection(@team.members)
+    @activities = @team.activities
 
     if @team.id == @checked
       hide_projects
@@ -88,7 +89,10 @@ class TeamsController < ApplicationController
   end
 
   def hide_project
+    @team = @project.team
+    @activities = @team.activities
     @project = Project.new
+
     respond_to do |format|
       format.html { redirect_to team_path(@team) }
       format.js { render "hide_project" }

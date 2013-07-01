@@ -13,9 +13,10 @@
         <% if current_user.active_projects.empty? %>
           <%= render '/projects/welcome_page' %>
         <% else %>
-          <%= render '/projects/projects_page' %>
+          <%= render '/activities/index' %>
         <% end %>
         <%= link_to "Create Team", new_team_path, :class => "btn btn-primary homepage-btn", remote: true %>
+
     </div>
   </div>
 </div>
