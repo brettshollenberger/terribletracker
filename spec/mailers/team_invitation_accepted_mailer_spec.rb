@@ -8,39 +8,44 @@ include EmailSpec::Matchers
 describe InvitationAcceptedMailer do
 
   before(:each) do
-    @active_team_collaboratorship = FactoryGirl.create(:active_team_collaboratorship)
-    @active_collaborator = @active_team_collaboratorship.user
-    @team = @active_team_collaboratorship.team
+    @active_team_ownership = FactoryGirl.create(:active_team_ownership)
+    @active_owner = @active_team_ownership.user
+    @team = @active_team_ownership.team
+    @active_collaboratorship = FactoryGirl.create(:active_team_membership, joinable: @team)
+    @active_collaborator = @active_collaboratorship.user
     @new_collaborator = FactoryGirl.create(:user)
     visit root_path
 
-    fill_in "Email", with: @active_collaborator.email
-      fill_in "Password", with: "foobar29"
-      click_on "Sign in"
+    login(@active_collaborator)
 
-      find("#team_name_#{@team.id}").click
+    find("#team_name_#{@team.id}").click
 
-      click_link "Invite Collaborator"
-      fill_in "User's Email", with: @new_collaborator.email
-      click_button "Add Member"
+    click_link "Invite Collaborator"
+    fill_in "User's Email", with: @new_collaborator.email
+    click_button "Add Member"
 
-      @new_membership = @new_collaborator.memberships.first
+    # Wait until collaborator invited notice appears on page
+    # before looking for the new membership; strange
+    # AJAX thing.
+    find("#collaborator_notice").should have_content("invited")
 
-      @email_team_owner = InvitationAcceptedMailer.
-        team_invitation_accepted_email_owner(
-          @new_collaborator,
-          @team)
+    @new_membership = @new_collaborator.memberships.first
 
-      @email_team_inviter = InvitationAcceptedMailer.
-        team_invitation_accepted_email_inviter(
-          @new_collaborator,
-          @team)
+    @email_team_owner = InvitationAcceptedMailer.
+      team_invitation_accepted_email_owner(
+        @new_collaborator,
+        @team)
+
+    @email_team_inviter = InvitationAcceptedMailer.
+      team_invitation_accepted_email_inviter(
+        @new_collaborator,
+        @team)
   end
 
   context "invitation_accepted_email_owner mailer", type: :feature, js: true do
 
     it "is delivered to owner of the team" do
-      @email_team_owner.should deliver_to(owner.email)
+      @email_team_owner.should deliver_to(@active_owner.email)
     end
 
     it "should contain the user's name in the message" do

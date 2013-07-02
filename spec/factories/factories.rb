@@ -97,7 +97,7 @@ FactoryGirl.define do
   end
 
   factory :comment do
-    body "Cool dog!"
+    sequence(:body) { |n| "Cool dog #{n}!" }
     user
     association :commentable, factory: :user_story
   end

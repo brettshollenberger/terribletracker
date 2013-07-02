@@ -62,3 +62,10 @@ RSpec.configure do |config|
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
 end
+
+def login(user)
+  visit root_path
+  fill_in "Email", with: user.email
+  fill_in "Password", with: "foobar29"
+  click_on "Sign in"
+end

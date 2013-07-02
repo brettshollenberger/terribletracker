@@ -17,6 +17,7 @@ feature 'collaborator comments on user story', %q{
   context 'as a collaborator' do
     let(:membership) { FactoryGirl.create(:active_collaboratorship) }
     let(:story)      { FactoryGirl.create(:user_story) }
+    let(:comment)    { FactoryGirl.create(:comment) }
 
     background do
       @project = membership.project
@@ -28,11 +29,11 @@ feature 'collaborator comments on user story', %q{
       visit project_path(@project)
     end
 
-    scenario 'commenting on a user story' do
+    scenario 'commenting on a user story', js: true do
       click_on story.title
-      fill_in "Comment", with: "Cool!"
-      click_on "Submit"
-      expect(page).to have_content('Cool!')
+      fill_in "Comment", with: comment.body
+      click_on "Comment"
+      expect(page).to have_content('Cool dog')
     end
   end
 end
