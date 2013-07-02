@@ -27,8 +27,7 @@ class UserStory < ActiveRecord::Base
     :dependent => :destroy
 
   has_many :activities,
-    :as => :trackable,
-    dependent: :destroy
+    :as => :trackable
 
   state_machine :state, :initial => :unstarted do
     after_transition any => :started, :do => :add_to_active_stories

@@ -1,32 +1,26 @@
 require 'spec_helper'
 
 describe Membership do
-  let(:membership)               { FactoryGirl.create(:membership)}
+  let(:membership)               { FactoryGirl.create(:membership) }
+  let(:project)                  { membership.project }
   let(:active_ownership)         { FactoryGirl.create(:active_ownership) }
   let(:pending_ownership)        { FactoryGirl.create(:pending_ownership) }
-  let(:closed_ownership)         { FactoryGirl.create(:closed_ownership) }
   let(:pending_collaboratorship) { FactoryGirl.create(:pending_collaboratorship) }
   let(:active_collaboratorship)  { FactoryGirl.create(:active_collaboratorship) }
-  let(:closed_collaboratorship)  { FactoryGirl.create(:closed_collaboratorship) }
   let(:pending_clientship)       { FactoryGirl.create(:pending_clientship) }
   let(:active_clientship)        { FactoryGirl.create(:active_clientship) }
-  let(:closed_clientship)        { FactoryGirl.create(:closed_clientship) }
   let(:active_team_ownership)    { FactoryGirl.create(:active_team_ownership) }
+  let(:team)                     { active_team_ownership.team }
 
   it "is valid" do
     expect(membership).to be_valid
     expect(active_ownership).to be_valid
     expect(pending_ownership).to be_valid
-    expect(closed_ownership).to be_valid
     expect(pending_collaboratorship).to be_valid
     expect(active_collaboratorship).to be_valid
-    expect(closed_collaboratorship).to be_valid
     expect(pending_clientship).to be_valid
     expect(active_clientship).to be_valid
-    expect(closed_clientship).to be_valid
     expect(active_team_ownership).to be_valid
-    expect(active_team_ownership.team).to be_valid
-    expect(active_team_ownership.team.owner).to be_valid
   end
 
   it "is not valid with a non-standard role" do
@@ -51,4 +45,23 @@ describe Membership do
     expect(membership).to validate_presence_of("user_id")
     expect(membership).to validate_presence_of("state")
   end
+
+  describe "#project" do
+    let(:membership)               { FactoryGirl.create(:membership) }
+    let(:project)                  { membership.project }
+
+    it "returns the project" do
+      expect(membership.project).to eql(project)
+    end
+  end
+
+  describe "#team" do
+    let(:active_team_ownership)    { FactoryGirl.create(:active_team_ownership) }
+    let(:team)                     { active_team_ownership.team }
+
+    it "returns the team" do
+      expect(active_team_ownership.team).to eql(team)
+    end
+  end
+
 end

@@ -15,7 +15,6 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem "twitter-bootstrap-rails"
 gem "draper"
 gem 'flatui-rails'
-gem 'public_activity'
 
 group :development, :test do
   gem 'rspec-rails'
@@ -29,6 +28,7 @@ end
 
 group :test do
   gem 'email_spec'
+  gem 'database_cleaner'
 end
 
 # Gems used only for assets and not required
