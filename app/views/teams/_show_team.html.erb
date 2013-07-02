@@ -15,22 +15,11 @@
         <br>
         <br>
         <% unless @activities.nil? %>
-          <h2>Recent Activity</h2>
-          <table class="table table-hover">
-            <tbody>
-              <% @activities.each do |activity| %>
-                <tr>
-                  <td><%= link_to activity.user.decorate.full_name, "#" %>
-                  <%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
-                  </td>
-                </tr>
-             <% end %>
-            </tbody>
-          </table>
+          <%= render "activities/index" %>
         <% end %>
 
         <h2>Members</h2>
-          <table class="table table-hover">
+          <table class="table table-hover team-members-table">
             <thead>
               <th>Name</th>
               <th>Email</th>
@@ -42,7 +31,7 @@
                   <td><%= member.email %></td>
                   <% unless member == current_user %>
                     <% if @team.owner == current_user %>
-                      <td><%= link_to "Remove Member", "/membership/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}/remove_team", method: :delete, remote: true %></td>
+                      <td><%= link_to "Remove Member", "/membership/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}/remove_team", method: :delete, remote: true, :class => "remove-member-link" %></td>
                     <% end %>
                   <% end %>
                 </tr>

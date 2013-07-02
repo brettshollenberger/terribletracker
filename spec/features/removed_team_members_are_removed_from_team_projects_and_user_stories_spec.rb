@@ -31,15 +31,16 @@ feature 'removed team members are automatically removed from team projects and u
       project.team = @team
       project.save
       project.reload
+      login(@owner)
     end
 
-    scenario "remove a team member" do
-      login_as(@owner, scope: :user)
-      visit team_path(@team)
-      click_on "Remove Member"
-      logout(@owner)
-      login_as(@collaborator, scope: :user)
-      visit root_path
+    scenario "remove a team member", type: :feature, js: true do
+      visit_team_path(@team)
+      find(".team-members-table").should have_content(@collaborator.full_name)
+      find(".remove-member-link").click
+      find(".team-members-table").should_not have_content(@collaborator.full_name)
+      find("#logout-btn").click
+      login(@collaborator)
       expect(page).to_not have_content(project.title)
     end
   end

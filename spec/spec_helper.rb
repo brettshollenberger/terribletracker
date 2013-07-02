@@ -70,7 +70,11 @@ def login(user)
   click_on "Sign in"
 end
 
-def visit_project_page(team, project)
+def visit_team_path(team)
   find("#team_name_#{team.id}").click
+end
+
+def visit_project_page(team, project)
+  visit_team_path(team)
   find("#project_title_#{project.id}").click
 end

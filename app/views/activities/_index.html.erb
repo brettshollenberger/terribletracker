@@ -2,7 +2,7 @@
 <table class="table table-hover">
   <tbody>
     <% @activities.each do |activity| %>
-      <% unless activity.trackable_id.nil? %>
+      <% unless activity.trackable.nil? %>
         <tr>
           <td><%= activity.user.decorate.full_name %>
           <%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>

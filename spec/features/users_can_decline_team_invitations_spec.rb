@@ -13,27 +13,21 @@ feature 'collaborators and clients can decline team invitations', %q{
   # They click the decline button, and the team is removed from their view.
 
   context 'as a collaborator' do
-    let(:ownership)        { FactoryGirl.create(:active_team_ownership) }
-    let(:new_collaborator) { FactoryGirl.create(:user) }
-
     background do
-      @owner = ownership.user
-      @team = ownership.team
-      login_as(@owner, scope: :user)
-      visit team_path(@team)
-      click_link "Add Team Member"
-      fill_in "User's Email", with: new_collaborator.email
-      click_button "Add Member"
-      logout(@owner)
-      login_as(new_collaborator, scope: :user)
-      visit root_path
+      @active_team_ownership = FactoryGirl.create(:active_team_ownership)
+      @active_owner = @active_team_ownership.user
+      @team = @active_team_ownership.team
+      @pending_collaboratorship = FactoryGirl.create(:pending_team_membership, joinable: @team)
+      @pending_collaborator = @pending_collaboratorship.user
+
+      login(@pending_collaborator)
     end
 
-    scenario 'declining invitations' do
-      click_link "Decline"
-
-      expect(page).to have_content("You've declined")
-      expect(page).to_not have_content(@team.name)
+    scenario 'accepting invitations', type: :feature, js: true do
+      find('.dropdown-toggle').click
+      find('.decline-invitation').should have_content("Decline")
+      find('.decline-invitation').click
+      find('#user-specific-navbar').should_not have_content(@team.name)
     end
   end
 end

@@ -42,7 +42,7 @@
   <br>
 <!-- ################## Login ###################### -->
 <%= link_to "Edit Profile", edit_user_registration_path(user: current_user), :class => "btn btn-block profile", remote: true %><br>
-<%= link_to "Logout", logout_path, :class => "btn btn-block profile" %>
+<%= link_to "Logout", logout_path, :class => "btn btn-block profile", :id => "logout-btn" %>
 <% end %><!-- End if current_user -->
 
 <script>

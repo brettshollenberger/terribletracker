@@ -31,15 +31,14 @@ feature 'new team members are automatically added to all projects', %q{
       project.save
       project.reload
 
-      login_as(@collaborator, scope: :user)
-      visit root_path
+      login(@collaborator)
     end
 
-    scenario 'accepts invitation' do
-      click_link "Accept"
-
-      expect(page).to have_content("You're a collaborator!")
-      expect(page).to have_content(@team.name)
+    scenario 'accepts invitation', type: :feature, js: true do
+      find('.dropdown-toggle').click
+      find('.accept-invitation').should have_content("Accept")
+      find('.accept-invitation').click
+      find('#user-specific-navbar').should have_content(@team.name)
       expect(page).to have_content(project.title)
     end
   end
