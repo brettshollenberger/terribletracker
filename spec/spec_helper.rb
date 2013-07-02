@@ -69,3 +69,8 @@ def login(user)
   fill_in "Password", with: "foobar29"
   click_on "Sign in"
 end
+
+def visit_project_page(team, project)
+  find("#team_name_#{team.id}").click
+  find("#project_title_#{project.id}").click
+end

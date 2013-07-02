@@ -27,8 +27,7 @@ feature 'collaborator deletes user story', %q{
     end
 
     scenario 'adding a user story to a project', js: true do
-      find("#team_name_#{@team.id}").click
-      find("#project_title_#{@project.id}").click
+      visit_project_page(@team, @project)
 
       find("#body-main").should have_content(@user_story.title)
 
