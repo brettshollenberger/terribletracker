@@ -17,25 +17,24 @@ feature 'collaborator deletes user story', %q{
   context 'as a collaborator', js: true do
 
     background do
-      @membership = FactoryGirl.create(:active_team_membership)
-      @team = @membership.joinable
+      @ownership = FactoryGirl.create(:active_team_ownership)
+      @team = @ownership.joinable
       @project = FactoryGirl.create(:project, team: @team)
-      @user = @membership.user
+      @owner = @team.owner
       @user_story = FactoryGirl.create(:user_story, project: @project)
 
-      login(@user)
-
-      visit root_path
+      login(@owner)
     end
 
-    scenario 'adding a user story to a project' do
+    scenario 'adding a user story to a project', js: true do
       find("#team_name_#{@team.id}").click
-      find("#project_#{@project.id}").click
-      expect(page).to have_content('Terrible Story')
+      find("#project_title_#{@project.id}").click
+
+      find("#body-main").should have_content(@user_story.title)
 
       click_on "Delete"
 
-      expect(page).to_not have_content('Terrible Story')
+      find("#body-main").should_not have_content(@user_story.title)
     end
   end
 end
