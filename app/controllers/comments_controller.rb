@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_filter :authenticate_user!
+
   def new_user_story_comment
     @user_story = UserStory.find(params[:comment][:user_story])
     @user = current_user

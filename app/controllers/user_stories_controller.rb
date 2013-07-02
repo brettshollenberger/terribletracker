@@ -1,4 +1,6 @@
 class UserStoriesController < ApplicationController
+  before_filter :authenticate_user!
+
   def new
     @project = Project.find(params[:project_id])
     @user_story = UserStory.new

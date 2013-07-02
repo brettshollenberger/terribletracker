@@ -41,11 +41,8 @@ class User < ActiveRecord::Base
 
   has_many :activities
 
-  def activities_for_teams
-    activities_array = []
-    self.teams.each { |team| activities_array.push(team.activities) }
-    activities_array.flatten!.sort! { |a,b| a.created_at <=> b.created_at }
-    return activities_array.reverse
+  def recent_activities
+    Activity.where("team_id IN (?)", teams).order('created_at DESC')
   end
 
 end
