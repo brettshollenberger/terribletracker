@@ -1,4 +1,5 @@
 class MembershipsController < ApplicationController
+  # before_filter :authenticate_user!
 
   def new
     @project = Project.find(params[:project])
@@ -85,7 +86,7 @@ class MembershipsController < ApplicationController
   def create_team_membership
     @team = Team.find(params[:membership][:team])
     @user = User.where(email: params[:membership][:user]).first
-    @membership = Membership.new(user: @user, joinable: @team, inviter_id: current_user.id)
+    @membership = Membership.new(user: @user, joinable_id: @team.id, joinable_type: "Team", inviter: current_user)
 
     if @membership.save
       TeamInvitationMailer.team_invitation_email(@user, @team).deliver

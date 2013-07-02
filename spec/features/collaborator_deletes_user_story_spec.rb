@@ -14,25 +14,27 @@ feature 'collaborator deletes user story', %q{
   # they have updated the story successfully, and they can see the updated
   # story on the project page.
 
-  context 'as a collaborator' do
-    let(:membership) { FactoryGirl.create(:active_collaboratorship) }
+  context 'as a collaborator', js: true do
 
     background do
-      @project = membership.project
-      @user = membership.user
-      @story = FactoryGirl.create(:user_story)
-      @story.project = @project
-      @story.save
-      login_as(@user, scope: :user)
-      visit project_path(@project)
+      @ownership = FactoryGirl.create(:active_team_ownership)
+      @team = @ownership.joinable
+      @project = FactoryGirl.create(:project, team: @team)
+      @owner = @team.owner
+      @user_story = FactoryGirl.create(:user_story, project: @project)
+
+      login(@owner)
     end
 
-    scenario 'adding a user story to a project' do
-      expect(page).to have_content('Terrible Story')
+    scenario 'adding a user story to a project', js: true do
+      find("#team_name_#{@team.id}").click
+      find("#project_title_#{@project.id}").click
+
+      find("#body-main").should have_content(@user_story.title)
 
       click_on "Delete"
 
-      expect(page).to_not have_content('Terrible Story')
+      find("#body-main").should_not have_content(@user_story.title)
     end
   end
 end

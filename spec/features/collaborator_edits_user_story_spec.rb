@@ -14,43 +14,34 @@ feature 'collaborator edits user story', %q{
   # they have updated the story successfully, and they can see the updated
   # story on the projects page.
 
-  context 'as a collaborator' do
+  context 'as a collaborator', js: true do
     let(:membership) { FactoryGirl.create(:active_team_collaboratorship) }
 
     background do
-      @team = membership.team
-      @user = membership.user
-      @story = FactoryGirl.create(:user_story)
-      @story.project = @project
-      @story.save
-      login_as(@user, scope: :user)
-      visit root_path
+      @ownership = FactoryGirl.create(:active_team_ownership)
+      @team = @ownership.joinable
+      @project = FactoryGirl.create(:project, team: @team)
+      @owner = @team.owner
+      @user_story = FactoryGirl.create(:user_story, project: @project)
 
-      click_on @project.title
+      login(@owner)
     end
 
     scenario 'adding a user story to a project', :js => true do
-      click_on @story.title
-      save_and_open_page
+      find("#team_name_#{@team.id}").click
+      find("#project_title_#{@project.id}").click
+      find("#user_story_link_#{@user_story.id}").click
       fill_in 'user_story[title]', with: 'Fast Times'
       fill_in 'user_story[story]', with: 'As a student at Ridgemont High, I would like to
         enjoy fast times.'
-      fill_in 'user_story[estimate_in_quarter_days]', with: 2
-      fill_in 'user_story[complexity]', with: 7
 
-      click_on 'Update Story'
+      # Simulate form submission
+      keypress_script = "$('#edit_story_form').submit();"
+      page.driver.execute_script(keypress_script)
 
-      expect(page).to have_content("Story updated")
-
-      expect(page).to have_content("Fast Times")
-      expect(page).to have_content("As a student")
-      expect(page).to have_content(".5 days")
-      expect(page).to have_content("7")
-
-      expect(page).to_not have_content('New user story')
-      expect(page).to_not have_content('foo bar baz')
-      expect(page).to_not have_content('0.25 days')
-      expect(page).to_not have_content('Complexity: 1')
+      find('#body-main').should have_content("Fast Times")
+      find("#user_story_link_#{@user_story.id}").click
+      find('#user_story_story').should have_content("As a student")
     end
   end
 end

@@ -7,10 +7,6 @@ FactoryGirl.define do
     password "foobar29"
     sequence(:first_name) { |n| "Yoda#{n}" }
     last_name "The Great One"
-
-    trait :one do
-      id 1
-    end
   end
 
   factory :project do
@@ -23,7 +19,7 @@ FactoryGirl.define do
 
   factory :membership do
     user
-    role "collaborator"
+    role "owner"
     state "active"
     inviter_id 1
     association :joinable, factory: :project
@@ -48,10 +44,6 @@ FactoryGirl.define do
       state "active"
     end
 
-    trait :closed do
-      state "closed"
-    end
-
     trait :joinable_project do
       association :joinable, factory: :project
     end
@@ -62,13 +54,10 @@ FactoryGirl.define do
 
     factory :active_ownership, traits: [:active, :owner, :joinable_project]
     factory :pending_ownership, traits: [:pending, :owner, :joinable_project]
-    factory :closed_ownership, traits: [:closed, :owner, :joinable_project]
     factory :pending_collaboratorship, traits: [:pending, :collaborator, :joinable_project]
     factory :active_collaboratorship, traits: [:active, :collaborator, :joinable_project]
-    factory :closed_collaboratorship, traits: [:closed, :collaborator, :joinable_project]
-    factory :pending_clientship, traits: [:pending, :client, :joinable_project]
-    factory :active_clientship, traits: [:active, :client, :joinable_project]
-    factory :closed_clientship, traits: [:closed, :client, :joinable_project]
+    factory :pending_clientship, traits: [:pending, :client, :joinable_team]
+    factory :active_clientship, traits: [:active, :client, :joinable_team]
     factory :active_team_ownership, traits: [:active, :owner, :joinable_team]
     factory :active_team_collaboratorship, traits: [:active, :collaborator, :joinable_team]
     factory :pending_team_membership, traits: [:pending, :collaborator, :joinable_team]
@@ -101,16 +90,23 @@ FactoryGirl.define do
   end
 
   factory :team do
-    name "The Merry Men"
+    sequence(:name) { |n| "The Merry Men #{n}" }
     description "A very funny group of men"
-    owner_id 1
+    association :owner, factory: :user
     website "themerrymen.com"
   end
 
   factory :comment do
-    body "Cool dog!"
+    sequence(:body) { |n| "Cool dog #{n}!" }
     user
     association :commentable, factory: :user_story
+  end
+
+  factory :activity do
+    user
+    team
+    action "create"
+    association :trackable, factory: :user_story
   end
 
 end

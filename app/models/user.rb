@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name,
     :bio, :webpage, :project
-  # attr_accessible :title, :body
 
   validates :first_name, :last_name, {
     presence: true
@@ -41,11 +40,8 @@ class User < ActiveRecord::Base
 
   has_many :activities
 
-  def activities_for_teams
-    activities_array = []
-    self.teams.each { |team| activities_array.push(team.activities) }
-    activities_array.flatten!.sort! { |a,b| a.created_at <=> b.created_at }
-    return activities_array.reverse
+  def recent_activities
+    Activity.where("team_id IN (?)", teams).order('created_at DESC')
   end
 
 end

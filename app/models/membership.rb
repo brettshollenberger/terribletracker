@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :joinable, :role, :user, :state, :inviter_id, :joinable_id, :joinable_type
+  attr_accessible :joinable, :role, :user, :state, :inviter_id, :joinable_id, :joinable_type, :inviter
 
   validates :role, :user, :joinable, :state, :user_id, :joinable_id, :joinable_type, {
     presence: true
@@ -16,6 +16,9 @@ class Membership < ActiveRecord::Base
   validates_uniqueness_of :user_id, {
     :scope => [:joinable_id, :joinable_type]
   }
+
+  belongs_to :inviter,
+    :class_name => "User"
 
   belongs_to :user, {
     inverse_of: :memberships
@@ -73,10 +76,6 @@ class Membership < ActiveRecord::Base
 
   def email_reopen_confirmations
     print "Email reopen confirmations"
-  end
-
-  def inviter
-    User.find(inviter_id)
   end
 
   def project
