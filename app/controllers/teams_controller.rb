@@ -18,12 +18,12 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(params[:team])
     @team.owner_id = current_user.id
-    @users = UserDecorator.decorate_collection(@team.members)
     @project = @team.projects.new
 
     if @team.save
-      @membership = Membership.new(joinable: @team, user: current_user, role: "owner", state: "active")
+      @membership = Membership.new(joinable_id: @team.id, joinable_type: "Team", user: current_user, role: "owner", state: "active")
       @membership.save
+      @users = UserDecorator.decorate_collection(@team.members)
 
       respond_to do |format|
         format.html
