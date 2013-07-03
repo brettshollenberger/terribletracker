@@ -24,6 +24,8 @@ class TeamsController < ApplicationController
       @membership = Membership.new(joinable_id: @team.id, joinable_type: "Team", user: current_user, role: "owner", state: "active")
       @membership.save
       @users = UserDecorator.decorate_collection(@team.members)
+      track_team_activity(@team, team=@team)
+      @activity = find_activity
 
       respond_to do |format|
         format.html
@@ -116,6 +118,10 @@ private
         return $1
       end
     end
+  end
+
+  def find_activity
+    Activity.where(team_id: @team.id).order("created_at DESC").first
   end
 
 end
