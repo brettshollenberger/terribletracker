@@ -14,32 +14,28 @@ feature 'collaborators and clients can accept team invitations', %q{
   # teams list in their navbar.
 
   context 'as a collaborator' do
-    let(:ownership)        { FactoryGirl.create(:active_team_ownership) }
-    let(:collaboratorship) { FactoryGirl.create(:active_team_collaboratorship) }
-    let(:new_collaborator) { FactoryGirl.create(:user) }
-
     background do
-      @owner = ownership.user
-      @team = ownership.team
-      collaboratorship.joinable = @team
-      collaboratorship.save
-      @collaborator = collaboratorship.user
-      login_as(@collaborator, scope: :user)
-      visit team_path(@team)
-      click_link "Add Team Member"
-      fill_in "User's Email", with: new_collaborator.email
-      click_button "Add Member"
-      logout(@collaborator)
-      login_as(new_collaborator, scope: :user)
-      visit root_path
+      @active_team_ownership = FactoryGirl.create(:active_team_ownership)
+      @active_owner = @active_team_ownership.user.decorate
+      @team = @active_team_ownership.team
+      @active_collaboratorship = FactoryGirl.create(:active_team_membership, joinable: @team)
+      @active_collaborator = @active_collaboratorship.user.decorate
+      @pending_collaboratorship = FactoryGirl.create(:pending_team_membership, joinable: @team, inviter: @active_collaborator)
+      @pending_collaborator = @pending_collaboratorship.user.decorate
+
+      login(@pending_collaborator)
     end
 
-    scenario 'seeing invitations' do
-      expect(page).to have_content(@team.name)
-      expect(page).to have_content(@owner.decorate.full_name)
-      expect(page).to have_content(@collaborator.decorate.full_name)
-      expect(page).to have_content("Accept")
-      expect(page).to have_content("Decline")
+    scenario 'seeing invitations', type: :feature, js: true do
+      within "#body-main" do
+        expect(page).to have_content(@team.name)
+        expect(page).to have_content(@active_owner.full_name)
+        expect(page).to have_content(@active_collaborator.full_name)
+      end
+      find('.dropdown-toggle').click
+      find('.accept-invitation').should have_content("Accept")
+      find('.decline-invitation').should have_content("Decline")
+      find('#user-specific-navbar').should_not have_content(@team.name)
     end
   end
 end

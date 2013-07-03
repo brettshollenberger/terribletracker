@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'team owners can remove members', %q{
   As a team owner,
   I want to remove members,
@@ -16,28 +13,22 @@ feature 'team owners can remove members', %q{
   # member removal abilities.
 
   context 'as a collaborator' do
-    let(:ownership)  { FactoryGirl.create(:active_team_ownership) }
-    let(:membership) { FactoryGirl.create(:active_team_collaboratorship) }
+    background do
+      create_team_with_project
+    end
 
-    scenario 'adding a user story to a project' do
-      @team = ownership.team
-      @owner = ownership.user
-      @collaborator = membership.user
-      membership.joinable = @team
-      membership.save
-
-      login_as(@collaborator, scope: :user)
-      visit team_path(@team)
+    scenario 'collaborators cannot remove one another', type: :feature, js: true do
+      login(@collaborator)
+      visit_team_path(@team)
       expect(page).to_not have_content("Remove Member")
-      logout(@collaborator)
+      logout
+    end
 
-      login_as(@owner, scope: :user)
-      visit team_path(@team)
-      all('a').select {|link| link.text == "Remove Member" }.first.click
-
-      expect(page).to have_content("Member removed")
+    scenario 'owners can remove anyone', type: :feature, js: true do
+      login(@owner)
+      visit_team_path(@team)
+      find('.remove-member-link').click
       expect(page).to_not have_content(@collaborator.email)
-      expect(@team.members.length).to eql(1)
     end
   end
 end

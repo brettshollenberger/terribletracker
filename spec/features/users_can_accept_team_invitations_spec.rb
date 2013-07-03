@@ -14,31 +14,21 @@ feature 'collaborators and clients can accept team invitations', %q{
   # teams list in their navbar.
 
   context 'as a collaborator' do
-    let(:ownership)        { FactoryGirl.create(:active_team_ownership) }
-    let(:collaboratorship) { FactoryGirl.create(:active_team_collaboratorship) }
-    let(:new_collaborator) { FactoryGirl.create(:user) }
-
     background do
-      @owner = ownership.user
-      @team = ownership.team
-      collaboratorship.joinable = @team
-      collaboratorship.save
-      @collaborator = collaboratorship.user
-      login_as(@collaborator, scope: :user)
-      visit team_path(@team)
-      click_link "Add Team Member"
-      fill_in "User's Email", with: new_collaborator.email
-      click_button "Add Member"
-      logout(@collaborator)
-      login_as(new_collaborator, scope: :user)
-      visit root_path
+      @active_team_ownership = FactoryGirl.create(:active_team_ownership)
+      @active_owner = @active_team_ownership.user
+      @team = @active_team_ownership.team
+      @pending_collaboratorship = FactoryGirl.create(:pending_team_membership, joinable: @team)
+      @pending_collaborator = @pending_collaboratorship.user
+
+      login(@pending_collaborator)
     end
 
-    scenario 'accepting invitations' do
-      click_link "Accept"
-
-      expect(page).to have_content("You're a collaborator!")
-      expect(page).to have_content(@team.name)
+    scenario 'accepting invitations', type: :feature, js: true do
+      find('.dropdown-toggle').click
+      find('.accept-invitation').should have_content("Accept")
+      find('.accept-invitation').click
+      find('#user-specific-navbar').should have_content(@team.name)
     end
   end
 end

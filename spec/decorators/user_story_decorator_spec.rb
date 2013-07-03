@@ -33,7 +33,7 @@ describe UserStoryDecorator do
   describe "state_button method" do
 
     it "outputs formatted HTML" do
-      expect(@user_story.state_button).to include("<div class=\"btn-group\"><a href=\"#\" class=\"btn dropdown-toggle state-btn\" data-toggle=\"dropdown\">")
+      expect(@user_story.state_button).to include('<div class="btn-group"><a href="#" class="btn dropdown-toggle state-btn unstarted-dropdown" data-toggle="dropdown">Unstarted')
     end
 
     it "formats based on user story state" do

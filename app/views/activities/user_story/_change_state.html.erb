@@ -1,1 +1,3 @@
-changed the status of <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %> to <%= link_to activity.information, "/user_story/#{activity.trackable.id}/show", remote: true %> on <%= activity.trackable.project.title %>
+<% unless activity.trackable.nil? %>
+changed the status of <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %> to <%= link_to activity.information, "/user_story/#{activity.trackable.id}/show", remote: true %>.
+<% end %>

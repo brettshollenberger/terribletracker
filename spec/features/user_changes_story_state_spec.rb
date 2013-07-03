@@ -15,23 +15,25 @@ feature 'collaborator user story state', %q{
   # story on the projects page.
 
   context 'as a collaborator' do
-    let(:membership) { FactoryGirl.create(:active_collaboratorship) }
+    let(:ownership) { FactoryGirl.create(:active_team_ownership) }
 
     background do
-      @project = membership.project
-      @user = membership.user
-      @story = FactoryGirl.create(:user_story)
-      @story.project = @project
-      @story.save
-      login_as(@user, scope: :user)
-      visit project_path(@project)
+      @owner = ownership.user
+      @team = ownership.team
+      @project = FactoryGirl.create(:project, team: @team)
+      @story = FactoryGirl.create(:user_story, project: @project)
+      login(@owner)
+      visit_project_path(@project)
     end
 
-    scenario 'starting a user story' do
-      click_link "Start"
-      @story.start
-      expect(page).to have_content("Start")
-      expect(@story.state).to eql("started")
+    scenario 'starting a user story', type: :feature, js: true do
+      find('.state-btn').should have_content("Unstarted")
+      find('.state-btn').should_not have_content("Started")
+      find('.state-btn').click
+      find('.dropdown-menu').should have_content("Started")
+      find('.started-btn').click
+      find('.started-dropdown').should have_content("Started")
+      find('.started-dropdown').should_not have_content("Unstarted")
     end
   end
 end
