@@ -36,10 +36,11 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
     @user_story = UserStory.new
-    @users = UserDecorator.decorate_collection(@project.users)
 
     if @project.save
       @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
+      @team.members.each { |member| Membership.create(joinable: @project, user: member, role: "collaborator", state: "active") }
+      @users = UserDecorator.decorate_collection(@project.users)
 
       if @membership.save
         respond_to do |format|
