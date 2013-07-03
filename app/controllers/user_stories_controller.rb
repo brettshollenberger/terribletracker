@@ -34,7 +34,7 @@ class UserStoriesController < ApplicationController
     @user_story.update_attributes(params[:user_story])
 
     track_activity(@user_story, project=@project)
-
+    @activity = find_activity
     respond_to do |format|
       format.html { redirect_to @project }
       format.js
@@ -97,7 +97,7 @@ class UserStoriesController < ApplicationController
     @team = @project.team
     yield(@story)
     track_activity(@story, project=@project, information=@story.state, action="change_state")
-    @activity = Activity.where(project_id: @project.id).order("created_at DESC").first
+    @activity = find_activity
     respond_to do |format|
       format.html { redirect_to @project }
       format.js { render "update_story" }
@@ -113,7 +113,7 @@ class UserStoriesController < ApplicationController
     @project = @story.project
     @team = @project.team
     track_activity(@story, project=@project, information=@user.id)
-    @activity = Activity.where(project_id: @project.id).order("created_at DESC").first
+    @activity = find_activity
     flash[:notice] = "#{@user.decorate.full_name} assigned"
     respond_to do |format|
       format.html { redirect_to @story.project }
@@ -126,6 +126,12 @@ class UserStoriesController < ApplicationController
       UserStory.update_all({position: index+1}, {id: id})
     end
     render nothing: true
+  end
+
+private
+
+  def find_activity
+    Activity.where(project_id: @project.id).order("created_at DESC").first
   end
 
 end

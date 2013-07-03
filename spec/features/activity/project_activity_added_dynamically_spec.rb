@@ -21,6 +21,18 @@ feature "project page displays activity dynamically", %q{
       visit_project_path(@project)
     end
 
+    scenario "creating a user story", js: true do
+      find('#right-sidebar').should have_content("New Story")
+
+      fill_in 'user_story[title]', with: 'User can add user stories on the same page'
+      fill_in 'user_story[story]', with: 'As a user, I would like to continue entering user stories from the projects page'
+
+      click_on 'Create Story'
+
+      find('#project-activities-table').should have_content("#{@owner.full_name} created user story User can add user stories on the same page")
+      find('#project-activities-table').should_not have_content("No activities to show yet.")
+    end
+
     scenario "assigning a collaborator to a user story", js: true do
       find('.assign-button').click
       page.should have_content(@collaborator.full_name)

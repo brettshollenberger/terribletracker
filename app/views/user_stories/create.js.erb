@@ -8,3 +8,7 @@ $('#new_story_form').each(function(){
 $('#user_story_title').focus();
 
 $('#new_team').remove();
+
+// Append new activity to table
+$('#no-activities').remove();
+$('#project-activities-table').prepend('<%= j render("activities/add_activity") %>');
