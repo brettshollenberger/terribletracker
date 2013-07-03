@@ -30,5 +30,14 @@ feature "project page displays activity dynamically", %q{
       find('#project-activities-table').should_not have_content("No activities to show yet.")
     end
 
+    scenario "changing the state of a user story", js: true do
+      find('.state-btn').click
+      page.should have_content("Started")
+      find('.started-btn').click
+
+      find('#project-activities-table').should have_content("#{@owner.full_name} started #{@story.title}")
+      find('#project-activities-table').should_not have_content("No activities to show yet.")
+    end
+
   end
 end

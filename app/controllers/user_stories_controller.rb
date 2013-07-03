@@ -97,6 +97,7 @@ class UserStoriesController < ApplicationController
     @team = @project.team
     yield(@story)
     track_activity(@story, project=@project, information=@story.state, action="change_state")
+    @activity = Activity.where(project_id: @project.id).order("created_at DESC").first
     respond_to do |format|
       format.html { redirect_to @project }
       format.js { render "update_story" }
