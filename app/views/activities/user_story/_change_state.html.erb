@@ -1,7 +1,7 @@
 <% unless activity.trackable.nil? %>
   <% if activity.trackable.state == "review" %>
-    marked <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %> for <%= link_to "code review", "/user_story/#{activity.trackable.id}/show", remote: true %>.
+    marked <%= link_to activity.trackable.title, "/projects/#{activity.trackable.project.id}/user_stories/#{activity.trackable.id}", remote: true %> for <%= link_to "code review", "/projects/#{activity.trackable.project.id}/user_stories/#{activity.trackable.id}", remote: true %>.
   <% else %>
-    <%= link_to activity.information, "/user_story/#{activity.trackable.id}/show", remote: true %> <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %>.
+    <%= link_to activity.information, "/projects/#{activity.trackable.project.id}/user_stories/#{activity.trackable.id}", remote: true %> <%= link_to activity.trackable.title, "/projects/#{activity.trackable.project.id}/user_stories/#{activity.trackable.id}", remote: true %>.
   <% end %>
 <% end %>

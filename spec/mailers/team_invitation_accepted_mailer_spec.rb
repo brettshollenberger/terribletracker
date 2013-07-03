@@ -1,22 +1,15 @@
 require "spec_helper"
 
-include Warden::Test::Helpers
-Warden.test_mode!
 include EmailSpec::Helpers
 include EmailSpec::Matchers
 
 describe InvitationAcceptedMailer do
 
   before(:each) do
-    @active_team_ownership = FactoryGirl.create(:active_team_ownership)
-    @active_owner = @active_team_ownership.user
-    @team = @active_team_ownership.team
-    @active_collaboratorship = FactoryGirl.create(:active_team_membership, joinable: @team)
-    @active_collaborator = @active_collaboratorship.user
+    create_team_with_project
     @new_collaborator = FactoryGirl.create(:user)
-    visit root_path
 
-    login(@active_collaborator)
+    login(@collaborator)
 
     find("#team_name_#{@team.id}").click
 
@@ -24,9 +17,6 @@ describe InvitationAcceptedMailer do
     fill_in "User's Email", with: @new_collaborator.email
     click_button "Add Member"
 
-    # Wait until collaborator invited notice appears on page
-    # before looking for the new membership; strange
-    # AJAX thing.
     find("#collaborator_notice").should have_content("invited")
 
     @new_membership = @new_collaborator.memberships.first
@@ -45,7 +35,7 @@ describe InvitationAcceptedMailer do
   context "invitation_accepted_email_owner mailer", type: :feature, js: true do
 
     it "is delivered to owner of the team" do
-      @email_team_owner.should deliver_to(@active_owner.email)
+      @email_team_owner.should deliver_to(@owner.email)
     end
 
     it "should contain the user's name in the message" do
