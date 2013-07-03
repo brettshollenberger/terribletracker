@@ -17,7 +17,6 @@ feature "team page displays activity dynamically", %q{
     end
 
     scenario "creating a team", js: true do
-      find('#new_team_link').should have_content("New Team")
       find('#new-team-btn').click
       fill_in "team[name]", with: "The Merry Men"
 
