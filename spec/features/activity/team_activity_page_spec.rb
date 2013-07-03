@@ -6,8 +6,8 @@ feature "team page displays the team's recent activity", %q{
   so that I can know what's happened while I was away.
 } do
   # Acceptance Criteria:
-  # User visits the homepage, and sees the recent activity
-  # of their teams.
+  # User visits the page for a team, and sees the recent activity
+  # of that team and only that team.
 
   context 'as a user' do
 

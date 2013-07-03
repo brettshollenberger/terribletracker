@@ -1,0 +1,5 @@
+<tr>
+  <td><%= @activity.user.decorate.full_name %>
+  <%= render "activities/#{@activity.trackable_type.underscore}/#{@activity.action}", activity: @activity %>
+  </td>
+</tr>
