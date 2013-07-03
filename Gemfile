@@ -6,6 +6,7 @@ gem 'devise'
 gem 'state_machine'
 gem "draper"
 gem 'jquery-rails'
+gem 'flatui-rails'
 
 group :development, :test do
   gem 'pry-rails'
