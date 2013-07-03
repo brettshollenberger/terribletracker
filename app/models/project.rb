@@ -14,6 +14,10 @@ class Project < ActiveRecord::Base
     through: :memberships
   }
 
+  has_many :activities, {
+    as: :trackable
+  }
+
   has_many :user_stories, {
     dependent: :destroy,
     inverse_of: :project
@@ -35,5 +39,9 @@ class Project < ActiveRecord::Base
 
   def active_users
     self.memberships.where(state: "active").collect { |membership| membership.user }
+  end
+
+  def activities
+    Activity.where(project_id: id).order("created_at desc").all
   end
 end

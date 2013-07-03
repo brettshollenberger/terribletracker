@@ -1,5 +1,6 @@
-<h2>Recent Activity</h2>
-<table class="table table-hover">
+<% if @activities.empty? %>
+  <span id="no-activities">No activities to show yet. Let's get to work!</span>
+<% else %>
   <tbody>
     <% @activities.each do |activity| %>
       <% unless activity.trackable.nil? %>
@@ -11,4 +12,4 @@
       <% end %>
    <% end %>
   </tbody>
-</table>
+<% end %>

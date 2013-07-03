@@ -45,6 +45,11 @@ $('input[name=team_<%= @project.id %>]').attr('checked', true);
 // the hidden_field
 $('.project_checked').each(function() { $(this).remove(); });
 
+// Add the project_checked hidden_field to all project_sidebar forms
+$('.project_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+});
+
 // Add the team_checked hidden field to all team_sidebar forms, so we'll know which team
 // to hide when the user navigates away
 $('.team_sidebar').each(function() {

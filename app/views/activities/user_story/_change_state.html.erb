@@ -1,3 +1,7 @@
 <% unless activity.trackable.nil? %>
-changed the status of <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %> to <%= link_to activity.information, "/user_story/#{activity.trackable.id}/show", remote: true %>.
+  <% if activity.trackable.state == "review" %>
+    marked <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %> for <%= link_to "code review", "/user_story/#{activity.trackable.id}/show", remote: true %>.
+  <% else %>
+    <%= link_to activity.information, "/user_story/#{activity.trackable.id}/show", remote: true %> <%= link_to activity.trackable.title, "/user_story/#{activity.trackable.id}/show", remote: true %>.
+  <% end %>
 <% end %>

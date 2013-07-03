@@ -27,8 +27,7 @@ class Team < ActiveRecord::Base
   }
 
   has_many :activities,
-    :as => :trackable,
-    dependent: :destroy
+    :as => :trackable
 
   def projects
     Project.where(team_id: id)

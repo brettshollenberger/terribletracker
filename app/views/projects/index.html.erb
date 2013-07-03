@@ -4,6 +4,7 @@
       <% if notice %>
         <div class="notice"><%= notice %></div>
       <% end %>
+        <h2>Welcome to Terrible Tracker</h2>
         <% unless current_user.project_invitations.empty? %>
           <%= render '/projects/invitations' %>
         <% end %>
@@ -13,7 +14,10 @@
         <% if current_user.active_projects.empty? %>
           <%= render '/projects/welcome_page' %>
         <% else %>
-          <%= render '/activities/index' %>
+          <h2>Recent Activity</h2>
+          <table class="table table-hover" id="team-activities-table">
+            <%= render '/activities/index' %>
+          </table>
         <% end %>
         <%= link_to "Create Team", new_team_path, :class => "btn btn-primary homepage-btn", remote: true %>
 
