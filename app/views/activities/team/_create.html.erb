@@ -1,0 +1,3 @@
+<% unless activity.trackable.nil? %>
+  created <%= link_to activity.trackable.name, "/team/#{activity.trackable.id}/show", remote: true %>.
+<% end %>

@@ -1,15 +1,17 @@
-<% if @activities.empty? %>
-  <span id="no-activities">No activities to show yet. Let's get to work!</span>
-<% else %>
-  <tbody>
-    <% @activities.each do |activity| %>
-      <% unless activity.trackable.nil? %>
-        <tr>
-          <td><%= activity.user.decorate.full_name %>
-          <%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
-          </td>
-        </tr>
-      <% end %>
-   <% end %>
-  </tbody>
+<% unless @activities.nil? %>
+  <% if @activities.empty? %>
+    <span id="no-activities">No activities to show yet. Let's get to work!</span>
+  <% else %>
+    <tbody>
+      <% @activities.each do |activity| %>
+        <% unless activity.trackable.nil? %>
+          <tr>
+            <td><%= activity.user.decorate.full_name %>
+            <%= render "activities/#{activity.trackable_type.underscore}/#{activity.action}", activity: activity %>
+            </td>
+          </tr>
+        <% end %>
+     <% end %>
+    </tbody>
+  <% end %>
 <% end %>

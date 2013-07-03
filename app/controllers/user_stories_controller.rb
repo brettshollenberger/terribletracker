@@ -33,7 +33,7 @@ class UserStoriesController < ApplicationController
 
     @user_story.update_attributes(params[:user_story])
 
-    track_activity(@user_story, project=@project)
+    track_user_story_activity(@user_story, project=@project)
     @activity = find_activity
     respond_to do |format|
       format.html { redirect_to @project }
@@ -96,7 +96,7 @@ class UserStoriesController < ApplicationController
     @project = @story.project
     @team = @project.team
     yield(@story)
-    track_activity(@story, project=@project, information=@story.state, action="change_state")
+    track_user_story_activity(@story, project=@project, information=@story.state, action="change_state")
     @activity = find_activity
     respond_to do |format|
       format.html { redirect_to @project }
@@ -112,7 +112,7 @@ class UserStoriesController < ApplicationController
     @story.save
     @project = @story.project
     @team = @project.team
-    track_activity(@story, project=@project, information=@user.id)
+    track_user_story_activity(@story, project=@project, information=@user.id)
     @activity = find_activity
     flash[:notice] = "#{@user.decorate.full_name} assigned"
     respond_to do |format|
