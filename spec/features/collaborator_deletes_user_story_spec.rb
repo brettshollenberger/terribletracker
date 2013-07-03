@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'collaborator deletes user story', %q{
   As a owner or collaborator,
   I want to delete user stories,
@@ -17,24 +14,15 @@ feature 'collaborator deletes user story', %q{
   context 'as a collaborator', js: true do
 
     background do
-      @ownership = FactoryGirl.create(:active_team_ownership)
-      @team = @ownership.joinable
-      @project = FactoryGirl.create(:project, team: @team)
-      @owner = @team.owner
-      @user_story = FactoryGirl.create(:user_story, project: @project)
-
+      create_team_with_project
       login(@owner)
+      visit_project_path(@project)
     end
 
     scenario 'adding a user story to a project', js: true do
-      find("#team_name_#{@team.id}").click
-      find("#project_title_#{@project.id}").click
-
-      find("#body-main").should have_content(@user_story.title)
-
+      find("#body-main").should have_content(@story.title)
       click_on "Delete"
-
-      find("#body-main").should_not have_content(@user_story.title)
+      find("#body-main").should_not have_content(@story.title)
     end
   end
 end

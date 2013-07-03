@@ -69,3 +69,35 @@ def login(user)
   fill_in "Password", with: "foobar29"
   click_on "Sign in"
 end
+
+def visit_team_path(team)
+  find("#team_name_#{team.id}").click
+end
+
+def visit_project_path(project)
+  visit_team_path(project.team)
+  find("#project_title_#{project.id}").click
+end
+
+def press_enter(form)
+  # Simulate form submission
+  keypress_script = "$('#{form}').submit();"
+  page.driver.execute_script(keypress_script)
+end
+
+def logout
+  find('#logout-btn').click
+end
+
+def create_team_with_project
+  @ownership = FactoryGirl.create(:active_team_ownership)
+  @owner = @ownership.user.decorate
+  @team = @ownership.team
+  @project = FactoryGirl.create(:project, team: @team)
+  @story = FactoryGirl.create(:user_story, project: @project)
+  @comment = FactoryGirl.create(:comment, commentable: @story)
+  @collaboratorship = FactoryGirl.create(:active_team_membership, joinable: @team)
+  @collaborator = @collaboratorship.user.decorate
+  @users = [@owner, @collaborator]
+  @users.each { |user| FactoryGirl.create(:membership, joinable: @project, user: user) }
+end

@@ -31,12 +31,12 @@
 <br>
 <!-- ################# New Team #################### -->
   <div id="new_team_link">
-    <%= link_to "New Team", new_team_path, :class => "btn btn-block profile", remote: true %>
+    <%= link_to "New Team", new_team_path, :class => "btn btn-block profile", remote: true, :id => "new-team-btn" %>
   </div>
   <br>
 <!-- ################## Login ###################### -->
 <%= link_to "Edit Profile", edit_user_registration_path(user: current_user), :class => "btn btn-block profile", remote: true %><br>
-<%= link_to "Logout", logout_path, :class => "btn btn-block profile" %>
+<%= link_to "Logout", logout_path, :class => "btn btn-block profile", :id => "logout-btn" %>
 
 <script>
 jQuery.fn.submitOnCheck = function() {

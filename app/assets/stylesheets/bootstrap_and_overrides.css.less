@@ -12,8 +12,18 @@
 @fontAwesomeTtfPath: asset-url("fontawesome-webfont.ttf");
 @fontAwesomeSvgPath: asset-url("fontawesome-webfont.svg#fontawesomeregular");
 
+@sosaEotPath: asset-url("sosa-regular-webfont.eot");
+@sosaWoffPath: asset-url("sosa-regular-webfont.woff");
+@sosaTtfPath: asset-url("sosa-regular-webfont.ttf");
+@sosaSvgPath: asset-url("sosa-regular-webfont.svg");
+
 // Font Awesome
 @import "fontawesome/font-awesome";
+
+@font-face {
+  font-family: 'Sosa';
+  src: url('../fonts/sosa-regular-webfont.eot?') format('eot'), url('../fonts/sosa-regular-webfont.woff') format('woff'), url('../fonts/sosa-regular-webfont.ttf') format('truetype');
+}
 
 // Glyphicons
 //@import "twitter/bootstrap/sprites.less";

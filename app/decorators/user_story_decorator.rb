@@ -45,10 +45,10 @@ private
   end
 
   def state_button_class_builder
-    return "btn dropdown-toggle state-btn" if state == "unstarted"
-    return "btn btn-primary dropdown-toggle state-btn" if state == "started"
-    return "btn btn-warning dropdown-toggle state-btn"if state == "review"
-    return "btn btn-success dropdown-toggle state-btn" if state == "finished"
+    return "btn dropdown-toggle state-btn unstarted-dropdown" if state == "unstarted"
+    return "btn btn-primary dropdown-toggle state-btn started-dropdown" if state == "started"
+    return "btn btn-warning dropdown-toggle state-btn review-dropdown"if state == "review"
+    return "btn btn-success dropdown-toggle state-btn finished-dropdown" if state == "finished"
   end
 
   def dropdowns
@@ -67,19 +67,19 @@ private
   end
 
   def unstarted_link
-    h.link_to "Unstarted", "/user_story/#{id}/unstarted", remote: true
+    h.link_to "Unstarted", "/user_story/#{id}/unstarted", remote: true, :class => "unstarted-btn"
   end
 
   def started_link
-    h.link_to "Started", "/user_story/#{id}/started", remote: true
+    h.link_to "Started", "/user_story/#{id}/started", remote: true, :class => "started-btn"
   end
 
   def review_link
-    h.link_to "Review", "/user_story/#{id}/review", remote: true
+    h.link_to "Review", "/user_story/#{id}/review", remote: true, :class => "review-btn"
   end
 
   def finished_link
-    h.link_to "Finished", "/user_story/#{id}/finished", remote: true
+    h.link_to "Finished", "/user_story/#{id}/finished", remote: true, :class => "finished-btn"
   end
 
   def assign_button_link

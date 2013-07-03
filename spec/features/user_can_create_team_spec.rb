@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'user creates team', %q{
   As a user,
   I want to create teams,
@@ -15,18 +12,19 @@ feature 'user creates team', %q{
     let(:user) { FactoryGirl.create(:user) }
 
     background do
-      login_as(user, scope: :user)
-      visit root_path
+      login(user)
     end
 
-    scenario 'adding a user story to a project' do
+    scenario 'adding a user story to a project', type: :feature, js: true do
+      find('#new-team-btn').click
       fill_in "team[name]", with: "The Merry Men"
-      fill_in "team[description]", with: "Four very funny guys that do stuff"
-      click_button "Create Team"
 
-      expect(page).to have_content("The Merry Men")
-      expect(page).to have_content("Members")
-      expect(page).to have_content("#{user.first_name} #{user.last_name}")
+      # Simulate form submission
+      press_enter("#new_team")
+
+      find('#members-header').should have_content("Members")
+      find('#body-main').should have_content("#{user.first_name} #{user.last_name}")
+      find('#user-specific-navbar').should have_content("The Merry Men")
     end
   end
 end

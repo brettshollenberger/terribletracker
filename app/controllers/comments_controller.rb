@@ -3,8 +3,7 @@ class CommentsController < ApplicationController
 
   def new_user_story_comment
     @user_story = UserStory.find(params[:comment][:user_story])
-    @user = current_user
-    @comment = @user_story.comments.new(body: params[:comment][:body], user: @user).decorate
+    @comment = current_user.comments.new(body: params[:comment][:body], commentable: @user_story).decorate
 
     if @comment.save
       respond_to do |format|
