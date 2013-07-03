@@ -1,8 +1,8 @@
 class UserStoryMailer < ActionMailer::Base
-  default from: "brett.shollenberger@gmail.com", host: "http://0.0.0.0:3000"
+  default from: "brett.shollenberger@gmail.com", host: "heroku.com"
 
   def assignment_mailer(user, story)
-    @base_url = "http://0.0.0.0:3000"
+    @base_url = "http://terribletracker-staging.herokuapp.com"
     @user = user
     @story = story
     @team = @story.project.team
