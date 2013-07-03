@@ -21,5 +21,10 @@ feature "team page displays the team's recent activity", %q{
       find('#body-main').should have_content("Recent Activity")
       find('#body-main').should have_content("#{@owner.full_name} created user story #{@story.title}")
     end
+
+    scenario "only displays activity for this team", js: true do
+      activity2 = FactoryGirl.create(:activity)
+      find('#body-main').should_not have_content(activity2.trackable.title)
+    end
   end
 end
