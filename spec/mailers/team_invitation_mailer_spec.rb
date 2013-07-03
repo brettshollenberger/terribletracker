@@ -1,22 +1,16 @@
 require "spec_helper"
 
-include Warden::Test::Helpers
-Warden.test_mode!
 include EmailSpec::Helpers
 include EmailSpec::Matchers
 
 describe TeamInvitationMailer do
 
   before(:each) do
-    @active_team_ownership = FactoryGirl.create(:active_team_ownership)
-    @active_owner = @active_team_ownership.user
-    @team = @active_team_ownership.team
-    @active_collaboratorship = FactoryGirl.create(:active_team_membership, joinable: @team)
-    @active_collaborator = @active_collaboratorship.user
+    create_team_with_project
     @new_collaborator = FactoryGirl.create(:user)
     visit root_path
 
-    login(@active_owner)
+    login(@owner)
 
     find("#team_name_#{@team.id}").click
 
@@ -24,9 +18,6 @@ describe TeamInvitationMailer do
     fill_in "User's Email", with: @new_collaborator.email
     click_button "Add Member"
 
-    # Wait until collaborator invited notice appears on page
-    # before looking for the new membership; strange
-    # AJAX thing.
     find("#collaborator_notice").should have_content("invited")
 
     @new_membership = @new_collaborator.memberships.first
@@ -44,7 +35,7 @@ describe TeamInvitationMailer do
     end
 
     it "should contain the inviter's name in the message" do
-      @email.should have_body_text("#{@active_owner.first_name} #{@active_owner.last_name}")
+      @email.should have_body_text("#{@owner.first_name} #{@owner.last_name}")
     end
 
     it "should have the correct subject" do

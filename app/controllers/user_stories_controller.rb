@@ -114,7 +114,8 @@ class UserStoriesController < ApplicationController
     @team = @project.team
     track_user_story_activity(@story, project=@project, information=@user.id)
     @activity = find_activity
-    flash[:notice] = "#{@user.decorate.full_name} assigned"
+    UserStoryMailer.assignment_mailer(@user, @story)
+
     respond_to do |format|
       format.html { redirect_to @story.project }
       format.js   { render "update_story" }
