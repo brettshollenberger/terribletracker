@@ -11,14 +11,12 @@
         <%= f.text_field :title, placeholder: "Title", :class => "edit-project" %>
       <% end %>
       <%= link_to "New Story", new_project_user_story_path(@project), :class => 'btn btn-primary collaborator-btn', :id => "new-story-btn", remote: true %>
-
-      <div class="project_budget">
-        <%= @project.budget %>
-      </div>
-      <div class="project_weekly_rate">
-        <%= @project.weekly_rate %>
-      </div>
-        <br>
+      <% unless @activities.nil? %>
+        <h2>Recent Activity</h2>
+        <table class="table table-hover" id="project-activities-table">
+          <%= render '/activities/index' %>
+        </table>
+      <% end %>
         <br>
         <h2>User Stories</h2>
         <%= render '/user_stories/list_user_stories' %>

@@ -77,6 +77,7 @@ class TeamsController < ApplicationController
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
     @user_story = UserStory.new
     @users = UserDecorator.decorate_collection(@project.users)
+    @activities = @project.activities
 
     if @project.id == @checked_project
       hide_project

@@ -1,1 +1,3 @@
 $('tr#user_story_<%= @story.id %>').html('<%= j render("update_user_story") %>');
+$('#no-activities').remove();
+$('#project-activities-table').prepend('<%= j render("activities/add_activity") %>');
