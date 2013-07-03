@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'collaborator edits user story', %q{
   As a owner or collaborator,
   I want to edit the details of a user story,
@@ -15,32 +12,24 @@ feature 'collaborator edits user story', %q{
   # story on the projects page.
 
   context 'as a collaborator', js: true do
-    let(:membership) { FactoryGirl.create(:active_team_collaboratorship) }
 
     background do
-      @ownership = FactoryGirl.create(:active_team_ownership)
-      @team = @ownership.joinable
-      @project = FactoryGirl.create(:project, team: @team)
-      @owner = @team.owner
-      @user_story = FactoryGirl.create(:user_story, project: @project)
-
+      create_team_with_project
       login(@owner)
     end
 
     scenario 'adding a user story to a project', :js => true do
       find("#team_name_#{@team.id}").click
       find("#project_title_#{@project.id}").click
-      find("#user_story_link_#{@user_story.id}").click
+      find("#user_story_link_#{@story.id}").click
       fill_in 'user_story[title]', with: 'Fast Times'
       fill_in 'user_story[story]', with: 'As a student at Ridgemont High, I would like to
         enjoy fast times.'
 
-      # Simulate form submission
-      keypress_script = "$('#edit_story_form').submit();"
-      page.driver.execute_script(keypress_script)
+      press_enter('#edit_story_form')
 
       find('#body-main').should have_content("Fast Times")
-      find("#user_story_link_#{@user_story.id}").click
+      find("#user_story_link_#{@story.id}").click
       find('#user_story_story').should have_content("As a student")
     end
   end

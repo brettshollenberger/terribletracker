@@ -27,9 +27,11 @@ feature 'collaborators and clients can accept team invitations', %q{
     end
 
     scenario 'seeing invitations', type: :feature, js: true do
-      find('#body-main').should have_content(@team.name)
-      find('#body-main').should have_content(@active_owner.full_name)
-      find('#body-main').should have_content(@active_collaborator.full_name)
+      within "#body-main" do
+        expect(page).to have_content(@team.name)
+        expect(page).to have_content(@active_owner.full_name)
+        expect(page).to have_content(@active_collaborator.full_name)
+      end
       find('.dropdown-toggle').click
       find('.accept-invitation').should have_content("Accept")
       find('.decline-invitation').should have_content("Decline")

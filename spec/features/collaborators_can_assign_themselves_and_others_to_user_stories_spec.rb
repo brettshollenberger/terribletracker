@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'collaborators can assign themselves and others to user stories', %q{
   As a project collaborator,
   I would like to assign myself and my teammates to user stories,
@@ -17,18 +14,9 @@ feature 'collaborators can assign themselves and others to user stories', %q{
   context 'as a new member' do
 
     background do
-      @ownership = FactoryGirl.create(:active_team_ownership)
-      @owner = @ownership.user.decorate
-      @team = @ownership.team
-      @project = FactoryGirl.create(:project, team: @team)
-      @collaboratorship = FactoryGirl.create(:active_team_membership, joinable: @team)
-      @collaborator = @collaboratorship.user.decorate
-      @user_story = FactoryGirl.create(:user_story, project: @project)
-      users = [@owner, @collaborator]
-      users.each { |user| FactoryGirl.create(:membership, joinable: @project, user: user) }
-
+      create_team_with_project
       login(@owner)
-      visit_project_page(@team, @project)
+      visit_project_path(@project)
 
       # The assertion is that the collaborator name dropdown only appears on the page
       # when they're assigned. So let's test the inverse first.

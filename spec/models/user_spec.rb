@@ -3,12 +3,9 @@ require 'spec_helper'
 describe User do
 
   let(:user)       { FactoryGirl.create(:user) }
-  let(:known_user) { FactoryGirl.build(:known_user) }
 
   it "is valid" do
     expect(user).to be_valid
-    expect(known_user).to be_valid
-    expect(known_user.id).to be(1)
   end
 
   it "is not valid without an email" do
@@ -27,31 +24,33 @@ describe User do
   end
 
   describe "#recent_activities" do
-    let(:project) { FactoryGirl.create(:project) }
+    let(:ownership) { FactoryGirl.create(:active_team_ownership) }
 
     before :each do
-      FactoryGirl.create(:active_team_ownership, joinable: project.team,
-        user: project.team.owner)
+      @owner = ownership.user
+      @team = ownership.team
+      @project = FactoryGirl.create(:project, team: @team)
+      @membership = FactoryGirl.create(:membership, joinable: @project, user: @owner)
     end
 
     it 'returns the activities from a single team' do
-      activity = FactoryGirl.create(:activity, team: project.team)
+      activity = FactoryGirl.create(:activity, team: @team)
 
-      project.team.owner.recent_activities.should include(activity)
+      @project.team.owner.recent_activities.should include(activity)
     end
 
     it 'excludes the activities from unrelated teams' do
-      relevant_activity = FactoryGirl.create(:activity, team: project.team)
+      relevant_activity = FactoryGirl.create(:activity, team: @team)
       other_activity = FactoryGirl.create(:activity)
 
-      activities = project.team.owner.recent_activities
+      activities = @project.team.owner.recent_activities
       activities.should include(relevant_activity)
       activities.should_not include(other_activity)
     end
 
     it 'mixes multiple teams' do
-      user = project.team.owner
-      first_team = project.team
+      user = @project.team.owner
+      first_team = @project.team
 
       second_team = FactoryGirl.create(:team, owner: user)
       second_project = FactoryGirl.create(:project, team: second_team)
@@ -62,8 +61,6 @@ describe User do
       third_activity = FactoryGirl.create(:activity, team: first_team, created_at: 3.hours.ago)
 
       user.recent_activities.should == [first_activity, second_activity, third_activity]
-
-
     end
   end
 end
