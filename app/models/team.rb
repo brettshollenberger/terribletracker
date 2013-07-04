@@ -42,10 +42,16 @@ class Team < ActiveRecord::Base
     Membership.where(joinable_id: id, joinable_type: "Team", role: "owner", state: "active").first.user
   end
 
+  def active_clientships
+    self.memberships.where(role: "client", state: "active").includes(:user).all
+  end
+
   def clients
-    client_list = []
-    Membership.where(joinable_id: id, joinable_type: "Team", role: "client", state: "active").all.each { |membership| client_list.push(membership.user) }
-    return client_list
+    clients = []
+    self.active_clientships.each do |clientship|
+      clients.push(clientship.user)
+    end
+    return UserDecorator.decorate_collection(clients)
   end
 
   def active_memberships
@@ -54,16 +60,22 @@ class Team < ActiveRecord::Base
 
   def members
     members = []
-    self.active_memberships.each do |member|
-      members.push(member.user)
+    self.active_memberships.each do |membership|
+      members.push(membership.user)
     end
     return UserDecorator.decorate_collection(members)
   end
 
+  def pending_memberships
+    self.memberships.where(state: "pending").includes(:user).all
+  end
+
   def pending_members
-    members_list = []
-    Membership.where(joinable_id: id, joinable_type: "Team", role: "collaborator", state: "pending").all.each { |membership| members_list.push(membership.user) }
-    return UserDecorator.decorate_collection(members_list)
+    members = []
+    self.pending_memberships.each do |membership|
+      members.push(membership.user)
+    end
+    return UserDecorator.decorate_collection(members)
   end
 
   def activities
