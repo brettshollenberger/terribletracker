@@ -344,5 +344,7 @@ div.right-sidebar {
 
 #team-loader {
   width: 20px;
-  float: right;
+  position: absolute;
+  right: 5px;
+  top: -2px;
 }
