@@ -1,3 +1,3 @@
 $('#user_story_<%= @user_story.id %>_comments').scrollTop(0);
-$('#user_story_<%= @user_story.id %>_comments').prepend('<%= j render("new_user_story_comment") %>');
+$('#user_story_<%= @user_story.id %>_comments').prepend('<%= j render("create_user_story_comment") %>');
 $('#new_user_story_comment_form')[0].reset();

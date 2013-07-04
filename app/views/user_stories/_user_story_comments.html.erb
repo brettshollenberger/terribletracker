@@ -13,7 +13,7 @@
 <% unless @comments.empty? %>
   <hr class="right-sidebar-hr">
 <% end %>
-<%= form_for [@project, @user_story, @comment], url: { action: "new_user_story_comment", controller: "comments" }, remote: true, :html => { :class => "terrible_story_bro", :id => "new_user_story_comment_form" } do |f| %>
+<%= form_for [@project, @user_story, @comment], url: { action: "create", controller: "comments" }, remote: true, :html => { :class => "terrible_story_bro", :id => "new_user_story_comment_form" } do |f| %>
 
   <%= f.text_area :body, :placeholder => "Comment", :class => "description" %>
   <br>

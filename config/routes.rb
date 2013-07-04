@@ -42,6 +42,6 @@ Terribletracker::Application.routes.draw do
   get "/add_project_to_team", to: "projects#add_project_to_team"
   put "/save_team_project_join", to: "projects#save_team_project_join"
 
-  post "user_story/:id/comments/new", to: "comments#new_user_story_comment"
+  post "user_story/:id/comments/create", to: "comments#create"
 
 end
