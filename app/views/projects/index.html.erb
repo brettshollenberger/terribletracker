@@ -11,7 +11,7 @@
         <% unless current_user.team_invitations.empty? %>
           <%= render '/projects/team_invitations' %>
         <% end %>
-        <% if current_user.active_projects.empty? %>
+        <% if current_user.teams.empty? %>
           <%= render '/projects/welcome_page' %>
         <% else %>
           <h2>Recent Activity</h2>

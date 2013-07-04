@@ -17,12 +17,6 @@ describe UserDecorator do
     @activity = FactoryGirl.create(:activity, team: @team)
   end
 
-  describe "active_projects" do
-    it "returns the user's active projects" do
-      expect(@owner.active_projects).to include(@project)
-    end
-  end
-
   describe "project_invitations" do
     it "returns the user's pending project memberships" do
       expect(@pending_member.project_invitations).to include(@pending_collaboratorship)
