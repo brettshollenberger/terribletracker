@@ -30,5 +30,14 @@ feature 'team owners can remove members', %q{
       find('.remove-member-link').click
       expect(page).to_not have_content(@collaborator.email)
     end
+
+    scenario 'removed members are no longer active on team projects', type: :feature, js: true do
+      login(@owner)
+      visit_team_path(@team)
+      find('.remove-member-link').click
+      visit_project_path(@project)
+      find('.assign-button').click
+      page.should_not have_content(@collaborator.full_name)
+    end
   end
 end

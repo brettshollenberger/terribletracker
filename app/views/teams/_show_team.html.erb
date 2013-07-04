@@ -10,7 +10,7 @@
       <%= form_for @team, remote: true do |f| %>
         <%= f.text_field :name, placeholder: "Name", :class => "edit-team" %>
       <% end %>
-      <%= link_to "Invite Collaborator", new_team_membership_path(team: @team), :class => 'btn btn-primary collaborator-btn',remote: true %>
+      <%= link_to "Invite Collaborator", new_membership_path(team: @team), :class => 'btn btn-primary collaborator-btn',remote: true %>
       <%= link_to "New Project", new_project_path(team: @team), :class => 'btn btn-primary project-btn', :id => "new-project-btn", remote: true %>
         <br>
         <br>
@@ -32,7 +32,7 @@
                   <td><%= member.email %></td>
                   <% unless member == current_user %>
                     <% if @team.owner == current_user %>
-                      <td><%= link_to "Remove Member", "/membership/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}/remove_team", method: :delete, remote: true, :class => "remove-member-link" %></td>
+                      <td><%= link_to "Remove Member", "/memberships/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}", method: :delete, remote: true, :class => "remove-member-link" %></td>
                     <% end %>
                   <% end %>
                 </tr>
