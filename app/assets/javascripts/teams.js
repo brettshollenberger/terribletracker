@@ -2,21 +2,28 @@ $(function() {
   $('.project_sidebar').hide();
 });
 
-jQuery.fn.submitOnCheck = function() {
+jQuery.fn.submitTeamOnCheck = function() {
   this.find('input[type=submit]').remove();
   this.find('input[type=checkbox]').click(function() {
     $(this).closest('form').submit();
-    $('#team-loader').show();
+  });
+  return this;
+};
+
+jQuery.fn.submitProjectOnCheck = function() {
+  this.find('input[type=submit]').remove();
+  this.find('input[type=checkbox]').click(function() {
+    $(this).closest('form').submit();
   });
   return this;
 };
 
 $(function() {
-  $('.team_sidebar').submitOnCheck();
+  $('.team_sidebar').submitTeamOnCheck()
 });
 
 $(function() {
-  $('.project_sidebar').submitOnCheck();
+  $('.project_sidebar').submitProjectOnCheck();
 });
 
 // Click toggle between two states

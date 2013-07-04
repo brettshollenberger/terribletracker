@@ -94,6 +94,7 @@ class TeamsController < ApplicationController
   def hide_project
     @team = @project.team
     @activities = @team.activities
+    @old_project = @project
     @project = Project.new
 
     respond_to do |format|
