@@ -56,9 +56,11 @@
         <% end %><!-- End if current_user -->
       </div>
     </div>
-    <div class="span9" id="body-main"><%= yield %></div>
+    <div class="span9" id="body-main"><img src="/assets/25.gif" id="team-loader"><%= yield %></div>
     <div class="span3" id="right-sidebar"></div>
   </div>
-
+  <script>
+    $('#team-loader').hide();
+  </script>
 </body>
 </html>

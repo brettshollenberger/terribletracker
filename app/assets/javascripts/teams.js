@@ -6,6 +6,7 @@ jQuery.fn.submitOnCheck = function() {
   this.find('input[type=submit]').remove();
   this.find('input[type=checkbox]').click(function() {
     $(this).closest('form').submit();
+    $('#body-main').html('<img src="/assets/25.gif" id="team-loader">');
   });
   return this;
 };
