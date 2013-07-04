@@ -32,13 +32,19 @@ class Project < ActiveRecord::Base
   }
 
   def owner
-    self.memberships.each do |membership|
-      return membership.user if membership.role == "owner"
-    end
+    self.memberships.where(role: "owner").first.user
+  end
+
+  def active_userships
+    self.memberships.where(state: "active").includes(:user).all
   end
 
   def active_users
-    self.memberships.where(state: "active").collect { |membership| membership.user }
+    users = []
+    self.active_userships.each do |usership|
+      users.push(usership.user)
+    end
+    return users
   end
 
   def activities

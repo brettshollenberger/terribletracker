@@ -41,6 +41,8 @@ class ProjectsController < ApplicationController
       @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
       @team.members.each { |member| Membership.create(joinable: @project, user: member, role: "collaborator", state: "active") }
       @users = UserDecorator.decorate_collection(@project.users)
+      track_project_activity(@project, project=@project)
+      @activities = @project.activities
 
       if @membership.save
         respond_to do |format|
