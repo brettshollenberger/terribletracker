@@ -29,4 +29,6 @@ $('#right-sidebar').hide('slide', {direction: "right"}, function() {
   $('#body-main').html('<%= j render("/projects/homepage") %>').switchClass('span6', 'span9');
 });
 
+$('#team-loader-<%= @team.id %>').hide();
+
 

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   before_filter :authenticate_user!
 
-  def new_user_story_comment
+  def create
     @user_story = UserStory.find(params[:comment][:user_story])
     @comment = current_user.comments.new(body: params[:comment][:body], commentable: @user_story).decorate
 

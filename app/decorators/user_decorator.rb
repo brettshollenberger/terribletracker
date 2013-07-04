@@ -1,16 +1,6 @@
 class UserDecorator < Draper::Decorator
   delegate_all
 
-  def active_projects
-    active_projects_list = []
-    self.memberships.each do |membership|
-      if membership.joinable_type == "Project"
-        active_projects_list.push(membership.project) if membership.state == "active"
-      end
-    end
-    return active_projects_list
-  end
-
   def project_invitations
     invitation_list = []
     self.memberships.each do |membership|

@@ -53,4 +53,6 @@ $('#right-sidebar').html('<%= j render("/projects/new_project_form") %>');
 
 $('#new_team').remove();
 
+$('#team-loader-<%= @team.id %>').hide();
+$('#project-loader-<%= @project.id %>').hide();
 
