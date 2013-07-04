@@ -79,6 +79,6 @@ class Team < ActiveRecord::Base
   end
 
   def activities
-    Activity.where(team_id: self.id).order("created_at desc").all
+    Activity.where(team_id: id).order("created_at desc").limit(5)
   end
 end

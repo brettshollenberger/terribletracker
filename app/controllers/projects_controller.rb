@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   def index
     @user = current_user
     @team = Team.new
-    @activities = current_user.recent_activities
+    @activities = current_user.recent_activities.limit(5)
     respond_to do |format|
       format.html
       format.js
@@ -110,7 +110,7 @@ class ProjectsController < ApplicationController
 
   def homepage
     @user = current_user
-    @activities = current_user.recent_activities
+    @activities = current_user.recent_activities.limit(5)
     @team = Team.new
     respond_to do |format|
       format.html
