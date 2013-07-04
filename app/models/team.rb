@@ -21,6 +21,11 @@ class Team < ActiveRecord::Base
     :dependent => :destroy
   }
 
+  # has_many :members,
+  #   class_name: 'User',
+  #   through: :memberships,
+  #   source: :user
+
   has_many :projects, {
     dependent: :destroy,
     inverse_of: :team
@@ -43,11 +48,16 @@ class Team < ActiveRecord::Base
     return client_list
   end
 
+  def active_memberships
+    self.memberships.where(state: "active").includes(:user).all
+  end
+
   def members
-    members_list = []
-    Membership.where(joinable_id: id, joinable_type: "Team", role: "collaborator", state: "active").all.each { |membership| members_list.push(membership.user) }
-    members_list.push(self.owner)
-    return UserDecorator.decorate_collection(members_list)
+    members = []
+    self.active_memberships.each do |member|
+      members.push(member.user)
+    end
+    return UserDecorator.decorate_collection(members)
   end
 
   def pending_members
