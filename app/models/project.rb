@@ -48,6 +48,6 @@ class Project < ActiveRecord::Base
   end
 
   def activities
-    Activity.where(project_id: id).order("created_at desc").all
+    Activity.where(project_id: id).order("created_at desc").limit(5)
   end
 end

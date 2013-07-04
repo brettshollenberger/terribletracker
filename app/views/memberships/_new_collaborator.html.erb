@@ -1,6 +1,6 @@
 <%= link_to "x", "#", :id => "close" %>
 <h2 class="right-sidebar">Add Team Member</h2>
-  <%= form_for @membership, remote: true, url: { action: "create_team_membership", controller: "memberships" }, :html => { :class => "terrible_story_bro", :id => "new_collaborator_form", :method => "post" } do |f| %>
+  <%= form_for @membership, remote: true, url: { action: "create", controller: "memberships" }, :html => { :class => "terrible_story_bro", :id => "new_collaborator_form", :method => "post" } do |f| %>
 
   <%= f.text_field :user, :placeholder => "User's Email", autofocus: true %>
   <br>

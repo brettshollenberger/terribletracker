@@ -26,7 +26,12 @@
                   <%= label_tag("team_#{team.id}", :class => "checkbox") do %>
                     <%= check_box_tag "team_#{team.id}", "#{team.name}", false, :id => "team_#{team.id}", :class => "team_checkbox", data: {toggle: "checkbox"} %>
                     <%= hidden_field_tag :id, "#{team.id}" %>
-                    <span id="team_name_<%= team.id %>"><%= team.name %></span>
+                    <span id="team_name_<%= team.id %>"><%= team.name %><img src="/assets/25.gif" id="team-loader-<%= team.id %>" class="team-loader"></span>
+                    <script>
+                      $('#team_name_<%= team.id %>').click(function() {
+                        $('#team-loader-<%= team.id %>').show();
+                      });
+                    </script>
                   <% end %><!-- End label_tag -->
                   <%= submit_tag "Submit" %>
                 <% end %><!-- End team_sidebar form -->
@@ -36,7 +41,12 @@
                     <%= label_tag("project_#{project.id}", :class => "checkbox nested_project") do %>
                       <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
                       <%= hidden_field_tag :id, "#{project.id}" %>
-                      <span id="project_title_<%= project.id %>"><%= project.title %></span>
+                      <span id="project_title_<%= project.id %>"><%= project.title %><img src="/assets/25.gif" id="project-loader-<%= project.id %>" class="project-loader"></span>
+                      <script>
+                      $('#project_title_<%= project.id %>').click(function() {
+                        $('#project-loader-<%= project.id %>').show();
+                      });
+                    </script>
                     <% end %><!-- End label_tag -->
                     <%= submit_tag "Submit" %>
                   <% end %><!-- End project_sidebar form -->
@@ -59,6 +69,9 @@
     <div class="span9" id="body-main"><%= yield %></div>
     <div class="span3" id="right-sidebar"></div>
   </div>
-
+  <script>
+    $('.team-loader').hide();
+    $('.project-loader').hide();
+  </script>
 </body>
 </html>

@@ -55,7 +55,7 @@ private
   end
 
   def accept_team
-    h.link_to "Accept", "/membership/#{id}/accept_team",remote: true, :class => "accept-invitation"
+    h.link_to "Accept", "/membership/#{id}/accept",remote: true, :class => "accept-invitation"
   end
 
 end

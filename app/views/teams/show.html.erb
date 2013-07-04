@@ -44,7 +44,7 @@
               <td><%= member.email %></td>
               <% unless member == current_user %>
                 <% if @team.owner == current_user %>
-                  <td><%= link_to "Remove Member", "/membership/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}/remove_team", method: :delete, remote: true %></td>
+                  <td><%= link_to "Remove Member", "/memberships/#{member.memberships.where(joinable_id: @team.id, joinable_type: "Team").first.id}", method: :delete, remote: true %></td>
                 <% end %>
               <% end %>
             </tr>
