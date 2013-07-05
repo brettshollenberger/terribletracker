@@ -4,11 +4,7 @@ class MembershipsController < ApplicationController
   def new
     @team = Team.find(params[:team])
     @membership = Membership.new
-
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    render "new.js"
   end
 
   def create
@@ -22,10 +18,7 @@ class MembershipsController < ApplicationController
     else
       flash[:notice] = "There was an error inviting this member"
     end
-    respond_to do |format|
-      format.html { redirect_to new_team_membership_path(team: @team) }
-      format.js
-    end
+    render "create.js"
   end
 
   def destroy
@@ -42,10 +35,7 @@ class MembershipsController < ApplicationController
         end
       end
     end
-    respond_to do |format|
-      format.html { redirect_to @team }
-      format.js
-    end
+    render "destroy.js"
   end
 
   def accept
@@ -57,11 +47,8 @@ class MembershipsController < ApplicationController
       @membership.team.projects.each do |project|
         Membership.create(joinable: project, user: @membership.user, role: "collaborator", state: "active")
       end
-      respond_to do |format|
-        format.html { redirect_to root_path }
-        format.js
-      end
     end
+    render "accept.js"
   end
 
   def decline
@@ -73,7 +60,7 @@ class MembershipsController < ApplicationController
         flash[:notice] = "You've declined."
       end
     end
-    redirect_to root_path
+    render "/projects/homepage.js"
   end
 
 private
