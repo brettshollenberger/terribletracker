@@ -10,15 +10,14 @@ Terribletracker::Application.routes.draw do
     get "/logout" => "devise/sessions#destroy"
   end
 
+  post "projects/:id", to: "projects#show"
   resources :projects do
-    resources :comments
     resources :user_stories do
       resources :comments
     end
   end
 
   resources :memberships
-
   resources :teams
 
   post "/teams/:id", to: "teams#show"
