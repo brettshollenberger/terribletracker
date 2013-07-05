@@ -40,7 +40,11 @@ class User < ActiveRecord::Base
   has_many :activities
 
   def recent_activities
-    Activity.where("team_id IN (?)", teams).order('created_at DESC')
+    Activity.where("team_id IN (?)", self.decorate.active_teams).order('created_at DESC')
+  end
+
+  def active_team_memberships
+    Membership.where(user_id: id, state: "active", joinable_type: "Team").includes(:user, :joinable).all
   end
 
 end

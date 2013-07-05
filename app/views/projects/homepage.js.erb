@@ -1,5 +1,7 @@
-// Render the homepage in project body
-$('#body-main').html('<%= j render("homepage") %>');
+$('#right-sidebar').hide('slide', {direction: "right"}, function() {
+  // Render the homepage in project body
+  $('#body-main').html('<%= j render("/projects/homepage") %>').switchClass("span6", "span9");
+});
 
 // Remove new team form, if active
 $('#new_team').remove();
@@ -31,9 +33,4 @@ $('label').each(function() {
   var for_label = $(this).attr('for');
   if ( for_label.substring(0, 5) == "team_" ) { $(this).removeClass('checked'); }
   if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
-});
-
-$('#right-sidebar').hide('slide', {direction: "right"}, function() {
-  // Render the homepage in project body
-  $('#body-main').html('<%= j render("homepage") %>').switchClass("span6", "span9");
 });
