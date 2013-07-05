@@ -2,8 +2,6 @@ class ProjectsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    # @user = current_user
-    # @team = Team.new
     @activities = current_user.recent_activities.limit(5)
     respond_to do |format|
       format.html
@@ -12,12 +10,21 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    begin
-      @project = current_user.projects.find(params[:id])
-      @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
-      @user_story = UserStory.new
-    rescue
-      redirect_to root_path
+    @checked_project = params[:checked].to_i if params[:checked]
+    @project = Project.find(params[:id])
+    @team = @project.team
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
+    @user_story = UserStory.new
+    @users = UserDecorator.decorate_collection(@project.users)
+    @activities = @project.activities
+
+    if @project.id == @checked_project
+      redirect_to team_path(@project.team)
+    else
+      respond_to do |format|
+        format.html { redirect_to project_path(@project) }
+        format.js
+      end
     end
   end
 
@@ -88,9 +95,9 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def add_project_to_team
-    @project = Project.find(params[:project])
-  end
+  # def add_project_to_team
+  #   @project = Project.find(params[:project])
+  # end
 
   def save_team_project_join
     @project = Project.find(params[:project][:project_id])

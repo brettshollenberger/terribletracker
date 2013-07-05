@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature "user can sign in", js: true do
   background do
     user = FactoryGirl.create(:user)

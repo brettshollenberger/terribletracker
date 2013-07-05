@@ -63,4 +63,26 @@ describe User do
       user.recent_activities.should == [first_activity, second_activity, third_activity]
     end
   end
+
+  describe "#active_team_memberships" do
+    before :each do
+      create_team_with_project
+    end
+
+    it "returns the user's active team memberships" do
+      expect(@owner.active_team_memberships).to include(@team.memberships.first)
+    end
+  end
+
+  describe "#pending_team_memberships" do
+    before :each do
+      create_team_with_project
+      @pending_membership = FactoryGirl.create(:pending_team_membership, joinable: @team)
+      @pending_member = @pending_membership.user
+    end
+
+    it "returns the user's pending team memberships" do
+      expect(@pending_member.pending_team_memberships).to include(@team.memberships.last)
+    end
+  end
 end

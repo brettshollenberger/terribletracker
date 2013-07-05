@@ -11,6 +11,7 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem 'flatui-rails'
 gem 'newrelic_rpm'
+gem 'kaminari'
 
 group :development, :test do
   gem 'pry-rails'
