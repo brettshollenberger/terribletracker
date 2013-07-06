@@ -349,3 +349,14 @@ div.right-sidebar {
   right: 5px;
   top: -2px;
 }
+
+.error {
+  margin: 10px 0px 0 10px !important;
+}
+
+.x-icon {
+  width: 20px;
+  position: absolute;
+  right: 5px;
+  top: 1px;
+}

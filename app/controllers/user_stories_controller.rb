@@ -47,7 +47,7 @@ class UserStoriesController < ApplicationController
     @comments = CommentDecorator.decorate_collection(@user_story.comments.order("created_at DESC"))
     @comment = @user_story.comments.new
 
-    render "edit.js"
+    render "edit", :formats => [:js]
   end
 
   def update

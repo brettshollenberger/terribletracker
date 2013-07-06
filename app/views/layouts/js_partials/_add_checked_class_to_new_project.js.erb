@@ -1,0 +1,5 @@
+// Always add class checked to the new checkbox
+$('label').each(function() {
+  var la = $(this).attr('for');
+  if ( la == "project_<%= @project.id %>" ) { $(this).addClass('checked'); }
+});

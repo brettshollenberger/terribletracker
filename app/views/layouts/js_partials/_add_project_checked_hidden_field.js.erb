@@ -1,0 +1,4 @@
+// Add the project_checked hidden_field to all project_sidebar forms
+$('.project_sidebar').each(function() {
+  $(this).append('<%= j hidden_field_tag :checked, "#{@project.id}", :class => "project_checked" %>');
+});
