@@ -1,0 +1,4 @@
+$('#right-sidebar').hide('slide', {direction: "right"}, function() {
+  // Render the homepage in project body
+  $('#body-main').html('<%= j render("/projects/homepage") %>').switchClass("span6", "span9");
+});

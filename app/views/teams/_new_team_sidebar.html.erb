@@ -5,7 +5,8 @@
   </label>
   <%= f.text_field :name, :placeholder => "Team Name", autofocus: true, :class => "team_name" %>
   <%= f.submit("Create Team", :class => "btn btn-success new-project-btn") %>
-
+  <div id="new_team_errors">
+  </div>
 <% end %>
 
 <script>

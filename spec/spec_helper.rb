@@ -101,4 +101,5 @@ def create_team_with_project
   @users = [@owner, @collaborator]
   @users.each { |user| FactoryGirl.create(:membership, joinable: @project, user: user) }
   @activity = FactoryGirl.create(:activity, trackable: @story, team: @team, user: @owner)
+  @team_name = @team.name
 end

@@ -6,9 +6,21 @@
         <span class="icon-to-fade"></span>
         <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
         <%= hidden_field_tag :id, "#{project.id}" %>
-        <span id="project_title_<%= project.id %>"><%= project.title %></span>
+        <span id="project_title_<%= project.id %>"><%= project.title %>
+          <img src="/assets/25.gif" id="project-loader-<%= project.id %>" class="project-loader">
+        </span>
+        <script>
+        $('#project_title_<%= project.id %>').click(function() {
+          $('#project-loader-<%= project.id %>').show();
+        });
+      </script>
       <% end %><!-- End label_tag -->
         <%= submit_tag "Submit" %>
       <% end %><!-- End project_sidebar form -->
     <% end %><!-- End team.projects.each -->
     </div><!-- End team_sidebar_(id) div -->
+
+<script>
+  $('.team-loader').hide();
+  $('.project-loader').hide();
+</script>

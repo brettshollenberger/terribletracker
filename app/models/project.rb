@@ -5,6 +5,8 @@ class Project < ActiveRecord::Base
     presence: true
   }
 
+  validates_uniqueness_of :title, scope: [:team_id]
+
   has_many :memberships, {
     :as => :joinable,
     :dependent => :destroy

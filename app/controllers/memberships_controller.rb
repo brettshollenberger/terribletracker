@@ -4,7 +4,7 @@ class MembershipsController < ApplicationController
   def new
     @team = Team.find(params[:team])
     @membership = Membership.new
-    render "new.js"
+    render "new", :formats => [:js]
   end
 
   def create
@@ -18,7 +18,7 @@ class MembershipsController < ApplicationController
     else
       flash[:notice] = "There was an error inviting this member"
     end
-    render "create.js"
+    render "create", :formats => [:js]
   end
 
   def destroy
@@ -35,7 +35,7 @@ class MembershipsController < ApplicationController
         end
       end
     end
-    render "destroy.js"
+    render "destroy", :formats => [:js]
   end
 
   def accept
@@ -48,7 +48,7 @@ class MembershipsController < ApplicationController
         Membership.create(joinable: project, user: @membership.user, role: "collaborator", state: "active")
       end
     end
-    render "accept.js"
+    render "accept", :formats => [:js]
   end
 
   def decline
@@ -60,7 +60,7 @@ class MembershipsController < ApplicationController
         flash[:notice] = "You've declined."
       end
     end
-    render "/projects/homepage.js"
+    render "/projects/homepage", :formats => [:js]
   end
 
 private

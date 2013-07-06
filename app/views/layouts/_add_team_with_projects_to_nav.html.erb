@@ -6,7 +6,22 @@
       <span class="icon-to-fade"></span>
       <%= check_box_tag "team_#{@team.id}", "#{@team.name}", false, :id => "team_#{@team.id}", :class => "team_checkbox", data: {toggle: "checkbox"} %>
       <%= hidden_field_tag :id, "#{@team.id}" %>
-      <span id="team_name_<%= @team.id %>"><%= @team.name %></span>
+      <span id="team_name_<%= @team.id %>"><%= @team.name %><img src="/assets/25.gif" id="team-loader-<%= @team.id %>" class="team-loader"></span>
+      <script>
+        $('#team_name_<%= @team.id %>').click(function() {
+          $('#team-loader-<%= @team.id %>').show();
+        });
+          $('#team_sidebar_<%= @team.id %>').hover(function() {
+          $('#team-destroy-icon-<%= @team.id %>').show();
+        }, function () {
+          $('#team-destroy-icon-<%= @team.id %>').hide();
+        });
+      </script>
+        <% if current_user == @team.owner %>
+          <%= link_to(team_path(@team), method: :delete, remote: true, confirm: "Are you sure you want to delete #{@team.name}?", :class => "destroy-team-link") do %>
+            <img src="http://files.brettshollenberger.com/terrible-tracker/x-icon.svg" type="image/svg+xml" class="x-icon" id="team-destroy-icon-<%= @team.id %>">
+          <% end %>
+        <% end %>
     <% end %><!-- End label_tag -->
     <%= submit_tag "Submit" %>
   <% end %><!-- End team_sidebar form -->
@@ -18,9 +33,20 @@
         <span class="icon-to-fade"></span>
         <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
         <%= hidden_field_tag :id, "#{project.id}" %>
-        <span id="project_title_<%= project.id %>"><%= project.title %></span>
+        <span id="project_title_<%= project.id %>"><%= project.title %><img src="/assets/25.gif" id="project-loader-<%= project.id %>" class="project-loader"></span>
+        <script>
+          $('#project_title_<%= project.id %>').click(function() {
+            $('#project-loader-<%= project.id %>').show();
+          });
+        </script>
       <% end %><!-- End label_tag -->
       <%= submit_tag "Submit" %>
     <% end %><!-- End project_sidebar form -->
   <% end %><!-- End team.projects.each -->
 </div><!-- End team_sidebar_(id) div -->
+
+<script>
+  $('.team-loader').hide();
+  $('.project-loader').hide();
+  $('.x-icon').hide();
+</script>

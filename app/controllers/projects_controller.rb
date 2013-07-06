@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @activities = current_user.recent_activities.limit(5)
+    @activities = current_user.recent_activities
     respond_to do |format|
       format.html
       format.js
@@ -19,13 +19,19 @@ class ProjectsController < ApplicationController
     @activities = @project.activities
 
     if @project.id == @checked_project
-      redirect_to team_path(@project.team)
+      hide
     else
-      respond_to do |format|
-        format.html { redirect_to project_path(@project) }
-        format.js
-      end
+      render "show", :formats => [:js]
     end
+  end
+
+  def hide
+    @team = @project.team
+    @activities = @team.activities
+    @old_project = @project
+    @project = Project.new
+
+    render "hide", :formats => [:js]
   end
 
   def new
@@ -45,23 +51,12 @@ class ProjectsController < ApplicationController
     @user_story = UserStory.new
 
     if @project.save
-      @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
-      @team.members.each { |member| Membership.create(joinable: @project, user: member, role: "collaborator", state: "active") }
-      @users = UserDecorator.decorate_collection(@project.users)
+      create_memberships
       track_project_activity(@project, project=@project)
       @activities = @project.activities
-
-      if @membership.save
-        respond_to do |format|
-          format.html { redirect_to @project }
-          format.js
-        end
-      else
-        respond_to do |format|
-          format.html { redirect_to new_project_path }
-          format.js   { "new" }
-        end
-      end
+    else
+      @project_error = "Please give your project a new name."
+      render "new", :formats => [:js]
     end
   end
 
@@ -75,12 +70,8 @@ class ProjectsController < ApplicationController
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("created_at"))
     @user_story = UserStory.new
     @users = UserDecorator.decorate_collection(@project.users)
-    if @project.update_attributes(params[:project])
-      respond_to do |format|
-        format.html
-        format.js
-      end
-    end
+    @project.update_attributes(params[:project])
+    render "update", :formats => [:js]
   end
 
   def destroy
@@ -123,6 +114,14 @@ class ProjectsController < ApplicationController
       format.html
       format.js
     end
+  end
+
+private
+  def create_memberships
+    @membership = Membership.new(joinable: @project, user: current_user, role: "owner", state: "active")
+    @membership.save
+    @team.members.each { |member| Membership.create(joinable: @project, user: member, role: "collaborator", state: "active") }
+    @users = UserDecorator.decorate_collection(@project.users)
   end
 
 end

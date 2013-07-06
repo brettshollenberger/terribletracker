@@ -1,0 +1,5 @@
+// Also, remove the "checked" class from all labels
+$('label').each(function() {
+  var for_label = $(this).attr('for');
+  if ( for_label.substring(0, 5) == "team_" ) { $(this).removeClass('checked'); }
+});

@@ -8,9 +8,7 @@ class Team < ActiveRecord::Base
     presence: true
   }
 
-  validates :name, {
-    uniqueness: true
-  }
+  validates_uniqueness_of :name, scope: [:owner_id]
 
   validates :owner_id, {
     numericality: true
@@ -20,11 +18,6 @@ class Team < ActiveRecord::Base
     :as => :joinable,
     :dependent => :destroy
   }
-
-  # has_many :members,
-  #   class_name: 'User',
-  #   through: :memberships,
-  #   source: :user
 
   has_many :projects, {
     dependent: :destroy,
