@@ -15,6 +15,9 @@
     <%= f.submit("Create Project", :class => "btn btn-success new-project-btn") %>
 
   <% end %>
+  <% if @project_error %>
+    <div class="error"><%= @project_error %></div>
+  <% end %>
 </div>
 
 <script>

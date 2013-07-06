@@ -1,6 +1,8 @@
 // Display new team in project body
 $('#body-main').html('').append('<%= j render("show_team") %>');
 
+$('#new_team_errors').html('');
+
 // Add team to user's nav
 $('#user-specific-navbar').append('<%= j render("/layouts/add_team_to_user_specific_navbar") %>');
 
@@ -10,17 +12,9 @@ $('.team_sidebar').each(function() {
 });
 
 // Change new team link to reflect the fact that the team is checked
-$('#new_team_link').html('').append('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", remote: true %>');
+$('#new_team_link').html('').append('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", :id => "new-team-btn", remote: true %>');
 
-jQuery.fn.submitOnCheck = function() {
-  this.find('input[type=submit]').remove();
-  this.find('input[type=checkbox]').click(function() {
-    $(this).closest('form').submit();
-  });
-  return this;
-};
-
-$('.team_sidebar').submitOnCheck();
+<%= render "/layouts/js_partials/submit_on_check" %>
 
 $('#body-main').switchClass('span9', 'span6', function() {
   $('#right-sidebar').show('normal');

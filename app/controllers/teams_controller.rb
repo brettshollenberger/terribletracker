@@ -32,7 +32,8 @@ class TeamsController < ApplicationController
         format.js
       end
     else
-      render "new.js"
+      @team_errors = "You cannot have two teams with the same name"
+      render "team_errors", :formats => [:js]
     end
   end
 
