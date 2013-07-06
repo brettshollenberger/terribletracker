@@ -6,16 +6,20 @@
       <span class="icon-to-fade"></span>
       <%= check_box_tag "team_#{@team.id}", "#{@team.name}", false, :id => "team_#{@team.id}", :class => "team_checkbox", data: {toggle: "checkbox"} %>
       <%= hidden_field_tag :id, "#{@team.id}" %>
-      <span id="team_name_<%= @team.id %>"><%= @team.name %><img src="/assets/25.gif" id="team-loader-<%= @team.id %>" class="team-loader"></span>
+      <span id="team_name_<%= @team.id %>"><%= @team.name %>
+        <img src="/assets/25.gif" id="team-loader-<%= @team.id %>" class="team-loader">
+      </span>
       <script>
         $('#team_name_<%= @team.id %>').click(function() {
           $('#team-loader-<%= @team.id %>').show();
         });
-          $('#team_sidebar_<%= @team.id %>').hover(function() {
+        $('#team_sidebar_<%= @team.id %>').hover(function() {
           $('#team-destroy-icon-<%= @team.id %>').show();
-        }, function () {
-          $('#team-destroy-icon-<%= @team.id %>').hide();
-        });
+          },
+          function () {
+            $('#team-destroy-icon-<%= @team.id %>').hide();
+          }
+        );
       </script>
         <% if current_user == @team.owner %>
           <%= link_to(team_path(@team), method: :delete, remote: true, confirm: "Are you sure you want to delete #{@team.name}?", :class => "destroy-team-link") do %>
@@ -25,25 +29,39 @@
     <% end %><!-- End label_tag -->
     <%= submit_tag "Submit" %>
   <% end %><!-- End team_sidebar form -->
+</div><!-- End Team Sidebar div -->
+<div id="projects_sidebar_<%= team.id %>">
   <% @team.projects.each do |project| %>
+    <div id="team_project_sidebar_<%= @project.id %>">
   <!-- ################# Projects ###################### -->
-    <%= form_tag("/projects/#{project.id}", :class => "project_sidebar", :id => "project_sidebar_#{@team.id}", remote: true) do %>
-      <%= label_tag("project_#{project.id}", :class => "checkbox nested_project") do %>
-        <span class="icon"></span>
-        <span class="icon-to-fade"></span>
-        <%= check_box_tag "project_#{project.id}", "#{project.title}", false, :id => "project_#{project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
-        <%= hidden_field_tag :id, "#{project.id}" %>
-        <span id="project_title_<%= project.id %>"><%= project.title %><img src="/assets/25.gif" id="project-loader-<%= project.id %>" class="project-loader"></span>
-        <script>
-          $('#project_title_<%= project.id %>').click(function() {
-            $('#project-loader-<%= project.id %>').show();
-          });
-        </script>
-      <% end %><!-- End label_tag -->
-      <%= submit_tag "Submit" %>
-    <% end %><!-- End project_sidebar form -->
+      <%= form_tag("/projects/#{@project.id}", :class => "project_sidebar", :id => "project_sidebar_#{@team.id}", remote: true) do %>
+        <%= label_tag("project_#{@project.id}", :class => "checkbox nested_project") do %>
+          <span class="icon"></span>
+          <span class="icon-to-fade"></span>
+          <%= check_box_tag "project_#{@project.id}", "#{@project.title}", false, :id => "project_#{@project.id}", data: {toggle: "checkbox"}, :class => "project_checkbox" %>
+          <%= hidden_field_tag :id, "#{@project.id}" %>
+          <span id="project_title_<%= @project.id %>"><%= @project.title %><img src="/assets/25.gif" id="project-loader-<%= @project.id %>" class="project-loader"></span>
+          <script>
+            $('#project_title_<%= @project.id %>').click(function() {
+              $('#project-loader-<%= @project.id %>').show();
+            });
+            $('#team_project_sidebar_<%= @project.id %>').hover(function() {
+              $('#project-destroy-icon-<%= @project.id %>').show();
+              },
+              function () {
+                $('#project-destroy-icon-<%= @project.id %>').hide();
+              }
+            );
+          </script>
+            <%= link_to(project_path(@project), method: :delete, remote: true, confirm: "Are you sure you want to delete #{@project.title}?", :class => "destroy-project-link") do %>
+              <img src="http://files.brettshollenberger.com/terrible-tracker/x-icon.svg" type="image/svg+xml" class="x-icon" id="project-destroy-icon-<%= @project.id %>">
+            <% end %>
+        <% end %><!-- End label_tag -->
+        <%= submit_tag "Submit" %>
+      <% end %><!-- End project_sidebar form -->
+    </div><!-- End team_project_sidebar div -->
   <% end %><!-- End team.projects.each -->
-</div><!-- End team_sidebar_(id) div -->
+</div><!-- End Project sidebar div -->
 
 <script>
   $('.team-loader').hide();
