@@ -11,6 +11,13 @@ $('.team_sidebar').each(function() {
   $(this).append('<%= j hidden_field_tag :checked, "#{@team.id}", :class => "team_checked" %>');
 });
 
+$('label').each(function() {
+  var la = $(this).attr('for');
+  if ( la == "team_<%= @team.id %>" ) { $(this).addClass('checked'); }
+});
+
+$('input[name=team_<%= @team.id %>]').attr('checked', true);
+
 // Change new team link to reflect the fact that the team is checked
 $('#new_team_link').html('').append('<%= j link_to "New Team", new_team_path(checked: @team.id), :class => "btn btn-block profile", :id => "new-team-btn", remote: true %>');
 

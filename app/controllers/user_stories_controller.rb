@@ -32,7 +32,8 @@ class UserStoriesController < ApplicationController
     @team = @project.team
 
     @user_story.update_attributes(params[:user_story])
-
+    # tracker = ActivityTracker::UserStoryActivityTracker.new(@user_story, @project, a="create", cu=current_user)
+    # tracker.track_activity
     track_project_activity(@user_story, project=@project)
     @activity = find_activity
     respond_to do |format|

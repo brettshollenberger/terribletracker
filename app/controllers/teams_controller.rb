@@ -77,6 +77,7 @@ class TeamsController < ApplicationController
       project.memberships.each { |m| m.destroy }
     end
     @team.destroy
+    @activities = current_user.recent_activities
     render "destroy", :formats => [:js]
   end
 

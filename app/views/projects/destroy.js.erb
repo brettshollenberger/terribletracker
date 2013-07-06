@@ -1,0 +1,9 @@
+$('#team_project_sidebar_<%= @project.id %>').remove();
+
+<% if @checked_project %>
+  <% if @id == @checked_project %>
+    <%= render '/projects/js_partials/render_homepage' %>
+
+    <%= render '/layouts/js_partials/uncheck_sidebar' %>
+  <% end %>
+<% end %>

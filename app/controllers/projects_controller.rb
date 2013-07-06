@@ -21,6 +21,7 @@ class ProjectsController < ApplicationController
     if @project.id == @checked_project
       hide
     else
+      session[:checked_project] = @project.id
       render "show", :formats => [:js]
     end
   end
@@ -75,15 +76,13 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
+    @checked_project = session[:checked_project]
     @project = Project.find(params[:id])
-
-    if @project.destroy
-      flash[:notice] = "Project deleted"
-      redirect_to projects_path
-    else
-      flash[:error] = "Oops. There was an error deleting your project"
-      redirect_to projects_path
-    end
+    @id = @project.id
+    @project.destroy
+    @activities = current_user.recent_activities
+    Membership.where(joinable_id: @project.id, joinable_type: "Project").all.each { |m| m.destroy }
+    render "destroy", :formats => [:js]
   end
 
   # def add_project_to_team
