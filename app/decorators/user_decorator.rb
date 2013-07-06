@@ -3,7 +3,13 @@ class UserDecorator < Draper::Decorator
 
   def active_teams
     teams = []
-    self.active_team_memberships.each { |m| teams.push(m.joinable) }
+    self.teams.active.all.each { |team| teams.push(team) }
+    teams
+  end
+
+  def inactive_teams
+    teams = []
+    self.teams.inactive.all.each { |team| teams.push(team) }
     teams
   end
 

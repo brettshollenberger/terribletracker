@@ -15,13 +15,19 @@ feature 'owners can delete teams', %q{
 
     background do
       create_team_with_project
-    end
-
-    scenario 'removing team', type: :feature, js: true do
       login(@owner)
       visit_team_path(@team)
       find('.x-icon').click
+    end
+
+    scenario 'removing team', type: :feature, js: true do
       find('#user-specific-navbar').should_not have_content(@team_name)
+    end
+
+    scenario "undoing team deletion", type: :feature, js: :true do
+      find('#undo-team-deletion').should have_content("Undo")
+      find('#undo-team-deletion').click
+      find('#user-specific-navbar').should have_content(@team_name)
     end
   end
 

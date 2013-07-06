@@ -27,6 +27,21 @@ describe Team do
     expect(team).to_not be_valid
   end
 
+  describe "#deactivate" do
+    it "deactivates the team" do
+      team.deactivate
+      expect(team.state).to eql('inactive')
+    end
+  end
+
+  describe "#activate" do
+    it "activates the team" do
+      team.deactivate
+      team.activate
+      expect(team.state).to eql('active')
+    end
+  end
+
   describe "#projects" do
     it "returns the team's projects" do
       expect(team.projects).to include(project)

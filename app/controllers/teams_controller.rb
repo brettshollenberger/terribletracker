@@ -72,11 +72,12 @@ class TeamsController < ApplicationController
     @checked = session[:checked]
     @team = Team.find(params[:id])
     @id = @team.id
-    Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.destroy }
-    @team.projects.each do |project|
-      project.memberships.each { |m| m.destroy }
-    end
-    @team.destroy
+    @team.deactivate
+    # Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.destroy }
+    # @team.projects.each do |project|
+    #   project.memberships.each { |m| m.destroy }
+    # end
+    # @team.destroy
     @activities = current_user.recent_activities
     render "destroy", :formats => [:js]
   end

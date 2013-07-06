@@ -1,10 +1,10 @@
 class Team < ActiveRecord::Base
-  attr_accessible :description, :name, :owner_id, :website
+  attr_accessible :description, :name, :owner_id, :website, :state
 
   belongs_to :owner,
     class_name: 'User'
 
-  validates :name, :owner_id, {
+  validates :name, :owner_id, :state, {
     presence: true
   }
 
@@ -26,6 +26,25 @@ class Team < ActiveRecord::Base
 
   has_many :activities,
     :as => :trackable
+
+  scope :active, -> { where(state: "active") }
+
+  scope :inactive, -> { where(state: "inactive") }
+
+  state_machine :state, :initial => :active do
+
+    event :deactivate do
+      transition :active => :inactive
+    end
+
+    event :activate do
+      transition :inactive => :active
+    end
+
+    state :active
+    state :inactive
+
+  end
 
   def projects
     Project.where(team_id: id)
