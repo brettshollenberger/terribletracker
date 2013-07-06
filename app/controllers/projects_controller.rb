@@ -19,12 +19,24 @@ class ProjectsController < ApplicationController
     @activities = @project.activities
 
     if @project.id == @checked_project
-      redirect_to team_path(@project.team)
+      hide
     else
       respond_to do |format|
         format.html { redirect_to project_path(@project) }
         format.js
       end
+    end
+  end
+
+  def hide
+    @team = @project.team
+    @activities = @team.activities
+    @old_project = @project
+    @project = Project.new
+
+    respond_to do |format|
+      format.html { redirect_to team_path(@team) }
+      format.js { render "/teams/hide_project" }
     end
   end
 

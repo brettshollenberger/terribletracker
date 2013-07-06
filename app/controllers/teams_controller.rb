@@ -72,18 +72,6 @@ class TeamsController < ApplicationController
     end
   end
 
-  def hide_project
-    @team = @project.team
-    @activities = @team.activities
-    @old_project = @project
-    @project = Project.new
-
-    respond_to do |format|
-      format.html { redirect_to team_path(@team) }
-      format.js { render "hide_project" }
-    end
-  end
-
 private
 
   def find_team
