@@ -3,18 +3,19 @@ module ActivityTracker
   class ActivityTracker
     attr_reader :trackable, :project, :information, :args, :args_hash, :current_user
 
-    def initialize(t, p, i=nil)
+    def initialize(t, p, a, cu, i=nil)
       @trackable = t
       @project = p
+      @action = a
+      @current_user = cu
       @information = i
-      @action = parameters[:action]
-      @current_user = current_user
-      @args = [team_id, project_id, trackable, information]
+      @args = [team_id, project_id, action, trackable, information]
       @args_hash = {}
       @args.each { |a| @args_hash.merge!(a) }
     end
 
     def track_activity
+      binding.pry
       @current_user.activities.create(@args_hash)
     end
 

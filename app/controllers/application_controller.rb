@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  include ActivityTracker
+
   def current_user
     UserDecorator.decorate(super) unless super.nil?
   end
