@@ -1,9 +1,9 @@
 class TeamsController < ApplicationController
   before_filter :authenticate_user!
 
-  def index
-    @team = current_user.teams
-  end
+  # def index
+  #   @team = current_user.teams
+  # end
 
   def new
     @team = Team.new
@@ -26,6 +26,7 @@ class TeamsController < ApplicationController
       @users = UserDecorator.decorate_collection(@team.members)
       track_team_activity(@team, team=@team)
       @activity = find_activity
+      session[:checked] = @team.id
 
       respond_to do |format|
         format.html
@@ -48,6 +49,7 @@ class TeamsController < ApplicationController
     if @team.id == @checked
       hide_projects
     else
+      session[:checked] = @team.id
       respond_to do |format|
         format.html { redirect_to root_path }
         format.js
@@ -64,6 +66,18 @@ class TeamsController < ApplicationController
         format.js
       end
     end
+  end
+
+  def destroy
+    @checked = session[:checked]
+    @team = Team.find(params[:id])
+    @id = @team.id
+    Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.destroy }
+    @team.projects.each do |project|
+      project.memberships.each { |m| m.destroy }
+    end
+    @team.destroy
+    render "destroy", :formats => [:js]
   end
 
   def hide_projects
