@@ -68,18 +68,33 @@ class TeamsController < ApplicationController
     end
   end
 
-  def destroy
+  def deactivate
     @checked = session[:checked]
     @team = Team.find(params[:id])
     @id = @team.id
     @team.deactivate
+    Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.deactivate }
     # Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.destroy }
     # @team.projects.each do |project|
     #   project.memberships.each { |m| m.destroy }
     # end
     # @team.destroy
     @activities = current_user.recent_activities
-    render "destroy", :formats => [:js]
+    render "deactivate", :formats => [:js]
+  end
+
+  def activate
+    @team = Team.find(params[:id])
+    @team.activate
+    Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.activate }
+    @activities = @team.activities
+    @projects = @team.projects.order("created_at")
+    @project = @team.projects.new
+    @users = UserDecorator.decorate_collection(@team.members)
+    @checked = session[:checked]
+    track_team_activity(@team, team=@team)
+    session[:checked] = @team.id
+    render "activate", :formats => [:js]
   end
 
   def hide_projects
@@ -108,7 +123,7 @@ private
   end
 
   def find_activity
-    Activity.where(team_id: @team.id).order("created_at DESC").first
+    Activity.where(team_id: @team.id).order("created_at DESC").last
   end
 
 end

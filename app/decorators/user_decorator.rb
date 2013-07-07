@@ -3,7 +3,9 @@ class UserDecorator < Draper::Decorator
 
   def active_teams
     teams = []
-    self.teams.active.all.each { |team| teams.push(team) }
+    self.active_team_memberships.each do |membership|
+      teams.push(membership.joinable) if membership.joinable.state == "active"
+    end
     teams
   end
 

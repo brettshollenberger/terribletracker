@@ -360,3 +360,29 @@ div.right-sidebar {
   right: 5px;
   top: 0px;
 }
+
+.deactivate-header {
+  width: 90%;
+  border-radius: 0px !important;
+  background-color: #E74C3C !important;
+  border: 0 !important;
+  text-shadow: none !important;
+}
+
+.deactivate-header h2,
+.deactivate-header p {
+  color: #ECF0F1;
+  text-shadow: none !important;
+}
+
+.deactivate-header .btn {
+  background-color: #C0392B !important;
+  color: #2C3E50 !important;
+  font-family: 'Lato';
+  font-weight: 900;
+  width: 20%;
+}
+
+.deactivate-header .btn:hover {
+  background-color: #ECF0F1 !important;
+}

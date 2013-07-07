@@ -1,13 +1,12 @@
 require 'spec_helper'
 
-feature 'owners can delete teams', %q{
+feature 'owners can deactivate teams', %q{
   As a team owner,
-  I want to be able to delete my team,
-  so that I can get out of Terrible Tracker once
-  and for all!
+  I want to be able to deactivate my team,
+  so that I know longer have it in my sidebar.
 } do
   # Acceptance Criteria:
-  # Team owner logs in, and removes their team.
+  # Team owner logs in, and deactivates their team.
   # It no longer shows up, but does offer them to undo their last
   # action.
 
@@ -25,8 +24,8 @@ feature 'owners can delete teams', %q{
     end
 
     scenario "undoing team deletion", type: :feature, js: :true do
-      find('#undo-team-deletion').should have_content("Undo")
-      find('#undo-team-deletion').click
+      find('#undo-team-deactivation').should have_content("Undo")
+      find('#undo-team-deactivation').click
       find('#user-specific-navbar').should have_content(@team_name)
     end
   end

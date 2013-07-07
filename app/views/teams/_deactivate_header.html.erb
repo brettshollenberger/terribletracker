@@ -1,0 +1,5 @@
+<div id="deactivate-team-header" class="deactivate-header alert alert-error">
+  <h2><%= @team.name %> Deactivated</h2>
+  <p>If this was a mistake, you can undo it.</p>
+  <p><%= link_to "Undo", activate_team_path(@team), :class => "btn", :id => "undo-team-deactivation", remote: true %></p>
+</div>

@@ -8,6 +8,10 @@ class Team < ActiveRecord::Base
     presence: true
   }
 
+  validates :state, {
+    inclusion: { :in => %w(active inactive) }
+  }
+
   validates_uniqueness_of :name, scope: [:owner_id]
 
   validates :owner_id, {

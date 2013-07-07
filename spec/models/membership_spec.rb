@@ -46,6 +46,21 @@ describe Membership do
     expect(membership).to validate_presence_of("state")
   end
 
+  describe "#deactivate" do
+    it "deactivates the membership" do
+      membership.deactivate
+      expect(membership.state).to eql('inactive')
+    end
+  end
+
+  describe "#activate" do
+    it "activates the membership" do
+      membership.deactivate
+      membership.activate
+      expect(membership.state).to eql('active')
+    end
+  end
+
   describe "#project" do
     let(:membership)               { FactoryGirl.create(:membership) }
     let(:project)                  { membership.project }
