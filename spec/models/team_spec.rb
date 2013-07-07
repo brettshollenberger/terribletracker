@@ -28,6 +28,39 @@ describe Team do
   end
 
   describe "#projects" do
+    it "returns the team's active projects" do
+      create_team_with_project
+      @project2 = FactoryGirl.create(:project, team: @team, state: "inactive")
+      expect(@team.projects).to include(@project)
+      expect(@team.projects).to_not include(@project2)
+    end
+  end
+
+  describe "#inactive_projects" do
+    it "returns the team's inactive projects" do
+      create_team_with_project
+      @project2 = FactoryGirl.create(:project, team: @team, state: "inactive")
+      expect(@team.inactive_projects).to_not include(@project)
+      expect(@team.inactive_projects).to include(@project2)
+    end
+  end
+
+  describe "#deactivate" do
+    it "deactivates the team" do
+      team.deactivate
+      expect(team.state).to eql('inactive')
+    end
+  end
+
+  describe "#activate" do
+    it "activates the team" do
+      team.deactivate
+      team.activate
+      expect(team.state).to eql('active')
+    end
+  end
+
+  describe "#projects" do
     it "returns the team's projects" do
       expect(team.projects).to include(project)
       expect(team.projects.length).to be(1)

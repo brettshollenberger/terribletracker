@@ -1,0 +1,12 @@
+$('#team_sidebar_<%= @team.id %>').remove();
+$('#projects_sidebar_<%= @team.id %>').remove();
+
+<% if @checked %>
+  <% if @id == @checked %>
+    <%= render '/projects/js_partials/render_homepage_with_team_deactivation' %>
+
+    <%= render '/layouts/js_partials/uncheck_sidebar' %>
+  <% else %>
+    <%= render '/teams/js_partials/team_deactivate_header' %>
+  <% end %>
+<% end %>

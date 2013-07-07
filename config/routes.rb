@@ -20,9 +20,14 @@ Terribletracker::Application.routes.draw do
   resources :memberships
   resources :teams
 
+  get "/teams/:id/deactivate", to: "teams#deactivate", as: :deactivate_team
+  get "/teams/:id/activate", to: "teams#activate", as: :activate_team
   post "/teams/:id", to: "teams#show"
   post "/show_project", to: "teams#show_project"
   get "/homepage", to: "projects#homepage"
+
+  get "/projects/:id/deactivate", to: "projects#deactivate", as: :deactivate_project
+  get "/projects/:id/activate", to: "projects#activate", as: :activate_project
 
   get "user_story/:id/unstarted", to: "user_stories#unstarted"
   get "user_story/:id/started", to: "user_stories#started"

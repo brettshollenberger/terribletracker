@@ -6,7 +6,7 @@ class Membership < ActiveRecord::Base
   }
 
   validates :state, {
-    inclusion: { :in => %w(pending active closed) }
+    inclusion: { :in => %w(pending active inactive) }
   }
 
   validates :role, {
@@ -30,29 +30,24 @@ class Membership < ActiveRecord::Base
 
   state_machine :state, :initial => :pending do
     after_transition :pending => :active, :do => :email_accepted_confirmations
-    after_transition :pending => :closed, :do => :email_decline_confirmations
-    after_transition :active => :closed, :do => :email_closed_confirmations
-    after_transition :closed => :active, :do => :email_reopen_confirmations
+    after_transition :active => :inactive, :do => :email_closed_confirmations
+    after_transition :inactive => :active, :do => :email_reopen_confirmations
 
     event :approve_membership do
       transition :pending => :active
     end
 
-    event :decline_membership do
-      transition :pending => :closed
+    event :deactivate do
+      transition :active => :inactive
     end
 
-    event :remove_membership do
-      transition :active => :closed
-    end
-
-    event :reopen_membership do
-      transition :closed => :active
+    event :activate do
+      transition :inactive => :active
     end
 
     state :pending
     state :active
-    state :closed
+    state :inactive
 
   end
 

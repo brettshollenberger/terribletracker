@@ -1,0 +1,28 @@
+<% if @checked %>
+  // Untoggle any active teams
+  $('#project_sidebar_<%= @checked %>').removeClass('visible').hide('normal');
+
+  // Remove the team_checked hidden_field from the team forms
+  $('.team_checked').each(function() { $(this).remove(); });
+
+  // Also remove the the project_checked hidden_field from the project forms;
+  // we're no longer in any team context
+  $('.project_checked').each(function() { $(this).remove(); });
+
+  // Set the team's check attribute to false
+  $('input[name=team_<%= @checked %>]').attr('checked', false);
+
+  // Also, remove the "checked" class from the label for teams and projects
+  $('label').each(function() {
+    var for_label = $(this).attr('for');
+    if ( for_label == "team_<%= @checked %>" ) { $(this).removeClass('checked'); }
+    if ( for_label.substring(0, 8) == "project_" ) { $(this).removeClass('checked'); }
+  });
+
+  // For all project_checkboxes, also set the checked attribute to false
+  $('input[class=project_checkbox]').each(function() {
+    $(this).attr('checked', false);
+  });
+<% end %>
+
+<%= render '/teams/js_partials/show_new_team.js.erb' %>
