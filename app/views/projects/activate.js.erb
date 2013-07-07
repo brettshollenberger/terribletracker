@@ -1,0 +1,9 @@
+// If another project was previously checked, uncheck it
+<% if @checked_project %>
+  <% unless @checked_project.nil? %>
+    <%= render '/layouts/js_partials/uncheck_old_project' %>
+  <% end %>
+<% end %>
+
+<%= render 'projects/js_partials/add_new_project' %>
+

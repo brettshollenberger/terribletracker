@@ -1,8 +1,12 @@
 class Project < ActiveRecord::Base
-  attr_accessible :budget, :description, :title, :weekly_rate, :team, :team_id
+  attr_accessible :budget, :description, :title, :weekly_rate, :team, :team_id, :state
 
-  validates :title, :team, {
+  validates :title, :team, :state, {
     presence: true
+  }
+
+  validates :state, {
+    inclusion: { :in => %w(active inactive) }
   }
 
   validates_uniqueness_of :title, scope: [:team_id]
@@ -32,6 +36,25 @@ class Project < ActiveRecord::Base
   belongs_to :team, {
     inverse_of: :projects
   }
+
+  scope :active, -> { where(state: "active") }
+
+  scope :inactive, -> { where(state: "inactive") }
+
+  state_machine :state, :initial => :active do
+
+    event :deactivate do
+      transition :active => :inactive
+    end
+
+    event :activate do
+      transition :inactive => :active
+    end
+
+    state :active
+    state :inactive
+
+  end
 
   def owner
     self.memberships.where(role: "owner").first.user

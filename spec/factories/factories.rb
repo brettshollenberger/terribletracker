@@ -94,6 +94,7 @@ FactoryGirl.define do
     description "A very funny group of men"
     association :owner, factory: :user
     website "themerrymen.com"
+    state "active"
   end
 
   factory :comment do

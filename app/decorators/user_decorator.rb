@@ -3,13 +3,23 @@ class UserDecorator < Draper::Decorator
 
   def active_teams
     teams = []
-    self.active_team_memberships.each { |m| teams.push(m.joinable) }
+    self.active_team_memberships.each do |membership|
+      teams.push(membership.joinable) if membership.joinable.state == "active"
+    end
+    teams
+  end
+
+  def inactive_teams
+    teams = []
+    self.teams.inactive.all.each { |team| teams.push(team) }
     teams
   end
 
   def team_invitations
     invitation_list = []
-    self.pending_team_memberships.each { |m| invitation_list.push(m) }
+    self.pending_team_memberships.each do |membership|
+      invitation_list.push(membership) if membership.joinable.state == "active"
+    end
     MembershipDecorator.decorate_collection(invitation_list)
   end
 

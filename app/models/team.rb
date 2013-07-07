@@ -1,11 +1,15 @@
 class Team < ActiveRecord::Base
-  attr_accessible :description, :name, :owner_id, :website
+  attr_accessible :description, :name, :owner_id, :website, :state
 
   belongs_to :owner,
     class_name: 'User'
 
-  validates :name, :owner_id, {
+  validates :name, :owner_id, :state, {
     presence: true
+  }
+
+  validates :state, {
+    inclusion: { :in => %w(active inactive) }
   }
 
   validates_uniqueness_of :name, scope: [:owner_id]
@@ -27,12 +31,35 @@ class Team < ActiveRecord::Base
   has_many :activities,
     :as => :trackable
 
+  scope :active, -> { where(state: "active") }
+
+  scope :inactive, -> { where(state: "inactive") }
+
+  state_machine :state, :initial => :active do
+
+    event :deactivate do
+      transition :active => :inactive
+    end
+
+    event :activate do
+      transition :inactive => :active
+    end
+
+    state :active
+    state :inactive
+
+  end
+
   def projects
-    Project.where(team_id: id)
+    Project.where(team_id: id, state: "active")
+  end
+
+  def inactive_projects
+    Project.where(team_id: id, state: "inactive")
   end
 
   def owner
-    Membership.where(joinable_id: id, joinable_type: "Team", role: "owner", state: "active").first.user
+    Membership.where(joinable_id: id, joinable_type: "Team", role: "owner").first.user
   end
 
   def active_clientships
