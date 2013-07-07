@@ -26,6 +26,9 @@ Terribletracker::Application.routes.draw do
   post "/show_project", to: "teams#show_project"
   get "/homepage", to: "projects#homepage"
 
+  get "/projects/:id/deactivate", to: "projects#deactivate", as: :deactivate_project
+  get "/projects/:id/activate", to: "projects#activate", as: :activate_project
+
   get "user_story/:id/unstarted", to: "user_stories#unstarted"
   get "user_story/:id/started", to: "user_stories#started"
   get "user_story/:id/review", to: "user_stories#review"

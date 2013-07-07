@@ -1,10 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :authenticate_user!
 
-  # def index
-  #   @team = current_user.teams
-  # end
-
   def new
     @team = Team.new
     @checked = params[:checked].to_i if params[:checked]
@@ -74,11 +70,6 @@ class TeamsController < ApplicationController
     @id = @team.id
     @team.deactivate
     Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.deactivate }
-    # Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.destroy }
-    # @team.projects.each do |project|
-    #   project.memberships.each { |m| m.destroy }
-    # end
-    # @team.destroy
     @activities = current_user.recent_activities
     render "deactivate", :formats => [:js]
   end
@@ -95,6 +86,14 @@ class TeamsController < ApplicationController
     track_team_activity(@team, team=@team)
     session[:checked] = @team.id
     render "activate", :formats => [:js]
+  end
+
+  def destroy
+    Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.destroy }
+    @team.projects.each do |project|
+      project.memberships.each { |m| m.destroy }
+    end
+    @team.destroy
   end
 
   def hide_projects

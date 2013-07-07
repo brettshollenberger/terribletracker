@@ -1,0 +1,3 @@
+<% unless activity.trackable.nil? %>
+  reopened <%= link_to activity.trackable.title, "/team/#{activity.trackable.id}", remote: true %>.
+<% end %>

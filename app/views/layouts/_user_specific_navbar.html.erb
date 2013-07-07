@@ -55,7 +55,7 @@
                   }
                 );
               </script>
-                <%= link_to(project_path(project), method: :delete, remote: true, confirm: "Are you sure you want to delete #{project.title}?", :class => "destroy-project-link") do %>
+                <%= link_to(deactivate_project_path(project), remote: true, confirm: "Are you sure you want to deactivate #{project.title}?", :class => "destroy-project-link") do %>
                   <img src="http://files.brettshollenberger.com/terrible-tracker/x-icon.svg" type="image/svg+xml" class="x-icon" id="project-destroy-icon-<%= project.id %>">
                 <% end %>
             <% end %><!-- End label_tag -->

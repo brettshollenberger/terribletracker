@@ -55,6 +55,7 @@ class ProjectsController < ApplicationController
       create_memberships
       track_project_activity(@project, project=@project)
       @activities = @project.activities
+      session[:checked_project] = @project.id
     else
       @project_error = "Please give your project a new name."
       render "new", :formats => [:js]
@@ -73,6 +74,31 @@ class ProjectsController < ApplicationController
     @users = UserDecorator.decorate_collection(@project.users)
     @project.update_attributes(params[:project])
     render "update", :formats => [:js]
+  end
+
+  def deactivate
+    @checked_project = session[:checked_project]
+    @project = Project.find(params[:id])
+    @id = @project.id
+    @project.deactivate
+    Membership.where(joinable_id: @project.id, joinable_type: "Project").all.each { |m| m.deactivate }
+    @activities = current_user.recent_activities
+    render "deactivate", :formats => [:js]
+  end
+
+  def activate
+    @project = current_user.projects.find(params[:id])
+    @project.activate
+    Membership.where(joinable_id: @project.id, joinable_type: "Project").all.each { |m| m.activate }
+    @activities = @project.activities
+    @users = UserDecorator.decorate_collection(@project.users)
+    @checked_project = session[:checked_project]
+    track_project_activity(@project, project=@project)
+    @team = @project.team
+    @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
+    @user_story = UserStory.new
+    session[:checked_project] = @project.id
+    render "activate", :formats => [:js]
   end
 
   def destroy
