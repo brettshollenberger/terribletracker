@@ -85,10 +85,6 @@ class ProjectsController < ApplicationController
     render "destroy", :formats => [:js]
   end
 
-  # def add_project_to_team
-  #   @project = Project.find(params[:project])
-  # end
-
   def save_team_project_join
     @project = Project.find(params[:project][:project_id])
     @team = Team.where(name: params[:project][:team]).first

@@ -20,22 +20,29 @@ describe Project do
     expect(project).to_not be_valid
   end
 
-  describe "#owner" do
-    let(:membership)    { FactoryGirl.create(:membership) }
-    let(:project)       { membership.project }
-    let(:user)          { membership.user }
+  describe "#deactivate" do
+    it "sets the project to inactive state" do
+      project.deactivate
+      expect(project.state).to eql("inactive")
+    end
+  end
 
-    it "has an owner method" do
+  describe "#activate" do
+    it "sets the project to active state" do
+      project.deactivate
+      project.activate
+      expect(project.state).to eql("active")
+    end
+  end
+
+  describe "#owner" do
+    it "returns the project owner" do
       expect(project.owner).to eql(user)
     end
 
   end
 
   describe "active_users" do
-    let(:membership)    { FactoryGirl.create(:membership) }
-    let(:project)       { membership.project }
-    let(:user)          { membership.user }
-
     it "returns the users with an active project membership" do
       expect(project.active_users).to include(user)
       expect(project.active_users.length).to eql(1)

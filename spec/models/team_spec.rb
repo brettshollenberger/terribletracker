@@ -27,6 +27,24 @@ describe Team do
     expect(team).to_not be_valid
   end
 
+  describe "#projects" do
+    it "returns the team's active projects" do
+      create_team_with_project
+      @project2 = FactoryGirl.create(:project, team: @team, state: "inactive")
+      expect(@team.projects).to include(@project)
+      expect(@team.projects).to_not include(@project2)
+    end
+  end
+
+  describe "#inactive_projects" do
+    it "returns the team's inactive projects" do
+      create_team_with_project
+      @project2 = FactoryGirl.create(:project, team: @team, state: "inactive")
+      expect(@team.inactive_projects).to_not include(@project)
+      expect(@team.inactive_projects).to include(@project2)
+    end
+  end
+
   describe "#deactivate" do
     it "deactivates the team" do
       team.deactivate

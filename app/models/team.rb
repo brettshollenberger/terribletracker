@@ -51,11 +51,15 @@ class Team < ActiveRecord::Base
   end
 
   def projects
-    Project.where(team_id: id)
+    Project.where(team_id: id, state: "active")
+  end
+
+  def inactive_projects
+    Project.where(team_id: id, state: "inactive")
   end
 
   def owner
-    Membership.where(joinable_id: id, joinable_type: "Team", role: "owner", state: "active").first.user
+    Membership.where(joinable_id: id, joinable_type: "Team", role: "owner").first.user
   end
 
   def active_clientships

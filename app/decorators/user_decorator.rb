@@ -17,7 +17,9 @@ class UserDecorator < Draper::Decorator
 
   def team_invitations
     invitation_list = []
-    self.pending_team_memberships.each { |m| invitation_list.push(m) }
+    self.pending_team_memberships.each do |membership|
+      invitation_list.push(membership) if membership.joinable.state == "active"
+    end
     MembershipDecorator.decorate_collection(invitation_list)
   end
 
