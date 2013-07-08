@@ -101,4 +101,13 @@ class Team < ActiveRecord::Base
   def activities
     Activity.where(team_id: id).order("created_at desc").limit(5)
   end
+
+  def team
+    self
+  end
+
+  def project
+    nil
+  end
+
 end

@@ -20,7 +20,7 @@ class TeamsController < ApplicationController
       @membership = Membership.new(joinable_id: @team.id, joinable_type: "Team", user: current_user, role: "owner", state: "active")
       @membership.save
       @users = UserDecorator.decorate_collection(@team.members)
-      track_team_activity(@team, team=@team)
+      track_activity(@team)
       @activity = find_activity
       session[:checked] = @team.id
 
@@ -69,6 +69,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
     @id = @team.id
     @team.deactivate
+    track_activity(@team)
     Membership.where(joinable_id: @team.id, joinable_type: "Team").all.each { |m| m.deactivate }
     @activities = current_user.recent_activities
     render "deactivate", :formats => [:js]
@@ -83,7 +84,7 @@ class TeamsController < ApplicationController
     @project = @team.projects.new
     @users = UserDecorator.decorate_collection(@team.members)
     @checked = session[:checked]
-    track_team_activity(@team, team=@team)
+    track_activity(@team)
     session[:checked] = @team.id
     render "activate", :formats => [:js]
   end

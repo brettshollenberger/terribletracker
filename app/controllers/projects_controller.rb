@@ -53,7 +53,7 @@ class ProjectsController < ApplicationController
 
     if @project.save
       create_memberships
-      track_project_activity(@project, project=@project)
+      track_activity(@project)
       @activities = @project.activities
       session[:checked_project] = @project.id
     else
@@ -81,6 +81,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @id = @project.id
     @project.deactivate
+    track_activity(@project)
     Membership.where(joinable_id: @project.id, joinable_type: "Project").all.each { |m| m.deactivate }
     @activities = current_user.recent_activities
     render "deactivate", :formats => [:js]
@@ -93,7 +94,7 @@ class ProjectsController < ApplicationController
     @activities = @project.activities
     @users = UserDecorator.decorate_collection(@project.users)
     @checked_project = session[:checked_project]
-    track_project_activity(@project, project=@project)
+    track_activity(@project)
     @team = @project.team
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
     @user_story = UserStory.new

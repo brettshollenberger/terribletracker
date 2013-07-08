@@ -1,6 +1,6 @@
 class UserStory < ActiveRecord::Base
 
-  attr_accessible :state, :complexity, :estimate_in_quarter_days, :project_id, :story, :title, :user, :position
+  attr_accessible :state, :complexity, :estimate_in_quarter_days, :project_id, :project, :story, :title, :user, :position
 
   belongs_to :project, {
     inverse_of: :user_stories
@@ -72,6 +72,10 @@ class UserStory < ActiveRecord::Base
 
   def remove_from_review_stories
     puts "Removed from review stories"
+  end
+
+  def team
+    self.project.team
   end
 
 end

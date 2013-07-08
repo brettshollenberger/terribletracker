@@ -32,9 +32,7 @@ class UserStoriesController < ApplicationController
     @team = @project.team
 
     @user_story.update_attributes(params[:user_story])
-    # tracker = ActivityTracker::UserStoryActivityTracker.new(@user_story, @project, a="create", cu=current_user)
-    # tracker.track_activity
-    track_project_activity(@user_story, project=@project)
+    track_activity(@user_story)
     @activity = find_activity
     respond_to do |format|
       format.html { redirect_to @project }
@@ -68,7 +66,6 @@ class UserStoriesController < ApplicationController
     @story = UserStory.find(params[:id])
     @project = @story.project
     @story.destroy
-
     respond_to do |format|
       format.html { redirect_to @project }
       format.js
@@ -97,7 +94,7 @@ class UserStoriesController < ApplicationController
     @project = @story.project
     @team = @project.team
     yield(@story)
-    track_project_activity(@story, project=@project, information=@story.state, action="change_state")
+    track_activity(@story, information=@story.state, action="change_state")
     @activity = find_activity
     respond_to do |format|
       format.html { redirect_to @project }
@@ -113,7 +110,7 @@ class UserStoriesController < ApplicationController
     @story.save
     @project = @story.project
     @team = @project.team
-    track_project_activity(@story, project=@project, information=@user.id)
+    track_activity(@story, information=@user.id)
     @activity = find_activity
     UserStoryMailer.assignment_mailer(@user, @story)
 

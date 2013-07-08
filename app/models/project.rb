@@ -75,4 +75,9 @@ class Project < ActiveRecord::Base
   def activities
     Activity.where(project_id: id).order("created_at desc").limit(5)
   end
+
+  def project
+    self
+  end
+
 end
