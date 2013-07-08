@@ -130,7 +130,7 @@ class ProjectsController < ApplicationController
 
   def homepage
     @user = current_user
-    @activities = current_user.recent_activities
+    @activities = current_user.recent_activities.page(params[:page]).per(10)
     @team = Team.new
     respond_to do |format|
       format.html

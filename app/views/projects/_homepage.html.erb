@@ -16,6 +16,7 @@
             <%= render '/activities/index' %>
           </table>
         <% end %>
+        <%= paginate @activities, remote: true %>
         <%= link_to "Create Team", new_team_path, :class => "btn btn-primary homepage-btn", remote: true %>
 
     </div>
