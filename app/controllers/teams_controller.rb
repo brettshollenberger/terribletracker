@@ -29,7 +29,7 @@ class TeamsController < ApplicationController
         format.js
       end
     else
-      @team_errors = "You cannot have two teams with the same name"
+      errorize
       render "team_errors", :formats => [:js]
     end
   end
@@ -124,6 +124,14 @@ private
 
   def find_activity
     Activity.where(team_id: @team.id).order("created_at DESC").last
+  end
+
+  def errorize
+    if @team.errors[:name].include?("has already been taken")
+      @team_errors = "You already have a team by that name."
+    elsif @team.errors[:name].include?("can't be blank")
+      @team_errors = "You must name your team."
+    end
   end
 
 end

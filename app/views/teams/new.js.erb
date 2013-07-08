@@ -26,3 +26,7 @@
 <% end %>
 
 $('#user-specific-navbar').append('<%= j render("new_team_sidebar") %>');
+
+// Change new team link to reflect the fact that the team is checked
+$('#new_team_link').html('<%= j button_tag "Create Team", :form => "new_team", :class => "btn btn-block profile click_to_create", remote: true %>');
+

@@ -73,7 +73,7 @@ class Project < ActiveRecord::Base
   end
 
   def activities
-    Activity.where(project_id: id).order("created_at desc").limit(5)
+    Activity.where(project_id: id).order("created_at desc").includes(:user, :trackable).limit(5)
   end
 
   def project

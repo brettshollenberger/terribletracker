@@ -16,6 +16,7 @@
         <table class="table table-hover" id="project-activities-table">
           <%= render '/activities/index' %>
         </table>
+        <%= paginate @activities, remote: true %>
       <% end %>
         <br>
         <h2>User Stories</h2>

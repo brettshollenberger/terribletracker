@@ -386,3 +386,7 @@ div.right-sidebar {
 .deactivate-header .btn:hover {
   background-color: #ECF0F1 !important;
 }
+
+.click_to_create {
+  background-color: #ECF0F1 !important;
+}

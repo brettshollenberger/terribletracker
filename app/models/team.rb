@@ -99,7 +99,7 @@ class Team < ActiveRecord::Base
   end
 
   def activities
-    Activity.where(team_id: id).order("created_at desc").limit(5)
+    Activity.where(team_id: id).order("created_at desc").includes(:user, :trackable).limit(5)
   end
 
   def team

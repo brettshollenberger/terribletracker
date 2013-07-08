@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @activities = current_user.recent_activities
+    @activities = current_user.recent_activities.page(params[:page]).per(10)
     respond_to do |format|
       format.html
       format.js
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
     @user_stories = UserStoryDecorator.decorate_collection(@project.user_stories.order("position"))
     @user_story = UserStory.new
     @users = UserDecorator.decorate_collection(@project.users)
-    @activities = @project.activities
+    @activities = @project.activities.page(params[:page]).per(5)
 
     if @project.id == @checked_project
       hide
@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
 
   def hide
     @team = @project.team
-    @activities = @team.activities
+    @activities = @team.activities.page(params[:page]).per(5)
     @old_project = @project
     @project = Project.new
 
@@ -54,7 +54,7 @@ class ProjectsController < ApplicationController
     if @project.save
       create_memberships
       track_activity(@project)
-      @activities = @project.activities
+      @activities = @project.activities.page(params[:page]).per(5)
       session[:checked_project] = @project.id
     else
       @project_error = "Please give your project a new name."
@@ -83,7 +83,7 @@ class ProjectsController < ApplicationController
     @project.deactivate
     track_activity(@project)
     Membership.where(joinable_id: @project.id, joinable_type: "Project").all.each { |m| m.deactivate }
-    @activities = current_user.recent_activities
+    @activities = current_user.recent_activities.page(params[:page]).per(10)
     render "deactivate", :formats => [:js]
   end
 
@@ -107,7 +107,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @id = @project.id
     @project.destroy
-    @activities = current_user.recent_activities
+    @activities = current_user.recent_activities.page(params[:page]).per(10)
     Membership.where(joinable_id: @project.id, joinable_type: "Project").all.each { |m| m.destroy }
     render "destroy", :formats => [:js]
   end
@@ -130,7 +130,7 @@ class ProjectsController < ApplicationController
 
   def homepage
     @user = current_user
-    @activities = current_user.recent_activities.limit(5)
+    @activities = current_user.recent_activities
     @team = Team.new
     respond_to do |format|
       format.html
