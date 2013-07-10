@@ -13,4 +13,4 @@ Coming features include:
 * Associate files with projects and user stories to keep track of your project materials
 * Search by project tags to find related work quickly
 
-The project is currently live at [Terrible Tracker](terribletracker-staging.herokuapp.com).
+The project is currently live at [Terrible Tracker](http://www.terribletracker-staging.herokuapp.com).
