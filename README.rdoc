@@ -1,3 +1,16 @@
 == Terrible Tracker
 
-Project management for developers.
+Terrible Tracker is a project management tool for web development consultancies. It helps your team collaborate on
+user stories, keep track of work that's been done and needs to be finished, and keep your clients in the loop.
+
+Terrible Tracker currently features team workspaces, user story tracking, and activity logging.
+
+Coming features include:
+* Project analytics and estimate recommendations based on your previous work experience
+* Automated estimates based on your weekly rates and user story estimates
+* Click to email/print PDF for billing
+* Improved invitation system to invite users that are not already active on Terrible Tracker
+* Associate files with projects and user stories to keep track of your project materials
+* Search by project tags to find related work quickly
+
+The project is currently live at [Terrible Tracker](terribletracker-staging.herokuapp.com).
