@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716221719) do
+ActiveRecord::Schema.define(:version => 20130716222327) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(:version => 20130716221719) do
 
   create_table "user_stories", :force => true do |t|
     t.string   "title",                                             :null => false
-    t.text     "story",                                             :null => false
+    t.text     "story"
     t.decimal  "estimate_in_quarter_days", :default => 0.0,         :null => false
     t.integer  "complexity"
     t.integer  "project_id",                                        :null => false

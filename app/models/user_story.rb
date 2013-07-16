@@ -10,7 +10,7 @@ class UserStory < ActiveRecord::Base
     inverse_of: :user_stories
   }
 
-  validates :story, :title, :project, {
+  validates :title, :project, {
     presence: true
   }
 

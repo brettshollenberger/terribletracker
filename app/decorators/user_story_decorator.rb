@@ -25,17 +25,6 @@ private
     return "#{num} #{word.pluralize}"
   end
 
-  # def estimize(obj)
-  #   estimate = obj.estimate_in_quarter_days.to_f / 4
-  #   return strfy(estimate)
-  # end
-
-  # def strfy(num)
-  #   str = num.to_s
-  #   return str[0..-2].to_i if str[-1] == "0" && str[-2] == "."
-  #   return num
-  # end
-
   def state_button_link
     h.link_to "#{state.capitalize}
       <span class = 'caret'>".html_safe,
